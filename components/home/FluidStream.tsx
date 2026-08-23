@@ -334,18 +334,19 @@ export const FluidStream: React.FC<FluidStreamProps> = ({
 
   useFrame((state, delta) => {
     const dt = Math.min(delta, 0.05);
-    const time = state.clock.getElapsedTime();
+    const time = state.clock.elapsedTime;
     const progress =
       typeof flowProgress === "number" ? flowProgress : flowProgress.current;
 
-    const show = !!mouthRef.current && progress > 0.005;
+    const mouth = mouthRef.current;
+    const show = !!mouth && progress > 0.005;
     if (meshRef.current) meshRef.current.visible = show;
     if (bubblesRef.current) bubblesRef.current.visible = show;
-    if (!show) return;
+    if (!show || !mouth) return;
 
     // Get mouth opening world coordinate & direction
-    mouthRef.current.getWorldPosition(mouthPos);
-    mouthRef.current.getWorldDirection(mouthDir);
+    mouth.getWorldPosition(mouthPos);
+    mouth.getWorldDirection(mouthDir);
 
     // Initial flow direction — falls mostly straight down with a slight lean
     const initFlowDir = new THREE.Vector3(0, -0.85, 0.45).normalize();

@@ -4,6 +4,7 @@ import React, { Suspense, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Center, Environment } from "@react-three/drei";
 import * as THREE from "three";
+import "@/lib/three-setup";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
