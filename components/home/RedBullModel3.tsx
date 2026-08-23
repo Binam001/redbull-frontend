@@ -23,19 +23,10 @@ export function RedBullModel3(props: React.JSX.IntrinsicElements["group"]) {
     "/models/red-bull-3-transformed.glb",
   ) as unknown as GLTFResult;
 
-  const meshRef = React.useRef<THREE.Mesh>(null);
-
-  React.useEffect(() => {
-    if (meshRef.current) {
-      meshRef.current.geometry.center();
-    }
-  }, []);
-
   return (
     <group {...props} dispose={null}>
       <group name="Scene">
         <mesh
-          ref={meshRef}
           name="Pepsi_Can"
           geometry={nodes.Pepsi_Can.geometry}
           material={materials["Pepsi Can.003"]}

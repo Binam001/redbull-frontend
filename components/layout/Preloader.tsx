@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { FloatingText } from "@/components/shared/FloatingText";
 
 const taglines = [
@@ -28,7 +29,14 @@ const Preloader = () => {
   if (isLoaded) return null;
 
   return (
-    <AnimatePresence onExitComplete={() => setIsLoaded(true)}>
+    <AnimatePresence
+      onExitComplete={() => {
+        setIsLoaded(true);
+        if (typeof window !== "undefined") {
+          ScrollTrigger.refresh();
+        }
+      }}
+    >
       {!isExiting && (
         <motion.div
           key="preloader-overlay"
