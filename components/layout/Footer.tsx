@@ -158,31 +158,31 @@ const Footer = () => {
 
             {/* Col 2 (Center): Round Social Buttons */}
             <div className="flex items-center justify-start md:justify-center gap-3 pt-2 md:pt-4 self-start md:self-center">
-              <Link
-                href="mailto:contact@redbull.com"
+              <div
+                // href="mailto:contact@redbull.com"
                 aria-label="Email"
                 className="size-9 sm:size-10 rounded-full border border-white/70 flex items-center justify-center text-white hover:bg-white/15 hover:border-white transition-all duration-200 backdrop-blur-xs"
               >
                 <Icon icon="mdi:email" className="size-4.5" />
-              </Link>
-              <Link
-                href="https://facebook.com"
-                target="_blank"
+              </div>
+              <div
+                // href="https://facebook.com"
+                // target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
                 className="size-9 sm:size-10 rounded-full border border-white/70 flex items-center justify-center text-white hover:bg-white/15 hover:border-white transition-all duration-200 backdrop-blur-xs"
               >
                 <Icon icon="mdi:facebook" className="size-5" />
-              </Link>
-              <Link
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
+              </div>
+              <div
+                // href="https://instagram.com"
+                // target="_blank"
+                // rel="noopener noreferrer"
                 aria-label="Instagram"
                 className="size-9 sm:size-10 rounded-full border border-white/70 flex items-center justify-center text-white hover:bg-white/15 hover:border-white transition-all duration-200 backdrop-blur-xs"
               >
                 <Icon icon="mdi:instagram" className="size-4.5" />
-              </Link>
+              </div>
             </div>
 
             {/* Col 3 (Right): Contact Info on a single row */}
@@ -194,20 +194,20 @@ const Footer = () => {
               </div>
               <div className="flex flex-wrap md:flex-nowrap items-center md:justify-end gap-x-4 sm:gap-x-6 gap-y-1 text-xs sm:text-[13px] text-white/85 font-medium whitespace-nowrap">
                 {contactLinks.map((contact) => (
-                  <Link
+                  <div
                     key={contact.title}
-                    href={contact.href}
-                    target={contact.title === "Address" ? "_blank" : undefined}
-                    rel={
-                      contact.title === "Address"
-                        ? "noopener noreferrer"
-                        : undefined
-                    }
+                    // href={contact.href}
+                    // target={contact.title === "Address" ? "_blank" : undefined}
+                    // rel={
+                    //   contact.title === "Address"
+                    //     ? "noopener noreferrer"
+                    //     : undefined
+                    // }
                     className="flex items-center gap-1 hover:text-white transition-colors duration-200"
                   >
                     <span>{contact.detail}</span>
                     <Icon icon={contact.icon} className="size-3.5 opacity-75" />
-                  </Link>
+                  </div>
                 ))}
               </div>
             </div>

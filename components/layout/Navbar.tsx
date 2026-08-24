@@ -20,6 +20,7 @@ const Navbar = () => {
   const [hidden, setHidden] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [activeLink, setActiveLink] = useState<string>("Home");
   const pathname = usePathname();
 
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -174,29 +175,35 @@ const Navbar = () => {
               onMouseLeave={() => setHoveredLink(null)}
             >
               {navLinks.map((link) => {
-                const isActive = pathname === link.href;
+                const isSelected = activeLink === link.name;
                 const isHovered = hoveredLink === link.name;
+                const isPillVisible = isHovered || (isSelected && !hoveredLink);
 
                 return (
-                  <div
+                  <button
+                    type="button"
                     key={link.name}
-                    // href={link.href}
+                    onClick={() => setActiveLink(link.name)}
                     className="relative flex items-center gap-1.5 px-5 py-1 rounded-full text-[13px] font-semibold tracking-wide transition-colors duration-300 cursor-pointer"
                     style={{
                       color:
-                        isHovered || isActive
-                          ? "#000000"
+                        isSelected
+                          ? "#CB2026"
+                          : isHovered
+                          ? "#CB2026"
                           : "rgba(0, 0, 0, 0.65)",
                     }}
                     onMouseEnter={() => setHoveredLink(link.name)}
                   >
                     {/* Animated hover/active background pill */}
-                    {(isHovered || (isActive && !hoveredLink)) && (
+                    {isPillVisible && (
                       <motion.div
                         layoutId="nav-pill"
                         className="absolute inset-0 rounded-full"
                         style={{
-                          background: "rgba(0, 0, 0, 0.06)",
+                          background: isSelected
+                            ? "rgba(203, 32, 38, 0.14)"
+                            : "rgba(203, 32, 38, 0.06)",
                         }}
                         initial={false}
                         transition={{
@@ -213,10 +220,14 @@ const Navbar = () => {
                     {link.hasDropdown && (
                       <Icon
                         icon="mdi:chevron-down"
-                        className="relative z-10 w-4 h-4 text-black/60"
+                        className={`relative z-10 w-4 h-4 transition-colors duration-300 ${
+                          isSelected || isHovered
+                            ? "text-[#CB2026]"
+                            : "text-black/60"
+                        }`}
                       />
                     )}
-                  </div>
+                  </button>
                 );
               })}
             </div>
@@ -256,21 +267,30 @@ const Navbar = () => {
                   transition={{ delay: 0.1 + index * 0.1 }}
                   className="w-full text-center"
                 >
-                  <Link
-                    href={link.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`flex items-center justify-center gap-2 text-xl font-semibold py-2 transition-colors w-fit mx-auto ${
-                      pathname === link.href ? "text-black" : "text-black/50"
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveLink(link.name);
+                      setIsMenuOpen(false);
+                    }}
+                    className={`flex items-center justify-center gap-2 text-xl font-semibold py-2 transition-colors w-fit mx-auto cursor-pointer ${
+                      activeLink === link.name
+                        ? "text-[#CB2026]"
+                        : "text-black/50 hover:text-black"
                     }`}
                   >
                     {link.name}
                     {link.hasDropdown && (
                       <Icon
                         icon="mdi:chevron-down"
-                        className="w-5 h-5 text-black/50"
+                        className={`w-5 h-5 ${
+                          activeLink === link.name
+                            ? "text-[#CB2026]"
+                            : "text-black/50"
+                        }`}
                       />
                     )}
-                  </Link>
+                  </button>
                 </motion.div>
               ))}
             </div>

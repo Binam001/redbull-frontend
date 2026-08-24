@@ -1,9 +1,9 @@
 export const navLinks = [
   { name: "Home", href: "/" },
-  { name: "Energy Drinks", href: "/products", hasDropdown: true },
-  { name: "About", href: "/about" },
-  { name: "Events", href: "/blog" },
-  { name: "Contact", href: "/contact" },
+  { name: "Energy Drinks", href: "/", hasDropdown: true },
+  { name: "About", href: "/" },
+  { name: "Events", href: "/" },
+  { name: "Contact", href: "/" },
 ];
 
 export const socialLinks = [

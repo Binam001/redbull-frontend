@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGLTF } from "@react-three/drei";
-import Image from "next/image";
+import NextImage from "next/image";
 import { FloatingText } from "@/components/shared/FloatingText";
 
 const taglines = [
@@ -50,10 +50,12 @@ const Preloader = () => {
     const allImages = [...STATIC_IMAGES, ...footerFrames];
 
     // 2. Preload all static images & frame sequences in the background
-    allImages.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
+    if (typeof window !== "undefined") {
+      allImages.forEach((src) => {
+        const img = new window.Image();
+        img.src = src;
+      });
+    }
 
     // 3. Preload 3D GLTF files into browser cache
     GLTF_MODELS.forEach((src) => {
@@ -125,7 +127,7 @@ const Preloader = () => {
               >
                 <div className="space-y-4 flex flex-col items-center">
                   <div className="relative w-36 sm:w-48 md:w-56 xl:w-[20vw] aspect-4/2">
-                    <Image
+                    <NextImage
                       src="/logo.svg"
                       alt="Red Bull Logo"
                       fill
