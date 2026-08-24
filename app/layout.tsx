@@ -8,6 +8,7 @@ import Footer from "@/components/layout/Footer";
 export const metadata: Metadata = {
   title: "Red Bull",
   description: "",
+  icons: { icon: "/logo.svg" },
 };
 
 export default function RootLayout({
