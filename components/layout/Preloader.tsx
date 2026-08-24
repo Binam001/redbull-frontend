@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGLTF } from "@react-three/drei";
@@ -25,7 +25,7 @@ const STATIC_IMAGES = [
 
 const GLTF_MODELS = ["/models/red-bull-3-transformed.glb"];
 
-const AUDIO_ASSETS = ["/audios/bgm.mp3"];
+const AUDIO_ASSETS = ["/audios/bgm.mp3", "/audios/can-popup-1.mpeg"];
 
 // Pre-generate image frame sequence paths
 const footerFrames = Array.from(
@@ -37,6 +37,7 @@ const Preloader = () => {
   const [showButtons, setShowButtons] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const popupAudioRef = useRef<HTMLAudioElement | null>(null);
 
   // Silent Background Asset Preloader
   useEffect(() => {
@@ -62,7 +63,13 @@ const Preloader = () => {
       fetch(src).catch(() => {});
     });
 
-    // 4. Preload Audio files in the background
+    // 4. Preload Audio files with dedicated can-popup-1 element
+    const popupAudio = new Audio("/audios/can-popup-1.mpeg");
+    popupAudio.preload = "auto";
+    popupAudio.volume = 1;
+    popupAudio.load();
+    popupAudioRef.current = popupAudio;
+
     AUDIO_ASSETS.forEach((src) => {
       const audio = new Audio();
       audio.src = src;
@@ -70,13 +77,30 @@ const Preloader = () => {
     });
   }, []);
 
+  const playCanPopup = () => {
+    try {
+      if (popupAudioRef.current) {
+        popupAudioRef.current.currentTime = 0;
+        popupAudioRef.current.play().catch(() => {});
+      }
+    } catch {
+      // Ignore audio playback errors if restricted by browser
+    }
+  };
+
   const handleEnter = (withAudio: boolean) => {
+    // 1. Play popup sound instantaneously
+    playCanPopup();
+
     sessionStorage.setItem("hasEnteredSite", "true");
     localStorage.setItem("audioPreference", withAudio ? "on" : "off");
     (window as Window & { hasEnteredIntro?: boolean }).hasEnteredIntro = true;
-    window.dispatchEvent(new Event("audioPreferenceChanged"));
 
-    setIsExiting(true);
+    // 2. Slight delay (400ms) for popup audio to play before preloader slides up
+    setTimeout(() => {
+      window.dispatchEvent(new Event("audioPreferenceChanged"));
+      setIsExiting(true);
+    }, 400);
   };
 
   if (isLoaded) return null;
@@ -115,7 +139,7 @@ const Preloader = () => {
                 animationDuration={0.7}
                 ease="back.out(1)"
                 stagger={0.015}
-                holdTime={1}
+                holdTime={0.7}
                 onComplete={() => setShowButtons(true)}
                 containerClassName="w-full min-h-[120px]"
                 textClassName="text-3xl sm:text-4xl md:text-5xl xl:text-[3vw] font-black tracking-tight leading-tight uppercase text-black font-['Orbitron',_var(--font-primary),_sans-serif] whitespace-nowrap"
