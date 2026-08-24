@@ -110,7 +110,7 @@ const Preloader = () => {
                 animationDuration={0.7}
                 ease="back.out(1)"
                 stagger={0.015}
-                holdTime={0.7}
+                holdTime={1}
                 onComplete={() => setShowButtons(true)}
                 containerClassName="w-full min-h-[120px]"
                 textClassName="text-3xl sm:text-4xl md:text-5xl xl:text-[3vw] font-black tracking-tight leading-tight uppercase text-black font-['Orbitron',_var(--font-primary),_sans-serif] whitespace-nowrap"

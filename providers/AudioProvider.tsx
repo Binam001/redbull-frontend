@@ -89,8 +89,8 @@ const AudioProvider = ({
         aria-label={isAudioOn ? "Mute Audio" : "Unmute Audio"}
         className={`cursor-pointer border-[2px] p-2 rounded-full transition-colors duration-300 ${
           isScrolled
-            ? "border-primary bg-black/5 hover:bg-black/10"
-            : "border-primary bg-white/5 hover:bg-white/10"
+            ? "border-black bg-black/5 hover:bg-black/10"
+            : "border-white bg-white/5 hover:bg-white/10"
         }`}
       >
         {isAudioOn ? (
@@ -101,7 +101,7 @@ const AudioProvider = ({
             strokeWidth="2"
             stroke="currentColor"
             className={`size-4 transition-colors duration-300 ${
-              isScrolled ? "text-black" : "text-ternary"
+              isScrolled ? "text-black" : "text-white"
             } ${imgClassName || ""}`}
           >
             <path
@@ -118,7 +118,7 @@ const AudioProvider = ({
             strokeWidth="2"
             stroke="currentColor"
             className={`size-4 transition-colors duration-300 ${
-              isScrolled ? "text-black" : "text-ternary"
+              isScrolled ? "text-black" : "text-white"
             } ${imgClassName || ""}`}
           >
             <path
