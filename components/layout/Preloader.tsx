@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGLTF } from "@react-three/drei";
+import Image from "next/image";
 import { FloatingText } from "@/components/shared/FloatingText";
 
 const taglines = [
@@ -122,19 +123,19 @@ const Preloader = () => {
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="space-y-8 flex flex-col items-center"
               >
-                <div className="space-y-2">
-                  <FloatingText
-                    animationDuration={0.7}
-                    ease="back.out(1)"
-                    stagger={0.02}
-                    containerClassName="w-full"
-                    textClassName="text-4xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-black font-['Orbitron',_var(--font-primary),_sans-serif] whitespace-nowrap"
-                  >
-                    GIVES YOU WINGS
-                  </FloatingText>
-                  <p className="font-mono text-xs md:text-sm text-black/60 tracking-wider">
+                <div className="space-y-4 flex flex-col items-center">
+                  <div className="relative w-36 sm:w-48 md:w-56 xl:w-[20vw] aspect-4/2">
+                    <Image
+                      src="/logo.svg"
+                      alt="Red Bull Logo"
+                      fill
+                      priority
+                      className="object-contain"
+                    />
+                  </div>
+                  {/* <p className="font-mono text-xs md:text-sm text-black/60 tracking-wider">
                     CHOOSE YOUR EXPERIENCE TO ENTER
-                  </p>
+                  </p> */}
                 </div>
 
                 {/* 2 Buttons */}
