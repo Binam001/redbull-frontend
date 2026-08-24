@@ -176,7 +176,7 @@ const SkydivingStartSection = () => {
       {/* <div className="absolute inset-0 bg-linear-to-b from-white via-transparent to-transparent" /> */}
       {/* <div className="absolute inset-0 h-[5vh] bg-white" /> */}
       {/* 1. Cloud Fog Overlay at the Top (Highest Z-Index, in front of the Diver) */}
-      <div className="absolute top-0 left-0 w-full h-[70vh] pointer-events-none z-40 will-change-transform">
+      <div className="absolute top-0 left-0 w-full h-[60vh] pointer-events-none z-40 will-change-transform">
         <Image
           src="/images/home/cloud-fog-1.webp"
           alt="Cloud Fog Transition"

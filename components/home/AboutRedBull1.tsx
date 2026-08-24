@@ -44,7 +44,7 @@ const AboutRedBull1 = () => {
             </h2>
 
             <p className="text-sm md:text-base text-black/70 max-w-md leading-relaxed font-medium">
-              From high-speed cockpits to decisive championship plays. When
+              From high speed cockpits to decisive championship plays. When
               fatigue is not an option, Red Bull vitalizes body and mind.
             </p>
           </div>

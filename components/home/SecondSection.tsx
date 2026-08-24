@@ -14,17 +14,16 @@ const SecondSection = () => {
             <span>Human Performance & Vitality</span>
           </div> */}
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] font-black tracking-tight text-[#223971] leading-[1.08]">
-            What Happens When You Refuse
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
+            The Difference Between
             <br />
-            to Settle for Average.
+            Good and Unstoppable.
           </h2>
 
-          <p className="text-xs sm:text-sm md:text-base text-black/70 leading-relaxed font-medium max-w-2xl mx-auto">
-            At 30,000 feet, on the world stage, or during the final decisive
-            play. When concentration wavers, failure is immediate. Here is why
-            the world&apos;s most driven individuals rely on Red Bull to defy
-            fatigue and master their craft.
+          <p className="text-xs sm:text-sm md:text-base text-black/70 leading-relaxed font-medium max-w-xl mx-auto">
+            When fatigue strikes, reaction time slows by critical fractions. Red
+            Bull is formulated to keep your mind razor-sharp and your body
+            unyielding.
           </p>
         </div>
 
