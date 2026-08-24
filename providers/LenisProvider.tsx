@@ -48,15 +48,13 @@ export const LenisProvider = ({ children, options }: LenisProviderProps) => {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Fix for mobile layout shifts and pinning issues
-    ScrollTrigger.config({
-      ignoreMobileResize: true,
-      autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
-    });
+    // Disable automatic browser scroll restoration on reload
+    if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
 
-    // Normalize scroll handles address bar resizing on mobile by intercepting the scroll
-    // Removed normalizeScroll as it conflicts with Lenis and causes severe iOS bugs/freezing
-    ScrollTrigger.normalizeScroll(true);
+    // Ensure native scroll position is at the very top immediately
+    window.scrollTo(0, 0);
 
     const lenisInstance = new Lenis({
       duration: 1.2,
@@ -70,6 +68,8 @@ export const LenisProvider = ({ children, options }: LenisProviderProps) => {
       ...options,
     });
 
+    lenisInstance.scrollTo(0, { immediate: true, force: true });
+
     lenisInstance.on("scroll", ScrollTrigger.update);
 
     gsap.ticker.add((time) => {
@@ -82,8 +82,6 @@ export const LenisProvider = ({ children, options }: LenisProviderProps) => {
     const resizeObserver = new ResizeObserver(() => {
       lenisInstance.resize();
 
-      // Prevent ScrollTrigger.refresh() on mobile to avoid layout jumps
-      // caused by the address bar appearing/disappearing.
       if (window.innerWidth > 1024) {
         ScrollTrigger.refresh();
       }
@@ -96,7 +94,16 @@ export const LenisProvider = ({ children, options }: LenisProviderProps) => {
     lenisRef.current = lenisInstance;
     setLenis(lenisInstance);
 
+    const handleScrollToTop = () => {
+      window.scrollTo(0, 0);
+      lenisInstance.scrollTo(0, { immediate: true, force: true });
+      ScrollTrigger.refresh();
+    };
+
+    window.addEventListener("scrollToTop", handleScrollToTop);
+
     return () => {
+      window.removeEventListener("scrollToTop", handleScrollToTop);
       gsap.ticker.remove((time) => lenisInstance.raf(time * 1000));
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       resizeObserver.disconnect();
@@ -108,6 +115,7 @@ export const LenisProvider = ({ children, options }: LenisProviderProps) => {
   }, []);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const instance = lenisRef.current;
     if (!instance) return;
 
@@ -118,9 +126,11 @@ export const LenisProvider = ({ children, options }: LenisProviderProps) => {
     instance.start();
 
     const id = setTimeout(() => {
+      window.scrollTo(0, 0);
+      instance.scrollTo(0, { immediate: true, force: true });
       ScrollTrigger.refresh();
       instance.resize();
-    }, 200); // Slightly longer timeout to ensure dynamic content is rendered
+    }, 150);
 
     return () => clearTimeout(id);
   }, [pathname]);

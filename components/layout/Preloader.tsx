@@ -86,6 +86,8 @@ const Preloader = () => {
       onExitComplete={() => {
         setIsLoaded(true);
         if (typeof window !== "undefined") {
+          window.scrollTo(0, 0);
+          window.dispatchEvent(new Event("scrollToTop"));
           ScrollTrigger.refresh();
         }
       }}
