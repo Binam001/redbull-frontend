@@ -4,7 +4,7 @@ import React from "react";
 const FirstSection = () => {
   return (
     <section className="relative w-full h-dvh flex items-center bg-[#E0DEDD] text-black overflow-hidden select-none z-10">
-      <div className="absolute inset-0 bg-linear-to-t from-white via-transparent to-transparent z-20" />
+      {/* <div className="absolute inset-0 bg-linear-to-t from-white via-transparent to-transparent z-20" /> */}
       <div className="w-full flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 min-h-dvh">
         {/* Left Side: Content (50% width) */}
         <div className="w-full md:w-1/2 flex flex-col items-start gap-5 md:gap-6 z-10 my-auto">

@@ -30,7 +30,7 @@ export function RedBullModel3(props: React.JSX.IntrinsicElements["group"]) {
           name="Pepsi_Can"
           geometry={nodes.Pepsi_Can.geometry}
           material={materials["Pepsi Can.003"]}
-          scale={[11.568, 8.72, 11.786]}
+          scale={[11.568, 10.72, 11.786]}
         />
       </group>
     </group>

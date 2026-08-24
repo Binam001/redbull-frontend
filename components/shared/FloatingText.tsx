@@ -12,6 +12,8 @@ interface FloatingTextProps {
   ease?: string;
   stagger?: number;
   holdTime?: number;
+  yPercent?: number;
+  rotate?: number;
   onComplete?: () => void;
 }
 
@@ -20,10 +22,12 @@ export const FloatingText: React.FC<FloatingTextProps> = ({
   children,
   containerClassName = "",
   textClassName = "",
-  animationDuration = 0.7,
-  ease = "back.out(1)",
-  stagger = 0.015,
+  animationDuration = 0.8,
+  ease = "back.out(1.8)",
+  stagger = 0.025,
   holdTime = 1.2,
+  yPercent = 100,
+  rotate = 0,
   onComplete,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -59,14 +63,15 @@ export const FloatingText: React.FC<FloatingTextProps> = ({
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
 
-      // 1. Subtle Staggered Entrance (50% reduced displacement and scale distortion)
+      // 1. Dynamic Wave Entrance with Stagger & Spring
       tl.fromTo(
         charElements,
         {
           opacity: 0,
-          yPercent: 50,
-          scaleY: 1.25,
-          scaleX: 0.9,
+          yPercent: yPercent,
+          rotate: rotate,
+          scaleY: 1.35,
+          scaleX: 0.85,
           transformOrigin: "50% 0%",
         },
         {
@@ -74,6 +79,7 @@ export const FloatingText: React.FC<FloatingTextProps> = ({
           ease: ease,
           opacity: 1,
           yPercent: 0,
+          rotate: 0,
           scaleY: 1,
           scaleX: 1,
           stagger: stagger,
@@ -86,9 +92,10 @@ export const FloatingText: React.FC<FloatingTextProps> = ({
           charElements,
           {
             duration: animationDuration * 0.7,
-            ease: "back.in(1)",
+            ease: "back.in(1.2)",
             opacity: 0,
-            yPercent: -50,
+            yPercent: -yPercent * 0.6,
+            rotate: -rotate * 0.5,
             scaleY: 1.25,
             scaleX: 0.9,
             transformOrigin: "50% 100%",

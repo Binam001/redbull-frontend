@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #e8e9ea;
+  --background: #ffffff;
   --foreground: #000000;
-  --primary: #ed2027;
-  --secondary: #182665;
-  --ternary: #f9ec33;
+  --primary: #cb2026;
+  --secondary: #233971;
+  --ternary: #ffc906;
 }
 
 @theme {
@@ -94,4 +94,18 @@ body,
 * {
   scrollbar-width: none !important; /* Firefox */
   -ms-overflow-style: none !important; /* IE and Edge */
+}
+
+@keyframes continuousTextWave {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-1.5deg);
+  }
+}
+
+.animate-char-wave {
+  animation: continuousTextWave 2.8s ease-in-out infinite;
 }

@@ -238,16 +238,16 @@ export const FluidStream: React.FC<FluidStreamProps> = ({
       g.setAttribute("aSize", new THREE.BufferAttribute(sizes, 1));
       g.setAttribute("aAlpha", new THREE.BufferAttribute(alphas, 1));
 
-      // Soft round bubble sprite — bright core, warm golden falloff
+      // Soft round bubble sprite — bright core, pale silvery falloff
       const canvas = document.createElement("canvas");
       canvas.width = 64;
       canvas.height = 64;
       const ctx = canvas.getContext("2d")!;
       const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
       grad.addColorStop(0.0, "rgba(255,255,255,1)");
-      grad.addColorStop(0.25, "rgba(255,246,214,0.95)");
-      grad.addColorStop(0.6, "rgba(255,214,130,0.35)");
-      grad.addColorStop(1.0, "rgba(255,214,130,0)");
+      grad.addColorStop(0.25, "rgba(255,235,180,0.92)");
+      grad.addColorStop(0.6, "rgba(220,185,80,0.3)");
+      grad.addColorStop(1.0, "rgba(220,185,80,0)");
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 64, 64);
       const tex = new THREE.CanvasTexture(canvas);
@@ -433,19 +433,20 @@ export const FluidStream: React.FC<FluidStreamProps> = ({
       const B = binormals[s];
       const N = normalsF[s];
 
-      // Fluid profile: fuller body at the mouth, short waist, a wide flare
-      // through the middle, then tapers to a soft point at the very tip
+      // Fluid profile: thin stream — Red Bull viscosity is ~2.2 cP (nearly water).
+      // Narrow mouth opening, slight bulge mid-stream from surface tension,
+      // then tapers to a fine point at the tip.
       let baseRadius: number;
-      if (sNorm < 0.12) {
-        baseRadius = THREE.MathUtils.lerp(0.08, 0.11, sNorm / 0.12);
+      if (sNorm < 0.1) {
+        baseRadius = THREE.MathUtils.lerp(0.04, 0.05, sNorm / 0.1);
       } else if (sNorm < 0.3) {
-        baseRadius = THREE.MathUtils.lerp(0.11, 0.09, (sNorm - 0.12) / 0.18);
-      } else if (sNorm < 0.7) {
-        baseRadius = THREE.MathUtils.lerp(0.09, 0.22, (sNorm - 0.3) / 0.4);
-      } else if (sNorm < 0.92) {
-        baseRadius = THREE.MathUtils.lerp(0.22, 0.19, (sNorm - 0.7) / 0.22);
+        baseRadius = THREE.MathUtils.lerp(0.05, 0.04, (sNorm - 0.1) / 0.2);
+      } else if (sNorm < 0.65) {
+        baseRadius = THREE.MathUtils.lerp(0.04, 0.08, (sNorm - 0.3) / 0.35);
+      } else if (sNorm < 0.88) {
+        baseRadius = THREE.MathUtils.lerp(0.08, 0.06, (sNorm - 0.65) / 0.23);
       } else {
-        baseRadius = THREE.MathUtils.lerp(0.19, 0.03, (sNorm - 0.92) / 0.08);
+        baseRadius = THREE.MathUtils.lerp(0.06, 0.015, (sNorm - 0.88) / 0.12);
       }
 
       // Gentle necking/bulging — kept subtle so the surface reads as one
@@ -550,25 +551,25 @@ export const FluidStream: React.FC<FluidStreamProps> = ({
 
   return (
     <group>
-      {/* Main Continuous Golden Red Bull Fluid Body */}
+      {/* Main Continuous Red Bull Fluid Body */}
       <mesh ref={meshRef} geometry={geometry}>
         <meshPhysicalMaterial
           ref={materialRef}
-          color="#ffc22b"
-          emissive="#8f5c00"
-          emissiveIntensity={0.25}
-          roughness={0.03}
+          color="#d4a520"
+          emissive="#704a0a"
+          emissiveIntensity={0.18}
+          roughness={0.04}
           metalness={0.0}
-          transmission={0.85}
+          transmission={0.93}
           ior={1.34}
-          thickness={0.9}
-          attenuationColor="#e89a00"
-          attenuationDistance={0.8}
+          thickness={0.25}
+          attenuationColor="#c49418"
+          attenuationDistance={0.5}
           clearcoat={1.0}
-          clearcoatRoughness={0.03}
-          reflectivity={0.65}
+          clearcoatRoughness={0.02}
+          reflectivity={0.7}
           transparent={true}
-          opacity={0.93}
+          opacity={0.82}
           side={THREE.DoubleSide}
           depthWrite={true}
         />

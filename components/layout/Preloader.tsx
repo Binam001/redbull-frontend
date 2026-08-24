@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGLTF } from "@react-three/drei";
 import { FloatingText } from "@/components/shared/FloatingText";
 
 const taglines = [
@@ -12,10 +13,59 @@ const taglines = [
   "For the one champion",
 ];
 
+const STATIC_IMAGES = [
+  "/images/home/bg-1.webp",
+  "/images/home/paras-khadka-4.webp",
+  "/images/home/rabindra-dhaat-1.webp",
+  "/images/home/ad-1.webp",
+  "/images/home/kavita-nepali-1.webp",
+  "/images/home/sky-diver-2.webp",
+];
+
+const GLTF_MODELS = ["/models/red-bull-3-transformed.glb"];
+
+const AUDIO_ASSETS = ["/audios/bgm.mp3"];
+
+// Pre-generate image frame sequence paths
+const footerFrames = Array.from(
+  { length: 149 },
+  (_, i) => `/images/footer-frames-2/${i + 1}.webp`,
+);
+
 const Preloader = () => {
   const [showButtons, setShowButtons] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  // Silent Background Asset Preloader
+  useEffect(() => {
+    // 1. Preload 3D Models in Three.js cache
+    try {
+      useGLTF.preload("/models/red-bull-3-transformed.glb");
+    } catch {
+      // Ignore in non-WebGL environments
+    }
+
+    const allImages = [...STATIC_IMAGES, ...footerFrames];
+
+    // 2. Preload all static images & frame sequences in the background
+    allImages.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+
+    // 3. Preload 3D GLTF files into browser cache
+    GLTF_MODELS.forEach((src) => {
+      fetch(src).catch(() => {});
+    });
+
+    // 4. Preload Audio files in the background
+    AUDIO_ASSETS.forEach((src) => {
+      const audio = new Audio();
+      audio.src = src;
+      audio.load();
+    });
+  }, []);
 
   const handleEnter = (withAudio: boolean) => {
     sessionStorage.setItem("hasEnteredSite", "true");
@@ -43,9 +93,16 @@ const Preloader = () => {
           initial={{ y: "0%" }}
           exit={{ y: "-100%" }}
           transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
-          className="fixed inset-0 z-[9999] bg-background flex flex-col items-center justify-between py-12 px-6 select-none will-change-transform"
+          className="fixed inset-0 z-[9999] bg-background flex flex-col items-center justify-between py-10 sm:py-12 px-6 select-none will-change-transform"
         >
-          {/* Center Stage: Floating / Wave Tagline Transition or Buttons */}
+          {/* Top Logo / Brand Accent */}
+          {/* <div className="w-full flex items-center justify-center opacity-60">
+            <span className="font-['Orbitron',_var(--font-primary),_sans-serif] text-xs uppercase tracking-[0.3em] font-bold text-black">
+              RED BULL • GIVES YOU WINGS
+            </span>
+          </div> */}
+
+          {/* Center Stage: Floating Taglines OR Enter Experience Controls */}
           <div className="relative w-full flex flex-col items-center justify-center text-center my-auto min-h-[220px]">
             {!showButtons ? (
               <FloatingText
@@ -111,6 +168,9 @@ const Preloader = () => {
               </motion.div>
             )}
           </div>
+
+          {/* Spacer to maintain vertical balance */}
+          <div className="h-6" />
         </motion.div>
       )}
     </AnimatePresence>
