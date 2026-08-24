@@ -265,7 +265,7 @@ const Footer = () => {
           <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t border-white/20 pt-6 mt-6">
             {/* Copyright */}
             <span className="text-xs xl:text-[0.9vw] font-medium tracking-wide text-center sm:text-left select-none">
-              Copyright © {new Date().getFullYear()} Lumina. All Rights
+              Copyright © {new Date().getFullYear()} Red Bull. All Rights
               Reserved.
             </span>
 
