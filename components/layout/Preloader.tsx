@@ -99,6 +99,7 @@ const Preloader = () => {
     // 2. Slight delay (400ms) for popup audio to play before preloader slides up
     setTimeout(() => {
       window.dispatchEvent(new Event("audioPreferenceChanged"));
+      window.dispatchEvent(new Event("preloaderExit"));
       setIsExiting(true);
     }, 400);
   };
@@ -112,6 +113,7 @@ const Preloader = () => {
         if (typeof window !== "undefined") {
           window.scrollTo(0, 0);
           window.dispatchEvent(new Event("scrollToTop"));
+          window.dispatchEvent(new Event("preloaderComplete"));
           ScrollTrigger.refresh();
         }
       }}

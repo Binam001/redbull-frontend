@@ -126,6 +126,7 @@ const RedBullAnimtaion2 = () => {
           end: "+=100%",
           scrub: 1,
           pin: true,
+          refreshPriority: 5,
         },
       });
 

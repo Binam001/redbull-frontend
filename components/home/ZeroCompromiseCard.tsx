@@ -97,6 +97,7 @@ const ZeroCompromiseCard = () => {
           scrub: 1,
           pin: canvasRef.current,
           pinSpacing: false,
+          refreshPriority: 5,
         },
       });
 

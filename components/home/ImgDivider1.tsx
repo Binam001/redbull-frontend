@@ -190,6 +190,7 @@ const ImgDivider1 = () => {
           scrub: 1,
           pin: canvasRef.current,
           pinSpacing: false,
+          refreshPriority: 6,
           onUpdate: (self) => {
             // When reaching the center phase
             const atPhase3 = self.progress >= 0.55;

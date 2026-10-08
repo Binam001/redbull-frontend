@@ -32,6 +32,28 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "BeausiteClassic-Light";
+  src: url("/fonts/BeausiteClassic-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "BeausiteClassic-Medium";
+  src: url("/fonts/BeausiteClassic-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Ethnocentric";
+  src: url("/fonts/ethnocentric.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   section {
     @apply px-4 md:px-8 lg:px-16 xl:px-24 py-8 lg:py-16;
@@ -61,7 +83,7 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Override Chrome/Safari autofill background color */
+/* Override Chrome/Safari autofill background color - keep transparent */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -70,10 +92,11 @@ textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
 textarea:-webkit-autofill:focus,
 textarea:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px #000000 inset !important;
-  -webkit-text-fill-color: #e4e3e2 !important;
-  caret-color: #e4e3e2 !important;
-  transition: background-color 5000s ease-in-out 0s !important;
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: currentColor !important;
+  transition: background-color 50000s ease-in-out 0s !important;
+  background-color: transparent !important;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */

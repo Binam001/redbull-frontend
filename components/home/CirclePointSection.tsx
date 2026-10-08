@@ -165,6 +165,7 @@ const CirclePointSection = () => {
           end: "+=250%",
           scrub: 1,
           pin: true,
+          refreshPriority: 5,
           onUpdate: (self) => {
             const progress = self.progress;
 

@@ -27,6 +27,7 @@ const SkyViewSection = () => {
           end: "+=100%",
           scrub: 1.2,
           pin: true,
+          refreshPriority: 5,
         },
       });
 

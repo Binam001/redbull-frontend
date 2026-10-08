@@ -85,6 +85,7 @@ const Footer = () => {
           anticipatePin: 1,
           scrub: 1,
           invalidateOnRefresh: true,
+          refreshPriority: 1,
         },
       });
 
@@ -121,10 +122,11 @@ const Footer = () => {
   );
 
   return (
-    <div
-      ref={containerRef}
-      className="relative w-full h-dvh overflow-hidden select-none"
-    >
+    <footer className="w-full">
+      <div
+        ref={containerRef}
+        className="relative w-full h-dvh overflow-hidden select-none"
+      >
       <div className="absolute inset-0 bg-linear-to-b from-white via-transparent to-transparent z-20" />
       <div className="relative w-full h-dvh flex items-center justify-center overflow-hidden">
         <canvas
@@ -147,7 +149,11 @@ const Footer = () => {
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
-                    href={link.href}
+                    href={
+                      link.href === "#"
+                        ? link.dropdownItems?.[0]?.href || "#"
+                        : link.href
+                    }
                     className="hover:text-white transition-colors duration-200"
                   >
                     {link.name}
@@ -311,7 +317,8 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </footer>
   );
 };
 

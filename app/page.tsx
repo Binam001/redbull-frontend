@@ -1,30 +1,29 @@
-import AboutCan from "@/components/home/AboutCan";
-import AboutRedBull1 from "@/components/home/AboutRedBull1";
-import BannerDivider from "@/components/home/BannerDivider";
-import BungeeSection from "@/components/home/BungeeSection";
-import CirclePointSection from "@/components/home/CirclePointSection";
-import FirstSection from "@/components/home/FirstSection";
-import GridSection from "@/components/home/GridSection";
-import HeroSection from "@/components/home/HeroSection";
-import ImgDivider1 from "@/components/home/ImgDivider1";
-import MountainAnimation from "@/components/home/MountainAnimation";
-import RedBullAnimation3 from "@/components/home/RedBullAnimation3";
-import SkydivingStartSection from "@/components/home/SkydivingStartSection";
-import ParagraphReveal from "@/components/shared/ParagraphReveal";
-import SecondSection from "@/components/home/SecondSection";
-import React from "react";
+import Divider from "@/components/landing/Divider";
+import GooeyReveal from "@/components/landing/GoeyReveal";
+import HeroCarousel from "@/components/landing/HeroCarousel";
+import HeroTry from "@/components/landing/HeroTry";
+import Intro from "@/components/landing/Intro";
+import Products from "@/components/landing/Products";
+import SvgPathHoverEffect from "@/components/landing/SvgPathHoverCardGrid";
 
 const page = () => {
   return (
     <div className="relative">
+      {/* <HeroSection /> */}
+      <HeroCarousel /> 
+      <Intro />
+      <HeroTry />
+      <Products />
+      <Divider />
+      <SvgPathHoverEffect />
+      <GooeyReveal />
       {/* <RedBullAnimation /> */}
       {/* <RedBullAnimtaion2 /> */}
-      <HeroSection />
       {/* <ParagraphReveal
         text="Red Bull vitalizes body and mind. Engineered for those who relentlessly defy limits, break records, and master their craft. Fuel your daily triumphs and unleash your full potential with pure, uncompromising energy."
         className="bg-[#000712] bg-linear-to-r from-[#010208] to-transparent"
       /> */}
-      <SecondSection />
+      {/* <SecondSection /> */}
       {/* <RedBullAnimation3 /> */}
       {/* <HeroSection />
       <AboutCan />
@@ -33,11 +32,11 @@ const page = () => {
       {/* <SkyViewSection /> */}
       {/* <ImgDivider1 /> */}
       {/* <BannerDivider /> */}
-      <AboutRedBull1 />
+      {/* <AboutRedBull1 /> */}
       {/* <AboutCan /> */}
       {/* <BungeeSection /> */}
-      <MountainAnimation />
-      <SkydivingStartSection />
+      {/* <MountainAnimation /> */}
+      {/* <SkydivingStartSection /> */}
       {/* <div className="h-dvh bg-amber-600"></div>
       <div className="h-dvh bg-blue-600"></div> */}
     </div>

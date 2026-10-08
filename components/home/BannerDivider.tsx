@@ -189,6 +189,7 @@ const BannerDivider = () => {
           scrub: 1,
           pin: canvasRef.current,
           pinSpacing: false,
+          refreshPriority: 6,
           onUpdate: (self) => {
             // When reaching the center phase
             const atPhase3 = self.progress >= 0.55;
@@ -301,7 +302,7 @@ const BannerDivider = () => {
 
           <div className="w-full md:w-1/2 flex flex-col items-start gap-5 md:gap-6">
             <h2 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.05] text-ternary">
-              Champions Aren't
+              Champions Aren&apos;t
               <br />
               Born <span className="text-white">Energized.</span>
               <br />

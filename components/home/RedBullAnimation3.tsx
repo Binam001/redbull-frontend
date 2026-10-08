@@ -108,6 +108,7 @@ const RedBullAnimation3 = () => {
         scrub: 1.5,
         pin: true,
         pinSpacing: false,
+        refreshPriority: 5,
         onRefresh: (self) => {
           const spacer = (self as any).pinSpacer;
           if (spacer && spacer.style) {

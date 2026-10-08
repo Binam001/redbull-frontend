@@ -81,6 +81,7 @@ const BungeeSection = () => {
           anticipatePin: 1,
           scrub: 1,
           invalidateOnRefresh: true,
+          refreshPriority: 5,
         },
       });
 

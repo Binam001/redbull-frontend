@@ -1,9 +1,44 @@
-export const navLinks = [
+export interface NavDropdownItem {
+  name: string;
+  href: string;
+  subtitle?: string;
+  badge?: string;
+  volume?: string;
+}
+
+export interface NavLink {
+  name: string;
+  href: string;
+  hasDropdown?: boolean;
+  dropdownItems?: NavDropdownItem[];
+}
+
+export const navLinks: NavLink[] = [
   { name: "Home", href: "/" },
-  { name: "Energy Drinks", href: "/", hasDropdown: true },
-  { name: "About", href: "/" },
-  { name: "Events", href: "/" },
-  { name: "Contact", href: "/" },
+  {
+    name: "Energy Drinks",
+    href: "#",
+    hasDropdown: true,
+    dropdownItems: [
+      {
+        name: "Red Bull® 250ml",
+        href: "/energy-drinks/red-bull-250ml",
+        subtitle: "RED BULL® GOLD",
+        volume: "250ml",
+        badge: "Classic Gold",
+      },
+      {
+        name: "Carbonated Blackcurrant Blueberry 330ml",
+        href: "/energy-drinks/carbonated-blackcurrant-blueberry-330ml",
+        subtitle: "Red Bull® New-Gen Can",
+        volume: "330ml",
+        badge: "New-Gen Flavor",
+      },
+    ],
+  },
+  { name: "Events", href: "/events" },
+  { name: "About", href: "/about" },
+  { name: "Contact", href: "/contact" },
 ];
 
 export const socialLinks = [
