@@ -1,6 +1,7 @@
 import CarbonatedCta from "@/components/carbonated-blackcurrant-blueberry-330ml/CarbonatedCta";
 import CarbonatedDivider from "@/components/carbonated-blackcurrant-blueberry-330ml/CarbonatedDivider";
 import CarbonatedHero from "@/components/carbonated-blackcurrant-blueberry-330ml/CarbonatedHero";
+import LongHero from "@/components/carbonated-blackcurrant-blueberry-330ml/LongHero";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,6 +16,7 @@ export default function CarbonatedBlackcurrantBlueberry330mlPage() {
 
   return (
     <main className="relative">
+      <LongHero />
       <CarbonatedHero />
       <CarbonatedDivider />
       <CarbonatedCta />

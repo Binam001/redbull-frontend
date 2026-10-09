@@ -1,89 +1,63 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
+import dynamic from "next/dynamic";
+import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useLenis } from "@/providers/LenisProvider";
-
-import Button from "@/components/shared/Button";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+const CarbonatedCanCanvas = dynamic(
+  () => import("./CarbonatedCanCanvas"),
+  { ssr: false }
+);
+
 export default function CarbonatedHero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const videoContainerRef = useRef<HTMLDivElement>(null);
-  const { scrollTo } = useLenis();
+  const canvasWrapperRef = useRef<HTMLDivElement>(null);
 
-  const handleScrollClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (scrollTo) {
-      scrollTo("#aspire-section-3", { duration: 1.2 });
-    } else {
-      const el = document.getElementById("aspire-section-3");
-      el?.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  // Pin the 3D can canvas across the 2-screen container section
+  useGSAP(
+    () => {
+      const container = containerRef.current;
+      const canvasWrapper = canvasWrapperRef.current;
+      if (!container || !canvasWrapper) return;
 
-  useEffect(() => {
-    const container = containerRef.current;
-    const video = videoContainerRef.current;
-    if (!container || !video) return;
-
-    const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
-
-      // Desktop animation: travel across and down from right (Section 1) to left (Section 2)
-      mm.add("(min-width: 1280px)", () => {
-        gsap.to(video, {
-          xPercent: -100,
-          yPercent: 100,
-          ease: "none",
-          force3D: true,
-          scrollTrigger: {
-            trigger: container,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        });
+      ScrollTrigger.create({
+        trigger: container,
+        start: "top top",
+        end: "bottom bottom",
+        pin: canvasWrapper,
+        pinSpacing: false,
+        anticipatePin: 1,
+        refreshPriority: 10,
       });
-
-      // Mobile / Tablet animation: travel down 90vh to land into Section 2 top half
-      mm.add("(max-width: 1279px)", () => {
-        gsap.to(video, {
-          y: "90vh",
-          ease: "none",
-          force3D: true,
-          scrollTrigger: {
-            trigger: container,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        });
-      });
-    }, container);
-
-    return () => ctx.revert();
-  }, []);
+    },
+    { scope: containerRef }
+  );
 
   return (
     <div className="relative w-full">
       {/* ======================================================== */}
-      {/* 2-SCREEN SCROLL CONTAINER WITH ANIMATED FLYING SHOE VIDEO */}
+      {/* 2-SCREEN SCROLL CONTAINER WITH PINNED 3D RED BULL CAN   */}
       {/* ======================================================== */}
       <div ref={containerRef} className="relative w-full">
-
+        {/* ---------------- 3D CAN PINNED LAYER ---------------- */}
+        <div
+          ref={canvasWrapperRef}
+          className="absolute top-0 left-0 w-full h-screen z-20 pointer-events-none"
+        >
+          <CarbonatedCanCanvas />
+        </div>
 
         {/* ---------------- SECTION 1 (Hero State 1) ---------------- */}
-        <section className="relative z-20 h-dvh w-full overflow-hidden">
+        <section className="relative z-10 h-screen w-full overflow-hidden">
           <div className="flex flex-col-reverse xl:flex-row items-center justify-center w-full h-full">
             {/* Left Column Text (Bottom half on mobile, Left half on desktop) */}
-            <div className="xl:w-1/2 w-full h-1/2 xl:h-full flex flex-col justify-center text-center xl:text-left gap-4 xl:gap-8 ">
+            <div className="xl:w-1/2 w-full h-1/2 xl:h-full flex flex-col justify-center text-center xl:text-left gap-4 xl:gap-8">
               <div className="flex flex-col gap-4 leading-relaxed">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
                   When the Day,
@@ -91,81 +65,39 @@ export default function CarbonatedHero() {
                   Calls for More
                   <br />
                 </h1>
-                <p className="text-xs sm:text-sm md:text-lg text-black/70 leading-relaxed font-medium max-w-xl ">
+                <p className="text-xs sm:text-sm md:text-lg text-black/70 leading-relaxed font-medium max-w-xl">
                   Some days move to their own rhythm: a busy morning, a late study session, one more match, one more mile. When the moment asks you to keep going, reach for a refreshingly different kind of energy.
                 </p>
               </div>
-
-              {/* <div className="flex justify-center xl:justify-start">
-                <Button
-                  label="Discover Red Bull"
-                  variant="solid"
-                  className="rounded-full"
-                  onClick={handleScrollClick}
-                />
-              </div> */}
             </div>
 
-            {/* Spacer Column (Top half on mobile, Right half on desktop) where the video is located */}
+            {/* Spacer Column (Top half on mobile, Right half on desktop) where 3D can floats at first */}
             <div className="w-full xl:w-1/2 h-1/2 xl:h-full pointer-events-none" />
           </div>
         </section>
 
         {/* ---------------- SECTION 2 (Hero State 2) ---------------- */}
-        <section className="relative z-20 h-dvh w-full overflow-hidden">
+        <section className="carbonated-hero-section-two relative z-10 h-screen w-full overflow-hidden">
           <div className="flex flex-col xl:flex-row items-center justify-center w-full h-full">
-            {/* Spacer Column (Top half on mobile, Left half on desktop) where video lands */}
+            {/* Spacer Column (Top half on mobile, Left half on desktop) where 3D can lands tilted */}
             <div className="w-full xl:w-1/2 h-1/2 xl:h-full pointer-events-none" />
 
             {/* Right Column Text (Bottom half on mobile, Right half on desktop) */}
-            <div className="xl:w-1/2 w-full h-1/2 xl:h-full flex flex-col justify-center xl:items-end text-center xl:text-right gap-4 xl:gap-8 ">
+            <div className="xl:w-1/2 w-full h-1/2 xl:h-full flex flex-col justify-center xl:items-end text-center xl:text-right gap-4 xl:gap-8 px-6 sm:px-12 md:px-16 lg:px-24">
               <div className="xl:ml-auto flex flex-col gap-4 leading-relaxed max-w-3xl">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
                   Blackcurrant.
                   <br />
                   Blueberry. Your Move.
-
                   <br />
                 </h1>
-                <p className="text-xs sm:text-sm md:text-lg text-black/70 leading-relaxed font-medium max-w-xl ">
+                <p className="text-xs sm:text-sm md:text-lg text-black/70 leading-relaxed font-medium">
                   Bold blackcurrant meets juicy blueberry in a smooth, sparkling flavor that brings a fresh twist to your routine. Crack open the New-Gen Can, take a sip, and find your flow—wherever the day takes you.
                 </p>
               </div>
-
-              {/* <div className="flex justify-center xl:justify-end">
-                <Button
-                  label="Contact Us"
-                  variant="solid"
-                  className="rounded-full"
-                  onClick={handleScrollClick}
-                />
-              </div> */}
             </div>
           </div>
         </section>
-
-        {/* ---------------- ABSOLUTE FLYING VIDEO LAYER ---------------- */}
-        <div
-          ref={videoContainerRef}
-          className="absolute top-0 right-0 w-full xl:w-1/2 h-[50vh] xl:h-dvh z-10 pointer-events-none flex items-center justify-center will-change-transform"
-        >
-          <div className="w-full h-full relative flex items-center justify-center">
-            <video
-              src="/videos/shoes-video-11.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-              className="pointer-events-none object-cover w-full h-full scale-[0.9] brightness-110"
-            />
-            {/* Subtle soft edge fades to blend with background on all viewports */}
-            <div className="absolute inset-0 bg-linear-to-t from-white via-15% via-transparent to-transparent pointer-events-none" />
-            <div className="absolute inset-0 bg-linear-to-l from-white via-20% via-transparent to-transparent pointer-events-none" />
-            <div className="xl:hidden absolute inset-0 bg-linear-to-b from-white via-15% via-transparent to-transparent pointer-events-none" />
-            <div className="xl:hidden absolute inset-0 bg-linear-to-r from-white via-20% via-transparent to-transparent pointer-events-none" />
-          </div>
-        </div>
       </div>
     </div>
   );

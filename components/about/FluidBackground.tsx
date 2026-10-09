@@ -119,7 +119,11 @@ const FRAGMENT_SHADER_SRC = `
   }
 `;
 
-export default function FluidBackground() {
+interface FluidBackgroundProps {
+  className?: string;
+}
+
+export default function FluidBackground({ className = "" }: FluidBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mousePos = useRef({ x: 0.5, y: 0.5 });
   const mouseSmooth = useRef({ x: 0.5, y: 0.5 });
@@ -300,7 +304,7 @@ export default function FluidBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-none z-0"
+      className={`absolute inset-0 w-full h-full pointer-events-none z-0 ${className}`}
     />
   );
 }

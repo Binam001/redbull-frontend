@@ -61,18 +61,18 @@ export default function ParagraphReveal({
 
   return (
     <section className={`relative overflow-hidden ${className}`}>
-      <div ref={containerRef} className="relative max-w-4xl mx-auto">
+      <div ref={containerRef} className="relative  mx-auto">
         <p
-          className={`text-center text-xl md:text-2xl lg:text-3xl font-medium leading-snug text-primary ${textClassName}`}
+          className={`text-center text-xl md:text-2xl lg:text-5xl font-bold leading-snug text-secondary ${textClassName}`}
         >
           {typeof children !== "string" && children
             ? children
             : words.length > 0
               ? words.map((w, i) => (
-                  <span key={i} className="reveal-word inline-block mr-2">
-                    {w}
-                  </span>
-                ))
+                <span key={i} className="reveal-word inline-block mr-2">
+                  {w}
+                </span>
+              ))
               : null}
         </p>
       </div>

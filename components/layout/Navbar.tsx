@@ -46,11 +46,8 @@ const Navbar = () => {
   const { isSmallerDevice } = useResponsive();
   const { scrollY } = useScroll();
   const isExclusivePage = pathname.startsWith("/exclusive");
-  const isLightPage =
-    pathname.startsWith("/contact") ||
-    pathname.startsWith("/energy-drinks") ||
-    pathname.startsWith("/about");
-  const isScrolledOrLight = scrolled || isLightPage;
+  const isEnergyDrinksPage = pathname.startsWith("/energy-drinks");
+  const isScrolledOrLight = scrolled;
 
   useEffect(() => {
     const matched = navLinks.find(
@@ -142,9 +139,7 @@ const Navbar = () => {
         transition={{ duration: 0.35, ease: "easeInOut" }}
         className={`fixed top-0 left-0 w-full z-210 px-4 md:px-8 lg:px-16 xl:px-24 transition-all duration-300 ${scrolled
           ? "py-3 bg-white"
-          : pathname.startsWith("/contact")
-            ? "py-4 bg-white"
-            : "py-4 bg-transparent"
+          : "py-4 bg-transparent"
           }`}
       >
         <div className="w-full flex items-center justify-between">
@@ -216,13 +211,16 @@ const Navbar = () => {
                         setActiveLink(link.name);
                         setActiveDropdown(null);
                       }}
-                      className={`relative flex items-center gap-1.5 text-[13.5px] font-semibold tracking-wide transition-colors duration-200 cursor-pointer py-1 ${isSelected || isDropdownOpen
-                        ? "text-[#CB2026]"
-                        : isHovered
-                          ? "text-[#CB2026]"
-                          : isScrolledOrLight
-                            ? "text-black/75 hover:text-black"
-                            : "text-white/85 hover:text-white"
+                      className={`relative flex items-center gap-1.5 text-[13.5px] font-semibold tracking-wide transition-colors duration-200 cursor-pointer py-1 ${
+                        isEnergyDrinksPage && !scrolled
+                          ? "text-white hover:text-white"
+                          : isSelected || isDropdownOpen
+                            ? "text-[#CB2026]"
+                            : isHovered
+                              ? "text-[#CB2026]"
+                              : isScrolledOrLight
+                                ? "text-black/75 hover:text-black"
+                                : "text-white/85 hover:text-white"
                         }`}
                     >
                       <span className="relative">
@@ -230,10 +228,13 @@ const Navbar = () => {
 
                         {/* Interactive Animated Underline */}
                         <span
-                          className={`absolute -bottom-1 left-0 h-[2px] bg-[#CB2026] rounded-full transition-all duration-300 ease-out ${showUnderline || isDropdownOpen
-                            ? "w-full opacity-100"
-                            : "w-0 opacity-0"
-                            }`}
+                          className={`absolute -bottom-1 left-0 h-[2px] ${
+                            isEnergyDrinksPage && !scrolled ? "bg-white" : "bg-[#CB2026]"
+                          } rounded-full transition-all duration-300 ease-out ${
+                            showUnderline || isDropdownOpen
+                              ? "w-full opacity-100"
+                              : "w-0 opacity-0"
+                          }`}
                         />
                       </span>
 
@@ -241,13 +242,17 @@ const Navbar = () => {
                       {link.hasDropdown && (
                         <Icon
                           icon="mdi:chevron-down"
-                          className={`w-4 h-4 transition-all duration-200 ${isDropdownOpen || isHovered ? "rotate-180" : ""
-                            } ${isSelected || isHovered || isDropdownOpen
-                              ? "text-[#CB2026]"
-                              : isScrolledOrLight
-                                ? "text-black/60"
-                                : "text-white/60"
-                            }`}
+                          className={`w-4 h-4 transition-all duration-200 ${
+                            isDropdownOpen || isHovered ? "rotate-180" : ""
+                          } ${
+                            isEnergyDrinksPage && !scrolled
+                              ? "text-white"
+                              : isSelected || isHovered || isDropdownOpen
+                                ? "text-[#CB2026]"
+                                : isScrolledOrLight
+                                  ? "text-black/60"
+                                  : "text-white/60"
+                          }`}
                         />
                       )}
                     </Link>
@@ -256,10 +261,10 @@ const Navbar = () => {
                     <AnimatePresence>
                       {link.hasDropdown && isDropdownOpen && link.dropdownItems && (
                         <motion.div
-                          initial={{ opacity: 0, y: 4 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 4 }}
-                          transition={{ duration: 0.15, ease: "easeOut" }}
+                          initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
                           onMouseEnter={() => {
                             if (dropdownTimeoutRef.current) {
                               clearTimeout(dropdownTimeoutRef.current);
@@ -272,22 +277,49 @@ const Navbar = () => {
                               setActiveDropdown(null);
                             }, 180);
                           }}
-                          className="absolute top-full left-0 pt-2 z-50 pointer-events-auto min-w-max"
+                          className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 z-50 pointer-events-auto"
                         >
-                          <div className="bg-white rounded-2xl px-6 py-4 shadow-[0_12px_32px_rgba(0,0,0,0.12)] flex flex-col gap-3 min-w-max">
-                            {link.dropdownItems.map((subItem) => (
-                              <Link
-                                key={subItem.name}
-                                href={subItem.href}
-                                onClick={() => {
-                                  setActiveLink(link.name);
-                                  setActiveDropdown(null);
-                                }}
-                                className="text-[14.5px] font-medium text-neutral-800 hover:text-[#CB2026] transition-colors duration-200 cursor-pointer whitespace-nowrap"
-                              >
-                                {subItem.name}
-                              </Link>
-                            ))}
+                          <div className="bg-black/80 backdrop-blur-2xl rounded-3xl p-2.5 border border-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.5)] flex flex-col gap-1.5 w-[350px] sm:w-[380px]">
+                            {link.dropdownItems.map((subItem) => {
+                              const isSubActive = pathname.startsWith(subItem.href);
+                              return (
+                                <Link
+                                  key={subItem.name}
+                                  href={subItem.href}
+                                  onClick={() => {
+                                    setActiveLink(link.name);
+                                    setActiveDropdown(null);
+                                  }}
+                                  className={`group flex items-center gap-3.5 p-2.5 rounded-2xl transition-all duration-200 cursor-pointer text-left ${isSubActive
+                                    ? "bg-white/15 text-white"
+                                    : "hover:bg-white/10 text-white"
+                                    }`}
+                                >
+                                  {/* Thumbnail container */}
+                                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden bg-black shrink-0 border border-white/10 flex items-center justify-center shadow-inner">
+                                    {subItem.image && (
+                                      <Image
+                                        src={subItem.image}
+                                        alt={subItem.name}
+                                        fill
+                                        sizes="64px"
+                                        className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                                      />
+                                    )}
+                                  </div>
+
+                                  {/* Text info */}
+                                  <div className="flex flex-col justify-center min-w-0 flex-1 text-left">
+                                    <span className="text-[11px] sm:text-xs font-semibold tracking-wider text-white/60 uppercase">
+                                      {subItem.subtitle || subItem.badge || subItem.volume}
+                                    </span>
+                                    <span className="text-[14.5px] sm:text-[15.5px] font-bold text-white tracking-tight leading-snug group-hover:text-[#CB2026] transition-colors duration-200">
+                                      {subItem.name}
+                                    </span>
+                                  </div>
+                                </Link>
+                              );
+                            })}
                           </div>
                         </motion.div>
                       )}
@@ -387,21 +419,45 @@ const Navbar = () => {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="flex flex-col items-center gap-2.5 mt-2 mb-2 overflow-hidden bg-white rounded-2xl px-6 py-3.5 shadow-md w-full max-w-xs"
+                            className="flex flex-col gap-2 mt-2 mb-2 overflow-hidden bg-[#181c22]/95 backdrop-blur-2xl rounded-3xl p-2.5 shadow-xl w-full max-w-sm border border-white/10"
                           >
-                            {link.dropdownItems.map((subItem) => (
-                              <Link
-                                key={subItem.name}
-                                href={subItem.href}
-                                onClick={() => {
-                                  setActiveLink(link.name);
-                                  setIsMenuOpen(false);
-                                }}
-                                className="text-sm font-medium text-neutral-800 hover:text-[#CB2026] py-1 transition-colors"
-                              >
-                                {subItem.name}
-                              </Link>
-                            ))}
+                            {link.dropdownItems.map((subItem) => {
+                              const isSubActive = pathname.startsWith(subItem.href);
+                              return (
+                                <Link
+                                  key={subItem.name}
+                                  href={subItem.href}
+                                  onClick={() => {
+                                    setActiveLink(link.name);
+                                    setIsMenuOpen(false);
+                                  }}
+                                  className={`group flex items-center gap-3 p-2.5 rounded-2xl transition-all duration-200 text-left ${isSubActive
+                                    ? "bg-white/15 text-white"
+                                    : "hover:bg-white/10 text-white"
+                                    }`}
+                                >
+                                  <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-black shrink-0 border border-white/10 flex items-center justify-center">
+                                    {subItem.image && (
+                                      <Image
+                                        src={subItem.image}
+                                        alt={subItem.name}
+                                        fill
+                                        sizes="48px"
+                                        className="object-cover object-center"
+                                      />
+                                    )}
+                                  </div>
+                                  <div className="flex flex-col justify-center min-w-0 flex-1 text-left">
+                                    <span className="text-[10.5px] font-semibold tracking-wider text-white/60 uppercase">
+                                      {subItem.subtitle || subItem.badge || subItem.volume}
+                                    </span>
+                                    <span className="text-[13.5px] font-bold text-white tracking-tight leading-snug truncate">
+                                      {subItem.name}
+                                    </span>
+                                  </div>
+                                </Link>
+                              );
+                            })}
                           </motion.div>
                         )}
                       </AnimatePresence>

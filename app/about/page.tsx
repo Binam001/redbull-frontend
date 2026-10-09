@@ -1,8 +1,9 @@
-import AboutHero from "@/components/about/AboutHero";
 import AboutTokenomics from "@/components/about/AboutTokenomics";
 import Saras from "@/components/about/Saras";
-import VideoAnimation from "@/components/about/ScrollVideoAnimation";
 import Tcp from "@/components/about/Tcp";
+import SecondSection from "@/components/home/SecondSection";
+import GooeyReveal from "@/components/landing/GoeyReveal";
+import Intro from "@/components/landing/Intro";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,10 +14,14 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main className="relative w-full">
-      <AboutHero />
+      <GooeyReveal />
+
+      <Intro />
+      <SecondSection />
+      {/* <AboutHero /> */}
       <AboutTokenomics />
-      <Tcp />
-      <Saras />
+      {/* <Tcp />
+      <Saras /> */}
       {/* <VideoAnimation /> */}
     </main>
   );

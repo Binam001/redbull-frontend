@@ -49,7 +49,7 @@ export default function FeaturedEvents() {
 
     return (
         <section
-            className="w-full text-neutral-900 font-sans py-14 sm:py-20 md:py-24 px-4 sm:px-8 md:px-12 lg:px-20 overflow-hidden"
+            className="w-full text-neutral-900 font-sans py-14 sm:py-20 md:py-28 px-4 sm:px-8 md:px-12 lg:px-20 overflow-hidden"
 
         >
             {/* Header with Title and Carousel Navigation Buttons */}
@@ -86,7 +86,7 @@ export default function FeaturedEvents() {
             </header>
 
             {/* Embla Carousel Viewport */}
-            <div className="w-full overflow-hidden border-t border-l border-neutral-700" ref={emblaRef}>
+            <div className="w-full overflow-hidden" ref={emblaRef}>
                 <div className="flex touch-pan-y">
                     {EVENTS.map((event) => (
                         <div

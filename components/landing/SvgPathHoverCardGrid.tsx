@@ -21,9 +21,9 @@ const CARDS: CardData[] = [
         description:
             "Precision aerodynamics meet raw asphalt adrenaline. Pushing cutting-edge engineering past 340 km/h to capture the checkered flag.",
         defaultImage:
-            "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1200&auto=format&fit=crop",
+            "/images/home/athletes/hover-athlete-1.jpg",
         hoverImage:
-            "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1200&auto=format&fit=crop",
+            "/images/home/athletes/athlete-1.jpg",
     },
     {
         id: "card-2",
@@ -32,9 +32,9 @@ const CARDS: CardData[] = [
         description:
             "Launching forty feet into thin air, defying gravity with heart-stopping tsunami flips and uncompromising two-wheeled mastery.",
         defaultImage:
-            "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?q=80&w=1200&auto=format&fit=crop",
+            "/images/home/athletes/hover-athlete-2.jpg",
         hoverImage:
-            "https://images.unsplash.com/photo-1558980664-769d59546b3d?q=80&w=1200&auto=format&fit=crop",
+            "/images/home/athletes/athlete-2.jpg",
     },
     {
         id: "card-3",
@@ -43,43 +43,43 @@ const CARDS: CardData[] = [
         description:
             "Carving towering 50-foot monster swells where split-second composure and raw nerve separate immortality from wipeout.",
         defaultImage:
-            "https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=1200&auto=format&fit=crop",
+            "/images/home/athletes/hover-athlete-3.jpg",
         hoverImage:
-            "https://images.unsplash.com/photo-1455729552865-3658a5d39692?q=80&w=1200&auto=format&fit=crop",
+            "/images/home/athletes/athlete-3.jpg",
     },
-    {
-        id: "card-4",
-        title: "Backcountry<br />Snowboarding",
-        subtitle: "Alpine Freeride",
-        description:
-            "Untouched powder corridors and sheer glacier drops. Navigating extreme mountain frontiers with fearless speed and razor precision.",
-        defaultImage:
-            "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?q=80&w=1200&auto=format&fit=crop",
-        hoverImage:
-            "https://images.unsplash.com/photo-1565992441121-4367c2967103?q=80&w=1200&auto=format&fit=crop",
-    },
-    {
-        id: "card-5",
-        title: "Urban Street<br />Skateboarding",
-        subtitle: "Street League Pro",
-        description:
-            "Transforming raw city concrete into an arena of technical innovation, balance, and relentless boundary-pushing skate progression.",
-        defaultImage:
-            "https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?q=80&w=1200&auto=format&fit=crop",
-        hoverImage:
-            "https://images.unsplash.com/photo-1547447134-cd3f5c716030?q=80&w=1200&auto=format&fit=crop",
-    },
-    {
-        id: "card-6",
-        title: "Alpine Cliff<br />Rock Climbing",
-        subtitle: "Vertical Horizons",
-        description:
-            "Ascending sheer monolithic granite walls with unyielding grip, pure mental clarity, and zero margin for error.",
-        defaultImage:
-            "https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=1200&auto=format&fit=crop",
-        hoverImage:
-            "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
-    },
+    // {
+    //     id: "card-4",
+    //     title: "Backcountry<br />Snowboarding",
+    //     subtitle: "Alpine Freeride",
+    //     description:
+    //         "Untouched powder corridors and sheer glacier drops. Navigating extreme mountain frontiers with fearless speed and razor precision.",
+    //     defaultImage:
+    //         "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?q=80&w=1200&auto=format&fit=crop",
+    //     hoverImage:
+    //         "https://images.unsplash.com/photo-1565992441121-4367c2967103?q=80&w=1200&auto=format&fit=crop",
+    // },
+    // {
+    //     id: "card-5",
+    //     title: "Urban Street<br />Skateboarding",
+    //     subtitle: "Street League Pro",
+    //     description:
+    //         "Transforming raw city concrete into an arena of technical innovation, balance, and relentless boundary-pushing skate progression.",
+    //     defaultImage:
+    //         "https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?q=80&w=1200&auto=format&fit=crop",
+    //     hoverImage:
+    //         "https://images.unsplash.com/photo-1547447134-cd3f5c716030?q=80&w=1200&auto=format&fit=crop",
+    // },
+    // {
+    //     id: "card-6",
+    //     title: "Alpine Cliff<br />Rock Climbing",
+    //     subtitle: "Vertical Horizons",
+    //     description:
+    //         "Ascending sheer monolithic granite walls with unyielding grip, pure mental clarity, and zero margin for error.",
+    //     defaultImage:
+    //         "https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=1200&auto=format&fit=crop",
+    //     hoverImage:
+    //         "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=1200&auto=format&fit=crop",
+    // },
 ];
 
 // Vertex Shader for Card Quad
@@ -217,6 +217,7 @@ function CardCanvas({
             gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_T, gl!.CLAMP_TO_EDGE);
             gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MIN_FILTER, gl!.LINEAR);
             gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MAG_FILTER, gl!.LINEAR);
+            gl!.pixelStorei(gl!.UNPACK_FLIP_Y_WEBGL, true);
             gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.RGBA, gl!.RGBA, gl!.UNSIGNED_BYTE, image);
             return tex;
         }
@@ -402,17 +403,17 @@ export default function SvgPathHoverCardGrid() {
     return (
         <div
             ref={containerRef}
-            className="w-full text-neutral-900 font-sans selection:bg-neutral-200 py-16 px-4 sm:px-8 md:px-12 lg:px-24 overflow-hidden"
-            style={{
-                fontFamily: "'BeausiteClassic-Light', -apple-system, BlinkMacSystemFont, sans-serif",
-            }}
+            className="w-full text-neutral-900 font-sans selection:bg-neutral-200 pb-28 px-4 sm:px-8 md:px-12 lg:px-24 overflow-hidden"
+        // style={{
+        //     fontFamily: "'BeausiteClassic-Light', -apple-system, BlinkMacSystemFont, sans-serif",
+        // }}
         >
             {/* Header with Title and Carousel Controls */}
             <header className="w-full mb-8 sm:mb-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
 
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.2vw] tracking-tight text-secondary leading-[1.08]">
-                        Our Athletes
+                        Our <span className="text-primary"> Athletes</span>
                     </h1>
                 </div>
 

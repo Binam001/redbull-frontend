@@ -2,17 +2,17 @@
 
 import React from "react";
 import Image from "next/image";
-import ZeroCompromiseCard from "./ZeroCompromiseCard";
+
 
 const SecondSection = () => {
   return (
-    <section className="relative w-full select-none">
+    <section className="relative w-full select-none mb-16 ">
       <div className="flex flex-col items-center">
         {/* Section Header - David Ogilvy Style */}
-        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16 space-y-4">
-          {/* <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#CB2026]/10 text-[#CB2026] text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em]">
+        {/* <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16 space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#CB2026]/10 text-[#CB2026] text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em]">
             <span>Human Performance & Vitality</span>
-          </div> */}
+          </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
             The Difference Between
@@ -25,7 +25,7 @@ const SecondSection = () => {
             Bull is formulated to keep your mind razor-sharp and your body
             unyielding.
           </p>
-        </div>
+        </div> */}
 
         {/* Bento Grid (2x2 Asymmetric Layout with Red Bull Palette) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 w-full">
@@ -62,9 +62,25 @@ const SecondSection = () => {
             />
           </div>
 
-          {/* Card 3 (Bottom-Left): Red Bull Crimson Red (#CB2026) with 3D Can */}
-          <div className="lg:col-span-5">
-            <ZeroCompromiseCard />
+          {/* Card 3 (Bottom-Left): Vitalizes Body. Sharpens Mind. */}
+          <div className="lg:col-span-5 relative h-[280px] sm:h-[340px] md:h-[380px] rounded-[28px] sm:rounded-[32px] bg-linear-to-br from-[#161c28] via-[#0f131c] to-[#0a0d13] p-6 sm:p-8 md:p-10 flex flex-col justify-end text-white overflow-hidden shadow-lg border border-white/10">
+            <Image
+              src="/images/home/red-bull-can.jpg"
+              alt="Stratospheric Focus"
+              fill
+              className="object-cover"
+            />
+            <div className="relative z-10 space-y-2">
+              <h3 className="text-xl sm:text-2xl md:text-3xl font-black text-white tracking-tight leading-tight drop-shadow-md">
+                Vitalizes Body.
+                <br />
+                Sharpens Mind.
+              </h3>
+              <p className="text-xs sm:text-sm text-white/75 leading-relaxed font-medium pt-0.5 drop-shadow-xs">
+                Engineered to give you wings whenever you need peak focus and
+                unstoppable stamina.
+              </p>
+            </div>
           </div>
 
           {/* Card 4 (Bottom-Right): Red Bull Deep Navy (#223971) with Champion Athlete */}

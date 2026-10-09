@@ -75,7 +75,7 @@ export const EVENTS: EventData[] = [
         description: "As padel skyrockets worldwide, elite international players clash for supremacy at the high-stakes German stop.",
         status: "live-soon",
         statusCtaText: "Live Soon",
-        image: "https://images.unsplash.com/photo-1554068865-24cecd4e34b8?q=80&w=1000&auto=format&fit=crop",
+        image: "/images/home/hero/adventure-5.jpg",
         carouselImages: [
             "/images/home/hero/hero-1.jpg",
             "/images/home/hero/hero-2.jpg",
@@ -120,7 +120,7 @@ export const EVENTS: EventData[] = [
     {
         id: "event-2",
         slug: "red-bull-rampage",
-        title: "Red Bull Rampage",
+        title: "NPL 2026 (Season 3)",
         sport: "MTB Freeride",
         date: "8 – 10 October 2026",
         dateShort: "8–10 Oct",
@@ -133,7 +133,7 @@ export const EVENTS: EventData[] = [
         description: "The premier big-mountain freeride spectacle where elite riders sculpt fearless lines down sheer Utah desert cliffs.",
         status: "tickets",
         statusCtaText: "Tickets LIVE NOW!",
-        image: "https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?q=80&w=1000&auto=format&fit=crop",
+        image: "/images/home/hero/npl-2.jpeg",
         carouselImages: [
             "/images/home/hero/hero-1.jpg",
             "/images/home/hero/hero-2.jpg",
@@ -195,7 +195,7 @@ export const EVENTS: EventData[] = [
         description: "High-octane motorcycle racing thrills as world-class riders push beyond 340 km/h at the iconic Motegi circuit.",
         status: "past",
         statusCtaText: "Event Ended",
-        image: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1000&auto=format&fit=crop",
+        image: "/images/home/hero/adventure-6.jpg",
         carouselImages: [
             "/images/home/hero/hero-1.jpg",
             "/images/home/hero/hero-2.jpg",
@@ -231,7 +231,7 @@ export const EVENTS: EventData[] = [
         description: "The dramatic final stop of the DTM season where championship glory is decided at full throttle on German tarmac.",
         status: "live",
         statusCtaText: "WATCH LIVE NOW!",
-        image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?q=80&w=1000&auto=format&fit=crop",
+        image: "/images/home/hero/adventure-4.jpg",
         carouselImages: [
             "/images/home/hero/hero-1.jpg",
             "/images/home/hero/hero-2.jpg",
@@ -267,7 +267,7 @@ export const EVENTS: EventData[] = [
         description: "The world's most electrifying Spanish freestyle rap showdown bringing razor-sharp verbal battles to Buenos Aires.",
         status: "live-soon",
         statusCtaText: "Live Soon",
-        image: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?q=80&w=1000&auto=format&fit=crop",
+        image: "/images/home/hero/adventure-2.jpg",
         carouselImages: [
             "/images/home/hero/hero-1.jpg",
             "/images/home/hero/hero-2.jpg",
@@ -303,7 +303,7 @@ export const EVENTS: EventData[] = [
         description: "Divers execute incredible acrobatics from heights of up to 27m into the Adriatic Sea in the ultimate display of skill.",
         status: "tickets",
         statusCtaText: "Tickets LIVE NOW!",
-        image: "https://images.unsplash.com/photo-1502680390469-be75c86b636f?q=80&w=1000&auto=format&fit=crop",
+        image: "/images/home/hero/adventure-1.jpg",
         carouselImages: [
             "/images/home/hero/hero-1.jpg",
             "/images/home/hero/hero-2.jpg",

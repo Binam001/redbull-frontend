@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import Button from "../shared/Button";
 
@@ -13,12 +14,12 @@ export default function GooeyReveal() {
     if (!container || !smudgeBlobs) return;
 
     const config = {
-      smoothing: 0.15,
-      movementThreshold: 5,
-      minRadius: 30,
-      maxRadius: 75,
-      expandDuration: 0.6,
-      dissolveDuration: 0.8,
+      smoothing: 0.35,
+      movementThreshold: 4,
+      minRadius: 32,
+      maxRadius: 80,
+      expandDuration: 0.25,
+      dissolveDuration: 0.55,
     };
 
     let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
@@ -99,7 +100,7 @@ export default function GooeyReveal() {
           duration: config.dissolveDuration,
           ease: "power2.inOut",
         },
-        `+=${0.1}`
+        `+=${0.05}`
       );
     };
 
@@ -169,20 +170,35 @@ export default function GooeyReveal() {
         </svg>
 
         {/* Background Content Layer */}
-        <div className="hero-content-background absolute inset-0 flex flex-col items-center justify-center bg-white text-neutral-900 p-8">
-          <div className="max-w-4xl text-center space-y-6">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
-              Find Your Wings
+        <div className="hero-content-background absolute inset-0 flex flex-col items-center justify-center bg-black text-neutral-900 p-8">
+          <div className="relative max-w-4xl text-center flex flex-col items-center justify-center">
+            {/* Red Bull Logo Behind Text */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[480px] md:w-[640px] lg:w-[1000px] aspect-[91/35] pointer-events-none select-none z-0 opacity-25">
+              <Image
+                src="/logo.svg"
+                alt="Red Bull Logo"
+                fill
+                priority
+                className="object-contain"
+              />
+            </div>
+
+            {/* Foreground Text Content */}
+
+          </div>
+          <div className="absolute bottom-16 z-10 space-y-6">
+            <h1 className="uppercase text-3xl sm:text-4xl md:text-5xl lg:text-[5vw] tracking-tight text-white leading-[1.08]">
+              Find Your Wiiings
             </h1>
 
-            <p className="text-xs sm:text-sm md:text-lg text-black/70 leading-relaxed font-medium max-w-xl mx-auto">
-              Ready to take on what’s next? Discover the energy, events, and
-              stories that bring people together to push beyond the ordinary.
-            </p>
+            {/* <p className="text-xs sm:text-sm md:text-lg text-white/80 leading-relaxed font-medium max-w-xl mx-auto">
+                Ready to take on what’s next? Discover the energy, events, and
+                stories that bring people together to push beyond the ordinary.
+              </p>
 
-            <div className="pt-4 flex justify-center gap-4">
-              <Button label="Explore Red Bull" className="rounded-full" />
-            </div>
+              <div className="pt-4 flex justify-center gap-4">
+                <Button label="Explore Red Bull" className="rounded-full" />
+              </div> */}
           </div>
         </div>
 
@@ -194,9 +210,10 @@ export default function GooeyReveal() {
             WebkitMask: "url(#smudge-mask)",
           }}
         >
-          <img
-            src="/images/home/gooey/gooey-bg.jpg"
+          <Image
+            src="/images/contact/contact-2.jpg"
             alt="Surface Background"
+            fill
             className="w-full h-full object-cover object-center pointer-events-none select-none"
           />
         </div>

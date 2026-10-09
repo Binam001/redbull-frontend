@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -12,32 +13,27 @@ interface MarketingCardItem {
     description: string;
     defaultImage: string;
     hoverImage: string;
+    href: string;
 }
 
 const MARKETING_CARDS: MarketingCardItem[] = [
     {
         id: "card-1",
-        title: "High Quality<br />Natural Ingredients",
+        title: "Blackcurrant<br />Blueberry Refreshment",
         description:
-            "Crafted from the finest, all-natural ingredients, ensuring a delightful experience with every sip. With absolutely no added sugar, this invigorating drink bursts with vibrant flavors, providing a crisp and satisfying taste that refreshes and revitalizes.",
-        defaultImage: "/images/marketing-cards/card_1_default.jpg",
-        hoverImage: "/images/marketing-cards/card_1_hover.jpg",
+            "Red Bull Carbonated Blackcurrant Blueberry 330ml pairs lively carbonation with the rich, fruity taste of blackcurrant and blueberry. Smooth, refreshing, and ready to enjoy, it’s a flavorful choice for work, study, gaming, or time on the move—whenever you want a refreshing drink with an energizing boost.",
+        defaultImage: "/images/home/hero/hover-long-can.jpg",
+        hoverImage: "/images/home/hero/long-can.jpg",
+        href: "/energy-drinks/carbonated-blackcurrant-blueberry-330ml",
     },
     {
         id: "card-2",
-        title: "Smoothness<br />and Aftertaste",
+        title: "Everyday Energy<br />with Red Bull Gold",
         description:
-            "Our product boasts an exceptionally smooth profile, free from any acidity, which highlights our commitment to sourcing only the finest natural ingredients. Taste a delicate balance of flavors, ensuring a satisfying and refined tasting experience.",
-        defaultImage: "/images/marketing-cards/card_2_default.jpg",
-        hoverImage: "/images/marketing-cards/card_2_hover.jpg",
-    },
-    {
-        id: "card-3",
-        title: "Unique<br />Can Design",
-        description:
-            "Introducing a can design that combines comfort and functionality, fitting perfectly in your hand for easy enjoyment. The modern look adds style to your drinking experience while highlighting your favorite flavors.",
-        defaultImage: "/images/marketing-cards/card_3_default.jpg",
-        hoverImage: "/images/marketing-cards/card_3_hover.jpg",
+            "Meet Red Bull Gold 250ml—a convenient companion for busy days and active routines. Made with high-quality ingredients, including taurine and B-group vitamins, it brings together amino acids and carbohydrates in a crisp, refreshing drink. Keep a can close for the moments that call for focus, movement, and a little extra energy.",
+        defaultImage: "/images/home/hero/hover-short-can.jpg",
+        hoverImage: "/images/home/hero/short-can.jpg",
+        href: "/energy-drinks/red-bull-250ml",
     },
 ];
 
@@ -176,6 +172,7 @@ function CardCanvas({
             gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_T, gl!.CLAMP_TO_EDGE);
             gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MIN_FILTER, gl!.LINEAR);
             gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MAG_FILTER, gl!.LINEAR);
+            gl!.pixelStorei(gl!.UNPACK_FLIP_Y_WEBGL, true);
             gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.RGBA, gl!.RGBA, gl!.UNSIGNED_BYTE, image);
             return tex;
         }
@@ -257,12 +254,11 @@ function CardCanvas({
 export default function Products() {
     const containerRef = useRef<HTMLDivElement>(null);
     const cardsWrapperRef = useRef<HTMLDivElement>(null);
-    const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const cardRefs = useRef<(HTMLAnchorElement | null)[]>([]);
     const heroTextRef = useRef<HTMLDivElement>(null);
 
-    // Separate animation mixRatio ref for each of the 3 cards
+    // Separate animation mixRatio ref for each of the 2 cards
     const mixRatioRefs = useRef<React.MutableRefObject<number>[]>([
-        { current: 0 },
         { current: 0 },
         { current: 0 },
     ]);
@@ -271,19 +267,17 @@ export default function Products() {
         const container = containerRef.current;
         if (!container) return;
 
-        const cards = cardRefs.current.filter(Boolean) as HTMLDivElement[];
-        if (cards.length < 3) return;
+        const cards = cardRefs.current.filter(Boolean) as HTMLAnchorElement[];
+        if (cards.length < 2) return;
 
         const card0 = cards[0];
         const card1 = cards[1];
-        const card2 = cards[2];
         const heroText = heroTextRef.current;
 
         const ctx = gsap.context(() => {
-            // Set initial fanned stack layout
-            gsap.set(card0, { rotation: 8, xPercent: 38, yPercent: 2, transformOrigin: "bottom left" });
-            gsap.set(card1, { rotation: 0, xPercent: 0, yPercent: 0, zIndex: 10 });
-            gsap.set(card2, { rotation: -8, xPercent: -38, yPercent: 2, transformOrigin: "bottom right" });
+            // Set initial fanned stack layout for 2 cards
+            gsap.set(card0, { rotation: -6, xPercent: 25, yPercent: 2, transformOrigin: "bottom center", zIndex: 5 });
+            gsap.set(card1, { rotation: 6, xPercent: -25, yPercent: 0, transformOrigin: "bottom center", zIndex: 10 });
 
             if (heroText) {
                 gsap.set(heroText, { y: 35, opacity: 0 });
@@ -294,16 +288,16 @@ export default function Products() {
                 scrollTrigger: {
                     trigger: container,
                     start: "top top",
-                    end: "+=150%",
+                    end: "+=100%",
                     pin: true,
                     scrub: 0.8,
                     anticipatePin: 1,
                     refreshPriority: 10,
                     onUpdate: (self) => {
                         const p = self.progress;
-                        // Only enable pointer events in the middle interactive phase
+                        // Only enable pointer events in the interactive phase
                         cards.forEach((card) => {
-                            if (p >= 0.28 && p <= 0.8) {
+                            if (p >= 0.15 && p <= 0.88) {
                                 card.style.pointerEvents = "auto";
                             } else {
                                 card.style.pointerEvents = "none";
@@ -313,7 +307,7 @@ export default function Products() {
                 },
             });
 
-            // 1. Entrance: Cards fan out and straighten up into a neat 3-column row
+            // 1. Entrance: Cards fan out and straighten up side-by-side
             tl.to(
                 card0,
                 {
@@ -326,7 +320,7 @@ export default function Products() {
                 0
             )
                 .to(
-                    card2,
+                    card1,
                     {
                         rotation: 0,
                         xPercent: 0,
@@ -358,8 +352,8 @@ export default function Products() {
             tl.to(
                 card0,
                 {
-                    rotation: 8,
-                    xPercent: 42,
+                    rotation: -6,
+                    xPercent: -30,
                     yPercent: -4,
                     duration: 0.35,
                     ease: "power2.in",
@@ -367,10 +361,10 @@ export default function Products() {
                 ">"
             )
                 .to(
-                    card2,
+                    card1,
                     {
-                        rotation: -8,
-                        xPercent: -40,
+                        rotation: 6,
+                        xPercent: 30,
                         yPercent: -4,
                         duration: 0.35,
                         ease: "power2.in",
@@ -403,7 +397,7 @@ export default function Products() {
     }, []);
 
     // Store render callbacks from each CardCanvas
-    const renderFns = useRef<((() => void) | null)[]>([null, null, null]);
+    const renderFns = useRef<((() => void) | null)[]>([null, null]);
 
     // Hover interaction handlers using simplex dissolve animation
     const handleMouseEnter = (index: number) => {
@@ -436,7 +430,7 @@ export default function Products() {
         <div className="w-full">
             <section
                 ref={containerRef}
-                className="relative w-full min-h-screen overflow-hidden select-none text-neutral-900"
+                className="relative w-full min-h-screen bg-black overflow-hidden select-none text-neutral-900"
                 style={{
                     fontFamily: "'BeausiteClassic-Light', -apple-system, BlinkMacSystemFont, sans-serif",
                 }}
@@ -448,25 +442,26 @@ export default function Products() {
                         ref={heroTextRef}
                         className="w-full text-center mb-3 sm:mb-4 md:mb-16 z-20 will-change-transform shrink-0"
                     >
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.2vw] tracking-tight text-secondary leading-[1.08]">
+                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.2vw] tracking-tight text-white leading-[1.08]">
                             A Taste Above The Rest
                         </h1>
                     </div>
 
-                    {/* The 3 Marketing Cards Row */}
+                    {/* The 2 Marketing Cards Row */}
                     <div
                         ref={cardsWrapperRef}
-                        className="relative z-10 w-full max-w-[1540px] flex items-center justify-center gap-4 sm:gap-6 md:gap-16 mx-auto "
+                        className="relative z-10 w-full max-w-[1240px] flex items-center justify-center gap-6 sm:gap-8 md:gap-24 mx-auto px-4"
                     >
                         {MARKETING_CARDS.map((card, idx) => (
-                            <div
+                            <Link
                                 key={card.id}
+                                href={card.href}
                                 ref={(el) => {
                                     cardRefs.current[idx] = el;
                                 }}
                                 onMouseEnter={() => handleMouseEnter(idx)}
                                 onMouseLeave={() => handleMouseLeave(idx)}
-                                className="marketing-card group relative w-full max-w-[480px] lg:max-w-[500px] h-[68vh] sm:h-[72vh] md:h-[74vh] max-h-[720px] aspect-[3/4.1] cursor-pointer will-change-transform shadow-2xl shrink"
+                                className="marketing-card group relative block w-full max-w-[480px] lg:max-w-[500px] h-[68vh] sm:h-[72vh] md:h-[74vh] max-h-[720px] aspect-[3/4.1] cursor-pointer will-change-transform shadow-2xl shrink no-underline"
                                 style={{
                                     clipPath: "inset(0 round 24px)",
                                 }}
@@ -503,7 +498,7 @@ export default function Products() {
                                         {card.description}
                                     </p>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>

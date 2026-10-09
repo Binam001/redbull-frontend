@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { EVENTS, getEventBySlug, type EventData, type EventStatus } from "@/constants/events";
+import Button from "../shared/Button";
 
 export { EVENTS, getEventBySlug, type EventData, type EventStatus };
 
@@ -86,17 +87,17 @@ export default function EventCard({ event, className = "" }: EventCardProps) {
     return (
         <Link
             href={`/events/${event.slug}`}
-            className={`group bg-white p-6 sm:p-7 md:p-8 border-r border-b border-neutral-700 hover:bg-neutral-50/60 transition-colors flex flex-col justify-between h-full select-none cursor-pointer block rounded-none ${className}`}
+            className={`group bg-white p-6 sm:p-7 md:p-8 rounded-4xl  hover:bg-zinc-100 transition-colors flex flex-col justify-between h-full select-none cursor-pointer block ${className}`}
         >
             <div>
                 {/* Top Row: Pop-up Date & Outlined Capsule Tag */}
                 <div className="flex items-end justify-between gap-3 mb-4 sm:mb-5">
                     {/* Pop-up Date Display */}
                     <div className="flex items-center gap-1.5 select-none leading-none">
-                        <span className="text-3xl sm:text-8xl font-medium text-neutral-900 tracking-tight leading-none">
+                        <span className="text-3xl sm:text-8xl font-medium text-primary tracking-tight leading-none">
                             {dayNumber}
                         </span>
-                        <div className="flex flex-col text-[10px] sm:text-sm font-medium text-neutral-600 leading-[1.05] tracking-tight">
+                        <div className="flex flex-col text-[10px] sm:text-sm font-bold text-neutral-600 leading-[1.05] tracking-tight">
                             {monthParts.map((part, i) => (
                                 <span key={i}>{part}</span>
                             ))}
@@ -113,7 +114,7 @@ export default function EventCard({ event, className = "" }: EventCardProps) {
                 </div>
 
                 {/* Sharp Landscape Image Container */}
-                <div className="relative w-full aspect-16/11 overflow-hidden bg-neutral-100 rounded-none mb-5 sm:mb-6">
+                <div className="relative w-full aspect-16/11 overflow-hidden bg-neutral-100 rounded-2xl mb-5 sm:mb-6">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src={event.image}
@@ -138,11 +139,12 @@ export default function EventCard({ event, className = "" }: EventCardProps) {
             </div>
 
             {/* Read More Underlined Link */}
-            <div className="mt-6 sm:mt-8 pt-2">
+            {/* <div className="mt-6 sm:mt-8 pt-2">
                 <span className="inline-block text-sm font-bold tracking-wider uppercase text-neutral-500 underline underline-offset-4 decoration-neutral-500 group-hover:text-neutral-950 group-hover:decoration-neutral-950 transition-colors">
                     READ MORE
                 </span>
-            </div>
+            </div> */}
+            <Button label="Read More" className="rounded-full mt-4" />
         </Link>
     );
 }

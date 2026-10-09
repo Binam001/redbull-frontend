@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 const CarbonatedDivider = () => {
@@ -23,13 +24,21 @@ const CarbonatedDivider = () => {
 
         <div className="xl:w-1/2 w-full h-[50vh] xl:h-auto min-h-[50vh] xl:min-h-dvh z-0 pointer-events-none flex items-center justify-center">
           <div className="w-full h-full relative flex items-center justify-center">
-            <video
+            {/* <video
               src="/videos/shoes-video-11.mp4"
               autoPlay
               muted
               loop
               playsInline
               className="pointer-events-none object-cover w-full h-full brightness-105"
+            /> */}
+            <Image
+              src="/images/product/carbonated-divider.jpg"
+              alt="Carbonated Divider"
+              fill
+              sizes="(max-width: 1280px) 100vw, 50vw"
+              className="object-cover"
+              priority
             />
           </div>
         </div>

@@ -28,12 +28,12 @@ export default function CarbonatedCta() {
 
             // Initial positions: off-screen left and right with subtle tilt
             gsap.set(leftHand, {
-                xPercent: -105,
+                xPercent: -65,
                 rotate: -6,
                 yPercent: 4,
             });
             gsap.set(rightHand, {
-                xPercent: 105,
+                xPercent: 60,
                 rotate: 6,
                 yPercent: 4,
             });
@@ -127,7 +127,7 @@ export default function CarbonatedCta() {
                             className="absolute inset-0 flex items-center justify-center will-change-transform z-10"
                         >
                             <img
-                                src="/images/home/cta/right-image.png"
+                                src="/images/product/long-right.png"
                                 alt="Right hand holding Red Bull can"
                                 className="w-full h-full object-contain pointer-events-none select-none"
                                 draggable={false}
@@ -140,7 +140,7 @@ export default function CarbonatedCta() {
                             className="absolute inset-0 flex items-center justify-center will-change-transform z-20"
                         >
                             <img
-                                src="/images/home/cta/left-hand.png"
+                                src="/images/product/long-left.png"
                                 alt="Left hand holding Red Bull can"
                                 className="w-full h-full object-contain pointer-events-none select-none"
                                 draggable={false}

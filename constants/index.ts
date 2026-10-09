@@ -4,6 +4,7 @@ export interface NavDropdownItem {
   subtitle?: string;
   badge?: string;
   volume?: string;
+  image?: string;
 }
 
 export interface NavLink {
@@ -26,18 +27,20 @@ export const navLinks: NavLink[] = [
         subtitle: "RED BULL® GOLD",
         volume: "250ml",
         badge: "Classic Gold",
+        image: "/images/home/hero/short-can.jpg",
       },
       {
         name: "Carbonated Blackcurrant Blueberry 330ml",
         href: "/energy-drinks/carbonated-blackcurrant-blueberry-330ml",
-        subtitle: "Red Bull® New-Gen Can",
+        subtitle: "RED BULL® NEW-GEN",
         volume: "330ml",
         badge: "New-Gen Flavor",
+        image: "/images/home/hero/long-can.jpg",
       },
     ],
   },
   { name: "Events", href: "/events" },
-  { name: "About", href: "/about" },
+  { name: "Company", href: "/about" },
   { name: "Contact", href: "/contact" },
 ];
 
