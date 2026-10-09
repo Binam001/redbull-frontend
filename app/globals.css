@@ -101,7 +101,7 @@ textarea:-webkit-autofill:active {
 }
 
 ::selection {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: #cb2026;
   color: #ffffff;
 }
 

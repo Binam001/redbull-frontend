@@ -1,7 +1,40 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import EventCard, { EVENTS } from "./EventCard";
+import Link from "next/link";
+import { EVENTS, type EventData } from "@/constants/events";
+
+function formatEventDate(event: EventData) {
+    const raw = event.date || "";
+    // Match "start – end Month Year" or "start - end Month"
+    const matchRange = raw.match(/(\d{1,2})\s*[-–—]\s*(\d{1,2})\s+([A-Za-z]+)(?:\s*[-–—]\s*([A-Za-z]+))?/);
+    if (matchRange) {
+        const d1 = matchRange[1].padStart(2, "0");
+        const d2 = matchRange[2].padStart(2, "0");
+        const m1 = matchRange[3].slice(0, 3);
+        const m2 = matchRange[4] ? matchRange[4].slice(0, 3) : m1;
+        return {
+            days: `${d1} – ${d2}`,
+            months: m1 === m2 ? `${m1}   ${m1}` : `${m1}   ${m2}`,
+        };
+    }
+
+    // Match single day "day Month Year"
+    const matchSingle = raw.match(/(\d{1,2})\s+([A-Za-z]+)/);
+    if (matchSingle) {
+        const d = matchSingle[1].padStart(2, "0");
+        const m = matchSingle[2].slice(0, 3);
+        return {
+            days: `${d}`,
+            months: m,
+        };
+    }
+
+    return {
+        days: (event.day || "01").padStart(2, "0"),
+        months: (event.month || "Oct").slice(0, 3),
+    };
+}
 
 export default function AllEvents() {
     const [selectedSport, setSelectedSport] = useState<string>("all");
@@ -27,7 +60,7 @@ export default function AllEvents() {
     };
 
     return (
-        <section className="w-full text-neutral-900 font-sans py-14 sm:pb-20 md:pb-24 px-4 sm:px-8 md:px-12 lg:px-20 bg-white">
+        <section className="w-full text-neutral-900 font-sans py-14 sm:pb-20 md:pb-28 px-4 sm:px-8 md:px-12 lg:px-20 bg-white">
             {/* Header: Title on Left, Filter Pills on Right */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10 sm:mb-14">
                 <div>
@@ -48,7 +81,7 @@ export default function AllEvents() {
                                 onClick={() => setSelectedSport(sport)}
                                 className={`px-4 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
                                     isSelected
-                                        ? "bg-black text-white border border-black"
+                                        ? "bg-black text-white border border-black shadow-sm"
                                         : "bg-transparent text-neutral-700 hover:text-black border border-neutral-300 hover:border-neutral-700"
                                 }`}
                             >
@@ -59,18 +92,85 @@ export default function AllEvents() {
                 </div>
             </div>
 
-            {/* Connected Grid Display */}
+            {/* List Display: Date -> Ticket Image -> Title & Description */}
             {filteredEvents.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-neutral-700">
-                    {filteredEvents.map((event) => (
-                        <div key={event.id} className="min-w-0 flex flex-col">
-                            <EventCard event={event} />
-                        </div>
-                    ))}
+                <div className="flex flex-col divide-y divide-neutral-200 border-t border-b border-neutral-200">
+                    {filteredEvents.map((event) => {
+                        const dateInfo = formatEventDate(event);
+
+                        return (
+                            <Link
+                                key={event.id}
+                                href={`/events/${event.slug}`}
+                                className="group flex flex-col md:flex-row md:items-center gap-6 lg:gap-10 py-8 sm:py-10 transition-colors hover:bg-neutral-50/70 px-2 sm:px-6 rounded-2xl select-none"
+                            >
+                                {/* 1. DATE: Large bold numbers with months below */}
+                                <div className="shrink-0 w-28 sm:w-32 lg:w-36 flex flex-col justify-center">
+                                    <span className="text-3xl sm:text-4xl lg:text-[42px] font-black text-neutral-900 tracking-tight font-primary leading-none">
+                                        {dateInfo.days}
+                                    </span>
+                                    <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-neutral-500 mt-2 whitespace-pre">
+                                        {dateInfo.months}
+                                    </span>
+                                </div>
+
+                                {/* 2. IMAGE: Ticket Card with left & right notches */}
+                                <div className="relative w-full sm:w-64 md:w-72 lg:w-80 aspect-16/10 rounded-2xl overflow-hidden bg-neutral-900 shrink-0 shadow-sm border border-neutral-100">
+                                    {/* Left ticket notch */}
+                                    <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white z-20 pointer-events-none" />
+                                    {/* Right ticket notch */}
+                                    <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white z-20 pointer-events-none" />
+
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                        src={event.image}
+                                        alt={event.title}
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                                        onError={(e) => {
+                                            e.currentTarget.src = "/images/marketing-cards/card_1_default.jpg";
+                                        }}
+                                        loading="lazy"
+                                    />
+                                </div>
+
+                                {/* 3. TITLE & DESCRIPTION */}
+                                <div className="flex-1 min-w-0 flex flex-col justify-center">
+                                    {/* Status Badge */}
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-neutral-100 text-neutral-800">
+                                            <span>📢</span>
+                                            <span>Happening now</span>
+                                        </span>
+                                    </div>
+
+                                    {/* Category / Sport */}
+                                    <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-neutral-400 mb-1">
+                                        {event.sport}
+                                    </span>
+
+                                    {/* Title */}
+                                    <h3 className="text-xl sm:text-2xl lg:text-[26px] font-bold text-neutral-900 group-hover:text-primary transition-colors font-primary leading-tight">
+                                        {event.title}
+                                    </h3>
+
+                                    {/* Description */}
+                                    <p className="mt-2 text-sm sm:text-base text-neutral-600 line-clamp-2 leading-relaxed">
+                                        {event.description}
+                                    </p>
+
+                                    {/* Location with Flag */}
+                                    <div className="flex items-center gap-2 mt-3 text-sm font-medium text-neutral-600">
+                                        <span className="text-base">{event.flagEmoji || "📍"}</span>
+                                        <span>{event.fullLocation || event.country || event.location}</span>
+                                    </div>
+                                </div>
+                            </Link>
+                        );
+                    })}
                 </div>
             ) : (
                 /* Empty state when no events match */
-                <div className="text-center py-20 px-4 bg-neutral-50 rounded-none border border-dashed border-neutral-300">
+                <div className="text-center py-20 px-4 bg-neutral-50 rounded-2xl border border-dashed border-neutral-300">
                     <p className="text-lg font-medium text-neutral-700 mb-2">
                         No events found matching your criteria.
                     </p>

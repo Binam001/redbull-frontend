@@ -38,7 +38,7 @@ export default function ParagraphReveal({
     if (words.length === 0) return;
 
     const ctx = gsap.context(() => {
-      gsap.set(words, { opacity: 0.15 });
+      gsap.set(words, { opacity: 0.25 });
 
       gsap.to(words, {
         opacity: 1,
@@ -63,13 +63,16 @@ export default function ParagraphReveal({
     <section className={`relative overflow-hidden ${className}`}>
       <div ref={containerRef} className="relative  mx-auto">
         <p
-          className={`text-center text-xl md:text-2xl lg:text-5xl font-bold leading-snug text-secondary ${textClassName}`}
+          className={`text-center text-xl md:text-2xl lg:text-5xl font-bold leading-snug text-secondary selection:bg-primary selection:text-white ${textClassName}`}
         >
           {typeof children !== "string" && children
             ? children
             : words.length > 0
               ? words.map((w, i) => (
-                <span key={i} className="reveal-word inline-block mr-2">
+                <span
+                  key={i}
+                  className="reveal-word inline-block mr-2 transition-colors duration-200 cursor-pointer hover:text-primary hover:!opacity-100 selection:bg-primary selection:text-white"
+                >
                   {w}
                 </span>
               ))
