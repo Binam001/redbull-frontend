@@ -56,7 +56,7 @@ export default function FeaturedEvents() {
             <header className="w-full mb-8 sm:mb-12 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div>
                     <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
-                        Featured Events
+                        Featured <span className="text-primary">Events</span>
                     </h2>
                 </div>
 
@@ -65,7 +65,7 @@ export default function FeaturedEvents() {
                     <button
                         onClick={scrollPrev}
                         disabled={prevBtnDisabled}
-                        className="w-11 h-11 rounded-full border border-black/10 bg-white flex items-center justify-center text-neutral-800 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 disabled:opacity-30 disabled:hover:bg-white disabled:hover:text-neutral-800 disabled:hover:border-black/10 transition-all duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs"
+                        className="w-11 h-11 rounded-full border border-black/10 bg-zinc-500 flex items-center justify-center text-white hover:bg-neutral-900 hover:text-white hover:border-neutral-900 disabled:opacity-30 disabled:hover:bg-white disabled:hover:text-neutral-800 disabled:hover:border-black/10 transition-all duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs"
                         aria-label="Previous slide"
                     >
                         <svg className="w-5 h-5 -translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -75,7 +75,7 @@ export default function FeaturedEvents() {
                     <button
                         onClick={scrollNext}
                         disabled={nextBtnDisabled}
-                        className="w-11 h-11 rounded-full border border-black/10 bg-white flex items-center justify-center text-neutral-800 hover:bg-neutral-900 hover:text-white hover:border-neutral-900 disabled:opacity-30 disabled:hover:bg-white disabled:hover:text-neutral-800 disabled:hover:border-black/10 transition-all duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs"
+                        className="w-11 h-11 rounded-full border border-black/10 bg-zinc-500 flex items-center justify-center text-white hover:bg-neutral-900 hover:text-white hover:border-neutral-900 disabled:opacity-30 disabled:hover:bg-white disabled:hover:text-neutral-800 disabled:hover:border-black/10 transition-all duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs"
                         aria-label="Next slide"
                     >
                         <svg className="w-5 h-5 translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

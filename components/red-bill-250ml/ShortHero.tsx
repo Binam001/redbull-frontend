@@ -3,7 +3,7 @@ import React from 'react'
 
 const ShortHero = () => {
     return (
-        <div className='relative w-full h-screen bg-black overflow-hidden flex flex-col items-center justify-between'>
+        <section className="relative w-full h-screen min-h-[580px] lg:min-h-0 bg-black overflow-hidden flex flex-col items-center justify-between px-4 sm:px-8 lg:px-[5vw]">
             {/* Red Ambient Spotlight Gradient Glow */}
             <div
                 className="absolute inset-0 pointer-events-none z-0 select-none"
@@ -20,24 +20,28 @@ const ShortHero = () => {
                 }}
             />
 
-            <div className="relative z-10 w-full px-4 pt-28 sm:pt-32 md:pt-55 text-center flex flex-col items-center gap-8 pointer-events-none">
-
-                <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.2vw] uppercase font-primary tracking-tight text-white leading-[0.9]">
+            <div className="relative z-10 w-full lg:max-w-[90vw] mx-auto pt-32 sm:pt-36 md:pt-44 lg:pt-[11vw] xl:pt-[10vw] text-center flex flex-col items-center gap-3 sm:gap-4 md:gap-6 lg:gap-[1.2vw] pointer-events-none">
+                <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.2vw] uppercase font-primary tracking-tight text-white leading-[0.92] lg:leading-[0.9]">
                     YOUR TRUE ENERGY
                 </h1>
-                <p className='text-xs sm:text-sm md:text-xl text-white leading-relaxed font-medium max-w-md'>The authentic formulation that started a global revolution.</p>
-
+                <p className="text-xs sm:text-sm md:text-base lg:text-[1.1vw] xl:text-[1vw] text-white/90 leading-relaxed font-medium max-w-sm sm:max-w-md lg:max-w-[34vw]">
+                    The authentic formulation that started a global revolution.
+                </p>
             </div>
-            <Image
-                src="/images/product/short-can-hero.png"
-                alt='Red Bull Gold 250ml short can'
-                width={1300}
-                height={1000}
-                priority
-                className='absolute -bottom-40 left-1/2 -translate-x-1/2 pointer-events-none select-none z-10'
-            />
-        </div>
-    )
-}
 
-export default ShortHero
+            <div className="absolute -bottom-14 sm:-bottom-20 md:-bottom-28 lg:-bottom-[7vw] xl:-bottom-[8vw] left-1/2 -translate-x-1/2 pointer-events-none select-none z-10 w-[115vw] sm:w-[90vw] md:w-[75vw] lg:w-[62vw] xl:w-[55vw] max-w-none flex justify-center">
+                <Image
+                    src="/images/product/short-can-hero.png"
+                    alt="Red Bull Gold 250ml short can"
+                    width={1300}
+                    height={1000}
+                    priority
+                    sizes="(max-width: 640px) 115vw, (max-width: 768px) 90vw, (max-width: 1024px) 75vw, 60vw"
+                    className="w-full h-auto object-contain pointer-events-none select-none"
+                />
+            </div>
+        </section>
+    );
+};
+
+export default ShortHero;

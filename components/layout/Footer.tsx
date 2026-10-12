@@ -6,11 +6,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
 import Link from "next/link";
-import { Icon } from "@iconify/react";
 import { SparklesCore } from "../shared/Sparkles";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { navLinks, contactLinks } from "@/constants";
 
 // Register plugins safely in the browser context
 if (typeof window !== "undefined") {
@@ -24,8 +22,9 @@ const FooterContent = () => {
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLHeadingElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const gradientRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const [isReady, setIsReady] = useState(false);
 
   const imagesRef = useRef<HTMLImageElement[]>([]);
@@ -114,38 +113,18 @@ const FooterContent = () => {
         0,
       );
 
-      // Initial states set via GSAP to prevent inline style parsing conflicts
-      if (textRef.current) {
-        gsap.set(textRef.current, { x: "-70vw", opacity: 0 });
-      }
+      // Initial states set via GSAP
       if (gradientRef.current) {
         gsap.set(gradientRef.current, { y: "100%", opacity: 0 });
       }
-
-      // Text travels from left with scroll and centers as video completes (slowed down and smoothed)
-      if (textRef.current) {
-        tl.to(
-          textRef.current,
-          {
-            x: "0vw",
-            ease: "power1.inOut",
-            duration: 1.6,
-          },
-          0.4,
-        );
-
-        tl.to(
-          textRef.current,
-          {
-            opacity: 1,
-            ease: "power1.out",
-            duration: 0.6,
-          },
-          0.4,
-        );
+      if (overlayRef.current) {
+        gsap.set(overlayRef.current, { opacity: 0 });
+      }
+      if (contentRef.current) {
+        gsap.set(contentRef.current, { opacity: 0, y: 20 });
       }
 
-      // Black overlay rises up from bottom as text enters, covering lower half fully in black with top gradient
+      // Curved red gradient glow rises up
       if (gradientRef.current) {
         tl.to(
           gradientRef.current,
@@ -153,9 +132,46 @@ const FooterContent = () => {
             y: "0%",
             opacity: 1,
             ease: "power1.out",
-            duration: 1.6,
+            duration: 1.5,
           },
-          0.4,
+          0.3,
+        );
+      }
+
+      // Overlay smoothly dims during scrub, and transitions to FULLY BLACK at the end
+      if (overlayRef.current) {
+        tl.to(
+          overlayRef.current,
+          {
+            opacity: 0.45,
+            ease: "power1.out",
+            duration: 0.8,
+          },
+          0.3,
+        );
+
+        tl.to(
+          overlayRef.current,
+          {
+            opacity: 1,
+            ease: "power2.inOut",
+            duration: 0.9,
+          },
+          1.1,
+        );
+      }
+
+      // Content (links, logo, gives you wings, copyright) smoothly fades in when gradient & overlay are fully done
+      if (contentRef.current) {
+        tl.to(
+          contentRef.current,
+          {
+            opacity: 1,
+            y: 0,
+            ease: "power2.out",
+            duration: 0.6,
+          },
+          1.4,
         );
       }
 
@@ -175,176 +191,233 @@ const FooterContent = () => {
         ref={containerRef}
         className="relative w-full h-dvh overflow-hidden select-none"
       >
-        <div className="absolute inset-0 bg-linear-to-b from-white via-transparent to-transparent z-20" />
+        <div className="absolute inset-0 bg-linear-to-b from-white via-transparent to-transparent z-[12] pointer-events-none" />
         <div className="relative w-full h-dvh flex items-center justify-center overflow-hidden">
           <canvas
             ref={canvasRef}
             className="relative w-full h-full object-cover object-top z-10"
           />
 
-          {/* Smooth black overlay gradient transitioning smoothly from black to transparent */}
+          {/* Cinematic black overlay that smoothly transitions to fully black when reaching the end */}
           <div
-            ref={gradientRef}
-            className="absolute inset-x-0 bottom-0 h-[80%] pointer-events-none z-20 will-change-transform"
-            style={{
-              background:
-                "linear-gradient(to top, #000000 0%, #000000 30%, rgba(0, 0, 0, 0.96) 38%, rgba(0, 0, 0, 0.88) 46%, rgba(0, 0, 0, 0.74) 55%, rgba(0, 0, 0, 0.55) 65%, rgba(0, 0, 0, 0.35) 75%, rgba(0, 0, 0, 0.18) 84%, rgba(0, 0, 0, 0.06) 92%, rgba(0, 0, 0, 0) 100%)",
-            }}
+            ref={overlayRef}
+            className="absolute inset-0 bg-black pointer-events-none z-[15] will-change-[opacity]"
           />
 
-          {/* Animated Slogan on Scroll */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-25 px-6 pb-24 sm:pb-32 md:pb-36 overflow-hidden">
-            <h2
-              ref={textRef}
-              className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-wider sm:tracking-tighter text-white text-center will-change-transform select-none max-w-5xl leading-[1.05]"
-            >
-              GIVES YOU WiiiNGS
-            </h2>
+          {/* Seamless Curved Primary #cb2026 Gradient Glow perfectly blending into the pitch-black overlay */}
+          <div
+            ref={gradientRef}
+            className="absolute inset-x-0 bottom-0 h-[72vh] pointer-events-none z-20 will-change-transform overflow-visible"
+            style={{
+              maskImage: "linear-gradient(to top, black 0%, black 58%, transparent 98%)",
+              WebkitMaskImage: "linear-gradient(to top, black 0%, black 58%, transparent 98%)",
+            }}
+          >
+            {/* Layer 1: Ambient Atmospheric Glow - vast, velvety diffusion seamlessly fading into black */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse 95% 85% at 50% 100%, rgba(203, 32, 38, 0.45) 0%, rgba(203, 32, 38, 0.3) 28%, rgba(170, 18, 24, 0.15) 52%, rgba(120, 8, 12, 0.05) 74%, rgba(50, 2, 4, 0.01) 88%, transparent 100%)",
+                filter: "blur(60px)",
+              }}
+            />
+
+            {/* Layer 2: Primary Curved Dome - defined half-circle arch rising behind the logo with exponential falloff */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse 72% 70% at 50% 100%, rgba(255, 45, 55, 0.95) 0%, rgba(203, 32, 38, 0.88) 22%, rgba(203, 32, 38, 0.6) 42%, rgba(180, 16, 22, 0.3) 62%, rgba(140, 10, 15, 0.1) 78%, rgba(60, 3, 6, 0.015) 90%, transparent 100%)",
+                filter: "blur(40px)",
+              }}
+            />
+
+            {/* Layer 3: Hot Saturated Core Highlight - vibrant energetic bloom directly behind logo & slogan */}
+            <div
+              className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[85vw] max-w-5xl h-[60%] pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse 65% 80% at 50% 100%, rgba(255, 60, 70, 0.98) 0%, rgba(225, 28, 35, 0.82) 28%, rgba(203, 32, 38, 0.42) 58%, rgba(150, 12, 16, 0.1) 82%, transparent 100%)",
+                filter: "blur(45px)",
+              }}
+            />
           </div>
 
-          {/* Bottom Footer Overlay UI */}
-          <div className="absolute bottom-0 left-0 w-full z-30 pointer-events-auto bg-linear-to-t from-[#060b0e]/95 via-[#060b0e]/85 to-transparent pt-12 pb-5 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 text-white font-sans">
-            {/* Upper Links & Info Section (3 Columns) */}
-            <div className="flex flex-col md:flex-row items-start justify-between gap-6 md:gap-4 w-full">
-              {/* Col 1 (Left): Links on a row */}
-              <div className="space-y-2">
-                <div className="border-b border-white/60 pb-1 mb-2.5 w-14">
-                  <h4 className="text-sm font-bold text-white tracking-wide">
+          {/* Complete Footer Content: Revealed smoothly when gradient and overlay are done */}
+          <div
+            ref={contentRef}
+            className="absolute inset-0 z-30 flex flex-col justify-between pt-8 sm:pt-10 md:pt-12 pb-5 px-6 sm:px-10 md:px-14 lg:px-20 text-white font-sans pointer-events-auto will-change-[opacity,transform] overflow-y-auto"
+          >
+            {/* Top Section: Links (Navigation & Company), Location & Socials matching the reference layout */}
+            <div className="w-full max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-y-8 gap-x-6 sm:gap-x-10 lg:gap-16 pt-2 sm:pt-4">
+              {/* Column 1: Navigation */}
+              <div>
+                <ul className="space-y-3.5 text-sm sm:text-[15px] font-medium text-white/80 text-center">
+                  <h4 className="text-sm sm:text-xl font-bold text-white tracking-tight mb-3.5">
                     Links
                   </h4>
-                </div>
-                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs sm:text-[13px] text-white/80 font-medium">
-                  {navLinks.map((link) => (
+                  <li>
                     <Link
-                      key={link.name}
-                      href={
-                        link.href === "#"
-                          ? link.dropdownItems?.[0]?.href || "#"
-                          : link.href
-                      }
+                      href="/about"
                       className="hover:text-white transition-colors duration-200"
                     >
-                      {link.name}
+
                     </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Col 2 (Center): Round Social Buttons */}
-              <div className="flex items-center justify-start md:justify-center gap-3 pt-2 md:pt-4 self-start md:self-center">
-                <div
-                  // href="mailto:contact@redbull.com"
-                  aria-label="Email"
-                  className="size-9 sm:size-10 rounded-full border border-white/70 flex items-center justify-center text-white hover:bg-white/15 hover:border-white transition-all duration-200 backdrop-blur-xs"
-                >
-                  <Icon icon="mdi:email" className="size-4.5" />
-                </div>
-                <div
-                  // href="https://facebook.com"
-                  // target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Facebook"
-                  className="size-9 sm:size-10 rounded-full border border-white/70 flex items-center justify-center text-white hover:bg-white/15 hover:border-white transition-all duration-200 backdrop-blur-xs"
-                >
-                  <Icon icon="mdi:facebook" className="size-5" />
-                </div>
-                <div
-                  // href="https://instagram.com"
-                  // target="_blank"
-                  // rel="noopener noreferrer"
-                  aria-label="Instagram"
-                  className="size-9 sm:size-10 rounded-full border border-white/70 flex items-center justify-center text-white hover:bg-white/15 hover:border-white transition-all duration-200 backdrop-blur-xs"
-                >
-                  <Icon icon="mdi:instagram" className="size-4.5" />
-                </div>
-              </div>
-
-              {/* Col 3 (Right): Contact Info on a single row */}
-              <div className="text-left md:text-right space-y-2 flex flex-col md:items-end">
-                <div className="border-b border-white/60 pb-1 mb-2.5 w-16 md:self-end">
-                  <h4 className="text-sm font-bold text-white tracking-wide">
-                    Contact
-                  </h4>
-                </div>
-                <div className="flex flex-wrap md:flex-nowrap items-center md:justify-end gap-x-4 sm:gap-x-6 gap-y-1 text-xs sm:text-[13px] text-white/85 font-medium whitespace-nowrap">
-                  {contactLinks.map((contact) => (
-                    <div
-                      key={contact.title}
-                      // href={contact.href}
-                      // target={contact.title === "Address" ? "_blank" : undefined}
-                      // rel={
-                      //   contact.title === "Address"
-                      //     ? "noopener noreferrer"
-                      //     : undefined
-                      // }
-                      className="flex items-center gap-1 hover:text-white transition-colors duration-200"
+                  </li>
+                  <li>
+                    <Link
+                      href="/"
+                      className="hover:text-white transition-colors duration-200"
                     >
-                      <span>{contact.detail}</span>
-                      <Icon icon={contact.icon} className="size-3.5 opacity-75" />
-                    </div>
-                  ))}
+                      Home
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/energy-drinks/red-bull-250ml"
+                      className="hover:text-white transition-colors duration-200"
+                    >
+                      Energy Drinks
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/events"
+                      className="hover:text-white transition-colors duration-200"
+                    >
+                      Events
+                    </Link>
+                  </li>
+
+                </ul>
+              </div>
+
+              {/* Column 2: Company */}
+              <div>
+                <ul className="space-y-3.5 text-sm sm:text-[15px] font-medium text-white/80 text-center">
+                  <h4 className="text-sm sm:text-xl font-bold text-white tracking-tight mb-3.5">
+                    Links
+                  </h4>
+                  <li>
+                    <Link
+                      href="/about"
+                      className="hover:text-white transition-colors duration-200"
+                    >
+
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/career"
+                      className="hover:text-white transition-colors duration-200"
+                    >
+                      Careers
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/about"
+                      className="hover:text-white transition-colors duration-200"
+                    >
+                      Company
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      href="/contact"
+                      className="hover:text-white transition-colors duration-200"
+                    >
+                      Contact
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Column 3: Location */}
+              <div className="text-center">
+                <h4 className="text-sm sm:text-xl font-bold text-white tracking-tight mb-3.5">
+                  Location
+                </h4>
+                <div className="space-y-1.5 text-sm sm:text-[15px] text-white/70">
+                  <p>Uttardhoka, Lazimpat,</p>
+                  <p>Kathmandu, Nepal</p>
+                  <p className="pt-2">
+                    <a
+                      href="tel:+9779703464314"
+                      className="hover:text-white transition-colors duration-200"
+                    >
+                      +977 970 3464314
+                    </a>
+                  </p>
                 </div>
+              </div>
+
+              {/* Column 4: Socials */}
+              <div className="text-center">
+                <h4 className="text-sm sm:text-xl font-bold text-white tracking-tight mb-3.5">
+                  Socials
+                </h4>
+                <ul className="space-y-3.5 text-sm sm:text-[15px] text-white/70">
+                  <li>
+                    <a
+                      href="https://facebook.com/redbull"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-white transition-colors duration-200"
+                    >
+                      Facebook
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://linkedin.com/company/red-bull"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-white transition-colors duration-200"
+                    >
+                      LinkedIn
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://instagram.com/redbull"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-white transition-colors duration-200"
+                    >
+                      Instagram
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
 
-            {/* Thin Divider Line */}
-            {/* <div className="w-full h-px bg-white/20 my-4 sm:my-5" /> */}
-
-            {/* Bottom Bar Section */}
-            {/* <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-4 text-xs text-white/75">
-          
-            <div className="flex items-center gap-1.5 shrink-0">
-              <span className="text-base sm:text-lg font-black tracking-tight text-white">
-                Traffic<span className="text-[#CB2026]">Bot</span>
-              </span>
-              <span className="text-[10px] font-bold text-white/60">®</span>
+            {/* Bottom / Dome Section: Red Bull Logo on bottom and below it GIVES YOU WiiiNGS */}
+            <div className="w-full flex flex-col items-center justify-center text-center my-auto py-2 sm:py-3 select-none">
+              <div className="relative w-24 sm:w-32 md:w-40 lg:w-120 aspect-4/2 drop-shadow-[0_0_35px_rgba(203,32,38,0.9)]">
+                <Image
+                  src="/logo.svg"
+                  alt="Red Bull Logo"
+                  fill
+                  priority
+                  className="object-contain"
+                />
+              </div>
+              <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-8xl font-black text-white tracking-tight sm:tracking-tighter uppercase drop-shadow-[0_0_35px_rgba(203,32,38,0.85)] mt-1 sm:mt-2 leading-none">
+                Unleash Your BABAAL <br /> Energy!!
+              </h2>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-[11px] sm:text-xs text-white/70">
-              <Link
-                href="#"
-                className="hover:text-white transition-colors duration-200"
-              >
-                End User License Agreement
-              </Link>
-              <Link
-                href="#"
-                className="hover:text-white transition-colors duration-200"
-              >
-                Privacy Policy
-              </Link>
-              <Link
-                href="#"
-                className="hover:text-white transition-colors duration-200"
-              >
-                Terms & Conditions
-              </Link>
-            </div>
-
-            <div className="flex items-center gap-3 shrink-0">
-              <Icon icon="logos:mastercard" className="h-3.5 w-auto" />
-              <Icon icon="logos:visa" className="h-2.5 w-auto" />
-              <Icon icon="logos:paypal" className="h-3.5 w-auto" />
-              <Icon icon="fontisto:american-express" className="h-3.5 w-auto text-[#007AC1]" />
-            </div>
-
-            <div className="text-[11px] sm:text-xs text-white/60 text-center lg:text-right shrink-0">
-              <span>
-                Coded and designed by myrusdesign. All rights reserved to
-                TrafficBot.uk
-              </span>
-            </div>
-          </div> */}
-            {/* Bottom Bar Section */}
-            <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t border-white/20 pt-6 mt-6">
+            {/* Bottom Bar Section: Copyright on left, WebX on right */}
+            <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t border-white/20 pt-4 sm:pt-5 mx-auto">
               {/* Copyright */}
-              <span className="text-xs xl:text-[0.9vw] font-medium tracking-wide text-center sm:text-left select-none">
-                Copyright © {new Date().getFullYear()} Red Bull. All Rights
-                Reserved.
+              <span className="text-xs xl:text-[0.9vw] font-medium tracking-wide text-center sm:text-left select-none text-white/80">
+                Copyright © {new Date().getFullYear()} Red Bull. All Rights Reserved.
               </span>
 
               <div className="flex flex-col md:flex-row items-center gap-2">
-                <p className="text-xs xl:text-[0.9vw]">Designed & Developed by</p>
+                <p className="text-xs xl:text-[0.9vw] text-white/80">Designed & Developed by</p>
                 <Link
                   target="_blank"
                   rel="noopener noreferrer"
@@ -376,7 +449,6 @@ const FooterContent = () => {
                         particleDensity={1200}
                         className="w-full h-full"
                         particleColor={"#e4e3e2"}
-                      // particleColor={isDarkTheme ? "#e4e3e2" : "#000000"}
                       />
                     </div>
                   </div>

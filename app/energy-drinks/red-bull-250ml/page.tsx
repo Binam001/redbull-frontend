@@ -1,9 +1,8 @@
-import AspireHero from "@/components/red-bill-250ml/ProductsHero";
 import ProductCta from "@/components/red-bill-250ml/ProductCta";
 import ProductDivider from "@/components/red-bill-250ml/ProductDivider";
-import { Metadata } from "next";
 import ProductsHero from "@/components/red-bill-250ml/ProductsHero";
 import ShortHero from "@/components/red-bill-250ml/ShortHero";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Red Bull® 250ml | RED BULL® GOLD - Energy Drinks Nepal",

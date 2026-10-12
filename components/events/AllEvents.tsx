@@ -79,11 +79,10 @@ export default function AllEvents() {
                             <button
                                 key={sport}
                                 onClick={() => setSelectedSport(sport)}
-                                className={`px-4 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase transition-all duration-200 cursor-pointer ${
-                                    isSelected
-                                        ? "bg-black text-white border border-black shadow-sm"
-                                        : "bg-transparent text-neutral-700 hover:text-black border border-neutral-300 hover:border-neutral-700"
-                                }`}
+                                className={`px-4 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase transition-all duration-200 cursor-pointer ${isSelected
+                                    ? "bg-primary text-white border border-secondary/50"
+                                    : "bg-transparent text-neutral-700 hover:text-black border border-neutral-300 hover:border-neutral-700"
+                                    }`}
                             >
                                 {label}
                             </button>
@@ -105,21 +104,19 @@ export default function AllEvents() {
                                 className="group flex flex-col md:flex-row md:items-center gap-6 lg:gap-10 py-8 sm:py-10 transition-colors hover:bg-neutral-50/70 px-2 sm:px-6 rounded-2xl select-none"
                             >
                                 {/* 1. DATE: Large bold numbers with months below */}
-                                <div className="shrink-0 w-28 sm:w-32 lg:w-36 flex flex-col justify-center">
-                                    <span className="text-3xl sm:text-4xl lg:text-[42px] font-black text-neutral-900 tracking-tight font-primary leading-none">
+                                <div className="shrink-0 w-28 sm:w-32 lg:w-66 flex flex-col justify-center">
+                                    <span className="text-3xl sm:text-6xl font-normal text-primary tracking-tight leading-none">
                                         {dateInfo.days}
                                     </span>
-                                    <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-neutral-500 mt-2 whitespace-pre">
+                                    <span className="text-xs sm:text-xl font-semibold uppercase tracking-wider text-neutral-500 mt-2 whitespace-pre">
                                         {dateInfo.months}
                                     </span>
                                 </div>
 
                                 {/* 2. IMAGE: Ticket Card with left & right notches */}
-                                <div className="relative w-full sm:w-64 md:w-72 lg:w-80 aspect-16/10 rounded-2xl overflow-hidden bg-neutral-900 shrink-0 shadow-sm border border-neutral-100">
-                                    {/* Left ticket notch */}
-                                    <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white z-20 pointer-events-none" />
-                                    {/* Right ticket notch */}
-                                    <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white z-20 pointer-events-none" />
+                                <div className="relative w-full sm:w-64 md:w-72 lg:w-96 aspect-16/10 rounded-2xl overflow-hidden bg-neutral-900 shrink-0 shadow-sm border border-neutral-100">
+                                    {/* <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white z-20 pointer-events-none" />
+                                    <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white z-20 pointer-events-none" /> */}
 
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
                                     <img
@@ -136,31 +133,37 @@ export default function AllEvents() {
                                 {/* 3. TITLE & DESCRIPTION */}
                                 <div className="flex-1 min-w-0 flex flex-col justify-center">
                                     {/* Status Badge */}
-                                    <div className="flex items-center gap-2 mb-2">
+                                    {/* <div className="flex items-center gap-2 mb-2">
                                         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-neutral-100 text-neutral-800">
                                             <span>📢</span>
                                             <span>Happening now</span>
                                         </span>
-                                    </div>
+                                    </div> */}
 
                                     {/* Category / Sport */}
-                                    <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-neutral-400 mb-1">
+                                    {/* <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-neutral-400 mb-1">
                                         {event.sport}
+                                    </span> */}
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 mb-2 rounded-full border border-neutral-700 text-[10px] sm:text-xs font-semibold text-neutral-800 tracking-wider uppercase shrink-0 transition-colors group-hover:border-black w-fit">
+                                        {event.status === "live" && (
+                                            <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse" />
+                                        )}
+                                        <span>{event.sport}</span>
                                     </span>
 
                                     {/* Title */}
-                                    <h3 className="text-xl sm:text-2xl lg:text-[26px] font-bold text-neutral-900 group-hover:text-primary transition-colors font-primary leading-tight">
+                                    <h3 className="text-xl sm:text-2xl lg:text-4xl font-bold text-neutral-900 group-hover:text-secondary transition-colors font-primary leading-tight">
                                         {event.title}
                                     </h3>
 
                                     {/* Description */}
-                                    <p className="mt-2 text-sm sm:text-base text-neutral-600 line-clamp-2 leading-relaxed">
+                                    <p className="mt-2 text-sm sm:text-lg text-neutral-600 line-clamp-2 leading-relaxed">
                                         {event.description}
                                     </p>
 
                                     {/* Location with Flag */}
-                                    <div className="flex items-center gap-2 mt-3 text-sm font-medium text-neutral-600">
-                                        <span className="text-base">{event.flagEmoji || "📍"}</span>
+                                    <div className="flex items-center gap-2 mt-3 text-lg font-bold text-neutral-600">
+                                        {/* <span className="text-base">{event.flagEmoji || "📍"}</span> */}
                                         <span>{event.fullLocation || event.country || event.location}</span>
                                     </div>
                                 </div>

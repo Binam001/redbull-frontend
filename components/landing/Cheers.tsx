@@ -66,6 +66,7 @@ export default function Cheers() {
                     scrub: 1,
                     anticipatePin: 1,
                     refreshPriority: 8,
+                    invalidateOnRefresh: true,
                 },
             });
 
@@ -148,12 +149,12 @@ export default function Cheers() {
                 className="relative w-full h-screen overflow-hidden font-sans select-none bg-black"
             >
                 {/* Product Descriptions Layer (Left Can info on right of left can, Right Can info on left of right can) */}
-                <div className="absolute inset-0 flex items-center justify-center z-10 px-4 sm:px-8 md:px-12 lg:px-20 pointer-events-auto">
-                    <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-28 items-center">
+                <div className="absolute inset-0 flex items-center justify-center z-10 px-4 sm:px-8 lg:px-[5vw] pointer-events-auto">
+                    <div className="w-full lg:max-w-[45vw] grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 lg:gap-[8vw] items-center">
                         {/* ================= LEFT CAN DESCRIPTION ================= */}
                         <div
                             ref={leftTextRef}
-                            className="flex flex-col items-start text-left space-y-3 sm:space-y-4 max-w-sm sm:max-w-md lg:max-w-lg z-10 will-change-transform"
+                            className="flex flex-col items-start text-left space-y-3 sm:space-y-4 lg:space-y-[1.2vw] max-w-sm sm:max-w-md lg:max-w-[32vw] z-10 will-change-transform"
                         >
                             {/* <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/15 border border-primary/30 text-primary text-[10px] sm:text-xs font-semibold tracking-wider uppercase">
                                 <span>New-Gen Can · 330ml</span>
@@ -168,11 +169,11 @@ export default function Cheers() {
                                 Red Bull Carbonated Blackcurrant Blueberry 330ml pairs lively carbonation with the rich, fruity taste of blackcurrant and blueberry. Smooth, refreshing, and ready to enjoy, it’s a flavorful choice for work, study, gaming, or time on the move—whenever you want a refreshing drink with an energizing boost.
                             </p> */}
 
-                            <div className="pt-1 sm:pt-2">
+                            <div className="pt-1 sm:pt-2 lg:pt-[0.6vw]">
                                 <Button
                                     label="Explore Blackcurrant"
                                     href="/energy-drinks/carbonated-blackcurrant-blueberry-330ml"
-                                    className="rounded-full"
+                                    className="rounded-full lg:px-[1.6vw] lg:py-[0.6vw] lg:text-[0.85vw]"
                                 />
                             </div>
                         </div>
@@ -180,7 +181,7 @@ export default function Cheers() {
                         {/* ================= RIGHT CAN DESCRIPTION ================= */}
                         <div
                             ref={rightTextRef}
-                            className="flex flex-col items-end text-right space-y-3 sm:space-y-4 max-w-sm sm:max-w-md lg:max-w-lg ml-auto z-10 will-change-transform"
+                            className="flex flex-col items-end text-right space-y-3 sm:space-y-4 lg:space-y-[1.2vw] max-w-sm sm:max-w-md lg:max-w-[32vw] ml-auto z-10 will-change-transform"
                         >
                             {/* <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-400 text-[10px] sm:text-xs font-semibold tracking-wider uppercase">
                                 <span>Classic Gold · 250ml</span>
@@ -195,11 +196,11 @@ export default function Cheers() {
                                 Meet Red Bull Gold 250ml—a convenient companion for busy days and active routines. Made with high-quality ingredients, including taurine and B-group vitamins, it brings together amino acids and carbohydrates in a crisp, refreshing drink. Keep a can close for the moments that call for focus, movement, and a little extra energy.
                             </p> */}
 
-                            <div className="pt-1 sm:pt-2">
+                            <div className="pt-1 sm:pt-2 lg:pt-[0.6vw]">
                                 <Button
                                     label="Explore Red Bull Gold"
                                     href="/energy-drinks/red-bull-250ml"
-                                    className="rounded-full"
+                                    className="rounded-full lg:px-[1.6vw] lg:py-[0.6vw] lg:text-[0.85vw]"
                                 />
                             </div>
                         </div>
@@ -208,7 +209,7 @@ export default function Cheers() {
 
                 {/* Front / Foreground Hands CTA Layer (meets in middle on scroll) */}
                 <div className="hands-foreground-layer absolute inset-0 pointer-events-none select-none overflow-hidden z-20 flex items-center justify-center">
-                    <div className="relative w-[150vw] sm:w-[125vw] md:w-full max-w-[1920px] aspect-[1678/937] flex items-center justify-center">
+                    <div className="relative w-[150vw] sm:w-[125vw] md:w-full lg:w-[100vw] lg:max-w-none aspect-[1678/937] flex items-center justify-center">
                         {/* Right Hand (holding gold can) */}
                         <div
                             ref={rightHandRef}
@@ -240,10 +241,10 @@ export default function Cheers() {
                 {/* "Cheers to new energy" Reveal Line (right below the cans after clink) */}
                 <div
                     ref={cheersLineRef}
-                    className="absolute bottom-6 sm:bottom-8 md:bottom-12 lg:bottom-14 left-1/2 -translate-x-1/2 z-30 pointer-events-none text-center px-4 will-change-transform will-change-opacity"
+                    className="absolute bottom-6 sm:bottom-8 md:bottom-12 lg:bottom-[3.5vw] left-1/2 -translate-x-1/2 z-30 pointer-events-none text-center px-4 sm:px-8 lg:px-[5vw] will-change-transform will-change-opacity"
                 >
-                    <div className="overflow-hidden py-1">
-                        <h3 className="font-primary text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight uppercase text-white drop-shadow-[0_4px_24px_rgba(203,32,38,0.35)]">
+                    <div className="overflow-hidden py-1 lg:py-[0.3vw]">
+                        <h3 className="font-primary text-xl sm:text-2xl md:text-3xl lg:text-[2.4vw] font-bold tracking-tight uppercase text-white drop-shadow-[0_4px_24px_rgba(203,32,38,0.35)] lg:drop-shadow-[0_0.3vw_1.5vw_rgba(203,32,38,0.35)]">
                             Cheers to <span className="text-primary">new energy</span>
                         </h3>
                     </div>

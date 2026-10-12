@@ -50,6 +50,7 @@ export default function ParagraphReveal({
           start,
           end,
           scrub,
+          invalidateOnRefresh: true,
         },
       });
     }, containerRef);
@@ -60,10 +61,10 @@ export default function ParagraphReveal({
   const words = resolvedText.trim() ? resolvedText.split(/\s+/) : [];
 
   return (
-    <section className={`relative overflow-hidden ${className}`}>
-      <div ref={containerRef} className="relative  mx-auto">
+    <section className={`relative w-full overflow-hidden px-4 sm:px-8 lg:px-[5vw] ${className}`}>
+      <div ref={containerRef} className="relative w-full lg:max-w-[90vw] mx-auto">
         <p
-          className={`text-center text-xl md:text-2xl lg:text-5xl font-bold leading-snug text-secondary selection:bg-primary selection:text-white ${textClassName}`}
+          className={`text-center text-xl sm:text-2xl md:text-3xl lg:text-[2.6vw] xl:text-[2.4vw] font-bold leading-snug lg:leading-[1.28] text-secondary selection:bg-primary selection:text-white ${textClassName}`}
         >
           {typeof children !== "string" && children
             ? children
@@ -71,7 +72,7 @@ export default function ParagraphReveal({
               ? words.map((w, i) => (
                 <span
                   key={i}
-                  className="reveal-word inline-block mr-2 transition-colors duration-200 cursor-pointer hover:text-primary hover:!opacity-100 selection:bg-primary selection:text-white"
+                  className="reveal-word inline-block mr-1.5 sm:mr-2 lg:mr-[0.55vw] transition-colors duration-200 cursor-pointer hover:text-primary hover:!opacity-100 selection:bg-primary selection:text-white"
                 >
                   {w}
                 </span>
