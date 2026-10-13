@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`h-full antialiased overflow-x-hidden`}>
       <body className="min-h-dvh flex flex-col">
-        {/* <Preloader /> */}
+        <Preloader />
         <LenisProvider>
           <Navbar />
           {children}

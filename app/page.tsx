@@ -13,7 +13,7 @@ const page = () => {
       {/* <HeroSection /> */}
       <HeroCarousel />
       <ParagraphReveal
-        text="Red Bull is made for the moments when you’re ready to do more—when an early start, a demanding day, or one more attempt calls for renewed focus and drive. Its distinctive blend of ingredients helps you feel energized and alert, so you can keep moving through the work, training, and pursuits that matter to you."
+        text="Red Bull is made for the moments when you’re ready to do more when an early start, a demanding day, or one more attempt calls for renewed focus and drive. Its distinctive blend of ingredients helps you feel energized and alert, so you can keep moving through the work, training, and pursuits that matter to you."
         className="my-12 sm:my-16 lg:my-[5vw]"
       />
       <HeroTry />

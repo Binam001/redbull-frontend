@@ -8,22 +8,32 @@ import NextImage from "next/image";
 import { FloatingText } from "@/components/shared/FloatingText";
 
 const taglines = [
-  "For the one who believes",
+  // "For the one who believes",
   "For the one who dares to fly",
-  "For the one who refuses to give up",
+  // "For the one who refuses to give up",
   "For the one champion",
 ];
 
 const STATIC_IMAGES = [
-  "/images/home/bg-1.webp",
-  "/images/home/paras-khadka-4.webp",
-  "/images/home/rabindra-dhaat-1.webp",
-  "/images/home/ad-1.webp",
-  "/images/home/kavita-nepali-1.webp",
-  "/images/home/sky-diver-2.webp",
+  // "/images/home/bg-1.webp",
+  // "/images/home/paras-khadka-4.webp",
+  // "/images/home/rabindra-dhaat-1.webp",
+  // "/images/home/ad-1.webp",
+  // "/images/home/kavita-nepali-1.webp",
+  // "/images/home/sky-diver-2.webp",
+  // Hero Carousel Images
+  "/images/home/hero/adventure-5.jpg",
+  "/images/home/hero/npl-2.jpeg",
+  "/images/home/hero/adventure-6.jpg",
+  "/images/home/hero/adventure-4.jpg",
+  "/images/home/hero/adventure-2.jpg",
+  "/images/home/hero/adventure-1.jpg",
 ];
 
-const GLTF_MODELS = ["/models/red-bull-3-transformed.glb"];
+const GLTF_MODELS = [
+  // "/models/red-bull-3-transformed.glb",
+  "/models/redbull.glb",
+];
 
 const AUDIO_ASSETS = ["/audios/bgm.mp3", "/audios/can-popup-1.mpeg"];
 
@@ -43,7 +53,9 @@ const Preloader = () => {
   useEffect(() => {
     // 1. Preload 3D Models in Three.js cache
     try {
-      useGLTF.preload("/models/red-bull-3-transformed.glb");
+      GLTF_MODELS.forEach((src) => {
+        useGLTF.preload(src);
+      });
     } catch {
       // Ignore in non-WebGL environments
     }
