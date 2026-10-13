@@ -87,17 +87,17 @@ export default function EventCard({ event, className = "" }: EventCardProps) {
     return (
         <Link
             href={`/events/${event.slug}`}
-            className={`group bg-white p-6 sm:p-7 md:p-8 rounded-4xl  hover:bg-zinc-100 transition-colors flex flex-col justify-between h-full select-none cursor-pointer block ${className}`}
+            className={`group bg-white p-5 sm:p-7 md:p-8 lg:p-[1.8vw] rounded-3xl sm:rounded-4xl lg:rounded-[2vw] hover:bg-zinc-100 transition-colors flex flex-col justify-between h-full select-none cursor-pointer block ${className}`}
         >
             <div>
                 {/* Top Row: Pop-up Date & Outlined Capsule Tag */}
-                <div className="flex items-end justify-between gap-3 mb-4 sm:mb-5">
+                <div className="flex items-end justify-between gap-3 lg:gap-[0.8vw] mb-4 sm:mb-5 lg:mb-[1.2vw]">
                     {/* Pop-up Date Display */}
-                    <div className="flex items-center gap-1.5 select-none leading-none">
-                        <span className="text-3xl sm:text-8xl font-medium text-primary tracking-tight leading-none">
+                    <div className="flex items-center gap-1.5 lg:gap-[0.4vw] select-none leading-none">
+                        <span className="text-4xl sm:text-7xl md:text-8xl lg:text-[4.5vw] font-medium text-primary tracking-tight leading-none">
                             {dayNumber}
                         </span>
-                        <div className="flex flex-col text-[10px] sm:text-sm font-bold text-neutral-600 leading-[1.05] tracking-tight">
+                        <div className="flex flex-col text-[11px] sm:text-sm lg:text-[0.85vw] font-bold text-neutral-600 leading-[1.05] tracking-tight">
                             {monthParts.map((part, i) => (
                                 <span key={i}>{part}</span>
                             ))}
@@ -105,16 +105,16 @@ export default function EventCard({ event, className = "" }: EventCardProps) {
                     </div>
 
                     {/* Category Pill Tag */}
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 mb-2 rounded-full border border-neutral-700 text-[10px] sm:text-xs font-semibold text-neutral-800 tracking-wider uppercase shrink-0 transition-colors group-hover:border-black">
+                    <span className="inline-flex items-center gap-1.5 lg:gap-[0.35vw] px-3 py-1 lg:px-[0.8vw] lg:py-[0.3vw] mb-1.5 sm:mb-2 lg:mb-[0.5vw] rounded-full border border-neutral-700 text-[10px] sm:text-xs lg:text-[0.75vw] font-semibold text-neutral-800 tracking-wider uppercase shrink-0 transition-colors group-hover:border-black">
                         {event.status === "live" && (
-                            <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse" />
+                            <span className="w-1.5 h-1.5 lg:w-[0.4vw] lg:h-[0.4vw] rounded-full bg-red-600 animate-pulse" />
                         )}
                         <span>{event.sport}</span>
                     </span>
                 </div>
 
                 {/* Sharp Landscape Image Container */}
-                <div className="relative w-full aspect-16/11 overflow-hidden bg-neutral-100 rounded-2xl mb-5 sm:mb-6">
+                <div className="relative w-full aspect-16/11 overflow-hidden bg-neutral-100 rounded-xl sm:rounded-2xl lg:rounded-[1.2vw] mb-4 sm:mb-6 lg:mb-[1.4vw]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src={event.image}
@@ -128,23 +128,20 @@ export default function EventCard({ event, className = "" }: EventCardProps) {
                 </div>
 
                 {/* Event Headline */}
-                <h3 className="text-lg sm:text-3xl font-bold text-neutral-700 leading-snug tracking-tight line-clamp-2 group-hover:text-neutral-950 transition-colors font-primary">
+                <h3 className="text-lg sm:text-2xl md:text-3xl lg:text-[1.65vw] font-bold text-neutral-700 leading-snug lg:leading-[1.2] tracking-tight line-clamp-2 group-hover:text-neutral-950 transition-colors font-primary">
                     {event.title}
                 </h3>
 
                 {/* Short Editorial Description */}
-                <p className="mt-2.5 sm:mt-3 text-xs sm:text-base text-neutral-500 font-normal line-clamp-3">
+                <p className="mt-2 sm:mt-3 lg:mt-[0.8vw] text-xs sm:text-sm md:text-base lg:text-[0.9vw] lg:leading-[1.5] text-neutral-500 font-normal line-clamp-3">
                     {event.description}
                 </p>
             </div>
 
-            {/* Read More Underlined Link */}
-            {/* <div className="mt-6 sm:mt-8 pt-2">
-                <span className="inline-block text-sm font-bold tracking-wider uppercase text-neutral-500 underline underline-offset-4 decoration-neutral-500 group-hover:text-neutral-950 group-hover:decoration-neutral-950 transition-colors">
-                    READ MORE
-                </span>
-            </div> */}
-            <Button label="Read More" className="rounded-full mt-4" />
+            <Button
+                label="Read More"
+                className="rounded-full mt-4 lg:mt-[0.1vw] lg:px-[1.6vw] lg:py-[0.55vw] lg:text-[0.85vw]"
+            />
         </Link>
     );
 }
