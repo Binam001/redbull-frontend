@@ -5,12 +5,14 @@ import { usePathname } from "next/navigation";
 
 interface AudioSectionProps {
   imgClassName?: string;
+  btnClassName?: string;
   className?: string;
   isScrolled?: boolean;
 }
 
 const AudioProvider = ({
   imgClassName,
+  btnClassName,
   className,
   isScrolled = false,
 }: AudioSectionProps) => {
@@ -91,7 +93,7 @@ const AudioProvider = ({
           isScrolled
             ? "border-black bg-black/5 hover:bg-black/10"
             : "border-white bg-white/5 hover:bg-white/10"
-        }`}
+        } ${btnClassName || ""}`}
       >
         {isAudioOn ? (
           <svg

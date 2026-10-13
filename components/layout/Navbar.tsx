@@ -137,9 +137,9 @@ const Navbar = () => {
         }}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: "easeInOut" }}
-        className={`fixed top-0 left-0 w-full z-210 px-4 md:px-8 lg:px-16 xl:px-24 transition-all duration-300 ${scrolled
-          ? "py-3 bg-white"
-          : "py-4 bg-transparent"
+        className={`fixed top-0 left-0 w-full z-210 px-4 sm:px-8 lg:px-[5vw] transition-all duration-300 ${scrolled
+          ? "py-3 lg:py-[0.75vw] bg-white"
+          : "py-4 lg:py-[1.1vw] bg-transparent"
           }`}
       >
         <div className="w-full flex items-center justify-between">
@@ -148,7 +148,7 @@ const Navbar = () => {
             <Link
               href="/"
               onClick={() => setIsMenuOpen(false)}
-              className="relative block w-24 sm:w-28 md:w-32 xl:w-36 aspect-4/2"
+              className="relative block w-24 sm:w-28 md:w-32 lg:w-[7.5vw] aspect-4/2"
             >
               <Image
                 src="/logo.svg"
@@ -161,10 +161,10 @@ const Navbar = () => {
           </div>
 
           {/* Right Section: Desktop Links + Audio Icon (+ Mobile Hamburger) */}
-          <div className="flex items-center gap-5 sm:gap-6 xl:gap-8">
+          <div className="flex items-center gap-5 sm:gap-6 lg:gap-[1.6vw]">
             {/* Desktop Navigation Links (No background, sitting on right) */}
             <nav
-              className="hidden xl:flex items-center gap-6 xl:gap-8"
+              className="hidden lg:flex items-center gap-4 lg:gap-[1.6vw]"
               onMouseLeave={() => {
                 setHoveredLink(null);
                 dropdownTimeoutRef.current = setTimeout(() => {
@@ -211,7 +211,7 @@ const Navbar = () => {
                         setActiveLink(link.name);
                         setActiveDropdown(null);
                       }}
-                      className={`relative flex items-center gap-1.5 text-[13.5px] font-semibold tracking-wide transition-colors duration-200 cursor-pointer py-1 ${
+                      className={`relative flex items-center gap-1.5 lg:gap-[0.32vw] text-[13px] lg:text-[0.72vw] font-semibold tracking-wide transition-colors duration-200 cursor-pointer py-1 lg:py-[0.2vw] ${
                         isEnergyDrinksPage && !scrolled
                           ? "text-white hover:text-white"
                           : isSelected || isDropdownOpen
@@ -228,7 +228,7 @@ const Navbar = () => {
 
                         {/* Interactive Animated Underline */}
                         <span
-                          className={`absolute -bottom-1 left-0 h-[2px] ${
+                          className={`absolute -bottom-1 lg:-bottom-[0.2vw] left-0 h-[2px] lg:h-[0.11vw] ${
                             isEnergyDrinksPage && !scrolled ? "bg-white" : "bg-[#CB2026]"
                           } rounded-full transition-all duration-300 ease-out ${
                             showUnderline || isDropdownOpen
@@ -242,7 +242,7 @@ const Navbar = () => {
                       {link.hasDropdown && (
                         <Icon
                           icon="mdi:chevron-down"
-                          className={`w-4 h-4 transition-all duration-200 ${
+                          className={`w-4 h-4 lg:w-[0.8vw] lg:h-[0.8vw] transition-all duration-200 ${
                             isDropdownOpen || isHovered ? "rotate-180" : ""
                           } ${
                             isEnergyDrinksPage && !scrolled
@@ -277,9 +277,9 @@ const Navbar = () => {
                               setActiveDropdown(null);
                             }, 180);
                           }}
-                          className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 z-50 pointer-events-auto"
+                          className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 lg:pt-[0.5vw] z-50 pointer-events-auto"
                         >
-                          <div className="bg-black/80 backdrop-blur-2xl rounded-3xl p-2.5 border border-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.5)] flex flex-col gap-1.5 w-[350px] sm:w-[380px]">
+                          <div className="bg-black/80 backdrop-blur-2xl rounded-3xl lg:rounded-[1.2vw] p-2.5 lg:p-[0.6vw] border border-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.5)] flex flex-col gap-1.5 lg:gap-[0.35vw] w-[350px] sm:w-[380px] lg:w-[20vw]">
                             {link.dropdownItems.map((subItem) => {
                               const isSubActive = pathname.startsWith(subItem.href);
                               return (
@@ -290,13 +290,13 @@ const Navbar = () => {
                                     setActiveLink(link.name);
                                     setActiveDropdown(null);
                                   }}
-                                  className={`group flex items-center gap-3.5 p-2.5 rounded-2xl transition-all duration-200 cursor-pointer text-left ${isSubActive
+                                  className={`group flex items-center gap-3.5 lg:gap-[0.7vw] p-2.5 lg:p-[0.5vw] rounded-2xl lg:rounded-[0.8vw] transition-all duration-200 cursor-pointer text-left ${isSubActive
                                     ? "bg-white/15 text-white"
                                     : "hover:bg-white/10 text-white"
                                     }`}
                                 >
                                   {/* Thumbnail container */}
-                                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl overflow-hidden bg-black shrink-0 border border-white/10 flex items-center justify-center shadow-inner">
+                                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 lg:w-[3.3vw] lg:h-[3.3vw] rounded-xl lg:rounded-[0.6vw] overflow-hidden bg-black shrink-0 border border-white/10 flex items-center justify-center shadow-inner">
                                     {subItem.image && (
                                       <Image
                                         src={subItem.image}
@@ -310,10 +310,10 @@ const Navbar = () => {
 
                                   {/* Text info */}
                                   <div className="flex flex-col justify-center min-w-0 flex-1 text-left">
-                                    <span className="text-[11px] sm:text-xs font-semibold tracking-wider text-white/60 uppercase">
+                                    <span className="text-[11px] sm:text-xs lg:text-[0.6vw] font-semibold tracking-wider text-white/60 uppercase">
                                       {subItem.subtitle || subItem.badge || subItem.volume}
                                     </span>
-                                    <span className="text-[14.5px] sm:text-[15.5px] font-bold text-white tracking-tight leading-snug group-hover:text-[#CB2026] transition-colors duration-200">
+                                    <span className="text-[14.5px] sm:text-[15.5px] lg:text-[0.8vw] font-bold text-white tracking-tight leading-snug group-hover:text-[#CB2026] transition-colors duration-200">
                                       {subItem.name}
                                     </span>
                                   </div>
@@ -333,10 +333,12 @@ const Navbar = () => {
             <AudioProvider
               isScrolled={isScrolledOrLight}
               className="relative flex items-center"
+              btnClassName="lg:p-[0.4vw]"
+              imgClassName="lg:size-[0.85vw]"
             />
 
             {/* Mobile Hamburger Toggle (Mobile Only - Right end) */}
-            <div className="xl:hidden flex items-center">
+            <div className="lg:hidden flex items-center">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 aria-label="Toggle Menu"
@@ -375,7 +377,7 @@ const Navbar = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "-100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed inset-0 z-200 flex flex-col items-center justify-center p-8 xl:hidden"
+            className="fixed inset-0 z-200 flex flex-col items-center justify-center p-8 lg:hidden"
             style={{
               background:
                 "linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(245,247,250,0.96) 100%)",

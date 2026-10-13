@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGLTF } from "@react-three/drei";
@@ -44,10 +45,19 @@ const footerFrames = Array.from(
 );
 
 const Preloader = () => {
+  const pathname = usePathname();
   const [showButtons, setShowButtons] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const popupAudioRef = useRef<HTMLAudioElement | null>(null);
+
+  // If directly loaded or refreshed from a subpage (e.g. /events), mark entered and bypass preloader
+  useEffect(() => {
+    if (pathname !== "/") {
+      (window as Window & { hasEnteredIntro?: boolean }).hasEnteredIntro = true;
+      setIsLoaded(true);
+    }
+  }, [pathname]);
 
   // Silent Background Asset Preloader
   useEffect(() => {
@@ -116,7 +126,7 @@ const Preloader = () => {
     }, 400);
   };
 
-  if (isLoaded) return null;
+  if (pathname !== "/" || isLoaded) return null;
 
   return (
     <AnimatePresence
