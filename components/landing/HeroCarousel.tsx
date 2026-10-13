@@ -34,6 +34,12 @@ const HERO_SLIDES: SlideData[] = EVENTS.map((event) => {
 const SLIDE_DURATION = 5000; // ms
 
 export default function HeroCarousel() {
+  const [hasEntered, setHasEntered] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return (
+      (window as Window & { hasEnteredIntro?: boolean }).hasEnteredIntro === true
+    );
+  });
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [slideProgress, setSlideProgress] = useState(0);
@@ -48,6 +54,41 @@ export default function HeroCarousel() {
 
   const progressStartTimeRef = useRef(Date.now());
   const progressRafRef = useRef<number | null>(null);
+
+  // Listen for user entering the site via Preloader buttons
+  useEffect(() => {
+    if (hasEntered) return;
+
+    const handleEnter = () => {
+      setHasEntered(true);
+      progressStartTimeRef.current = Date.now();
+      setSlideProgress(0);
+
+      // Coordinated subtle entrance for hero text when the site opens
+      if (titleRef.current && descRef.current && actionsRef.current) {
+        gsap.fromTo(
+          [titleRef.current, descRef.current, actionsRef.current],
+          { opacity: 0, y: 22 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.08,
+            ease: "power3.out",
+            delay: 0.1,
+          }
+        );
+      }
+    };
+
+    window.addEventListener("preloaderExit", handleEnter);
+    window.addEventListener("preloaderComplete", handleEnter);
+
+    return () => {
+      window.removeEventListener("preloaderExit", handleEnter);
+      window.removeEventListener("preloaderComplete", handleEnter);
+    };
+  }, [hasEntered]);
 
   // Slide Transition Handler with smooth text animation
   const goToSlide = useCallback((targetIndex: number) => {
@@ -97,8 +138,10 @@ export default function HeroCarousel() {
     goToSlide(prev);
   }, [goToSlide]);
 
-  // Smooth Slide Progress Timer
+  // Smooth Slide Progress Timer (only ticks when user has entered site)
   useEffect(() => {
+    if (!hasEntered) return;
+
     progressStartTimeRef.current = Date.now();
 
     const updateTimer = () => {
@@ -120,7 +163,7 @@ export default function HeroCarousel() {
     return () => {
       if (progressRafRef.current) cancelAnimationFrame(progressRafRef.current);
     };
-  }, [currentIndex, isTransitioning, nextSlide]);
+  }, [hasEntered, currentIndex, isTransitioning, nextSlide]);
 
   const activeSlide = HERO_SLIDES[currentIndex];
 
@@ -142,7 +185,7 @@ export default function HeroCarousel() {
                 fill
                 priority={idx === 0}
                 sizes="100vw"
-                className={`object-cover object-center w-full h-full transition-transform duration-[6000ms] ease-out ${isActive ? "scale-105" : "scale-100"
+                className={`object-cover object-center w-full h-full transition-transform duration-[6000ms] ease-out ${isActive && hasEntered ? "scale-105" : "scale-100"
                   }`}
               />
             </div>
@@ -214,7 +257,7 @@ export default function HeroCarousel() {
           <button
             type="button"
             onClick={prevSlide}
-            disabled={isTransitioning}
+            disabled={!hasEntered || isTransitioning}
             aria-label="Previous Slide"
             className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/50 active:scale-95 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all cursor-pointer disabled:opacity-40"
           >
@@ -226,7 +269,7 @@ export default function HeroCarousel() {
           <button
             type="button"
             onClick={nextSlide}
-            disabled={isTransitioning}
+            disabled={!hasEntered || isTransitioning}
             aria-label="Next Slide"
             className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/50 active:scale-95 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all cursor-pointer disabled:opacity-40"
           >
@@ -246,7 +289,7 @@ export default function HeroCarousel() {
             <button
               key={slide.id}
               type="button"
-              onClick={() => goToSlide(idx)}
+              onClick={() => hasEntered && goToSlide(idx)}
               aria-label={`Go to slide ${idx + 1}`}
               className="relative flex-1 h-6 flex items-center cursor-pointer group"
             >
