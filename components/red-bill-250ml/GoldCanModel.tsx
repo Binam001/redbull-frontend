@@ -32,7 +32,7 @@ const INITIAL_Y_ROTATION = degToRad(-40);
 
 export function GoldCanModel({
   rotate = false,
-  setRotate = () => {},
+  setRotate = () => { },
   ...props
 }: GoldCanModelProps) {
   const { nodes, materials } = useGLTF(
@@ -101,7 +101,7 @@ export function GoldCanModel({
           const initialPosX = mobile ? 0 : 2.15;
           const initialPosY = mobile ? 0.45 : 0.05;
           const targetPosX = mobile ? 0 : -1.8;
-          const targetPosY = mobile ? 0.45 : -0.10;
+          const targetPosY = mobile ? 0.20 : -0.42;
 
           // 1. Position animation (Right to Left on desktop)
           gsap.fromTo(
@@ -113,9 +113,9 @@ export function GoldCanModel({
               z: 0,
               ease: "none",
               scrollTrigger: {
-                trigger: ".products-hero-section-two",
-                start: "top bottom",
-                end: "top top",
+                trigger: ".products-hero-scroll-container",
+                start: "top top",
+                end: "bottom bottom",
                 scrub: 1,
                 immediateRender: false,
                 onUpdate: (self) => {
@@ -139,9 +139,9 @@ export function GoldCanModel({
               z: targetRotZ,
               ease: "none",
               scrollTrigger: {
-                trigger: ".products-hero-section-two",
-                start: "top bottom",
-                end: "top top",
+                trigger: ".products-hero-scroll-container",
+                start: "top top",
+                end: "bottom bottom",
                 scrub: 1,
                 immediateRender: false,
               },
@@ -161,9 +161,9 @@ export function GoldCanModel({
               z: targetScale,
               ease: "none",
               scrollTrigger: {
-                trigger: ".products-hero-section-two",
-                start: "top bottom",
-                end: "top top",
+                trigger: ".products-hero-scroll-container",
+                start: "top top",
+                end: "bottom bottom",
                 scrub: 1,
                 immediateRender: false,
               },

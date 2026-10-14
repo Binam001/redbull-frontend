@@ -10,10 +10,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ProductCta() {
     const containerRef = useRef<HTMLDivElement>(null);
-    const leftHandRef = useRef<HTMLDivElement>(null);
-    const rightHandRef = useRef<HTMLDivElement>(null);
+    // const leftHandRef = useRef<HTMLDivElement>(null);
+    // const rightHandRef = useRef<HTMLDivElement>(null);
 
-    // Scroll-triggered hands entrance animation meeting in middle
+    // Scroll-triggered hands entrance animation meeting in middle (commented out)
+    /*
     useGSAP(
         () => {
             const container = containerRef.current;
@@ -91,37 +92,36 @@ export default function ProductCta() {
         },
         { scope: containerRef }
     );
+    */
 
     return (
         <div className="w-full">
             <div
                 ref={containerRef}
-                className="relative w-full h-screen overflow-hidden font-sans select-none"
+                className="relative w-full  flex items-center justify-center bg-white text-neutral-900 select-none p-8 overflow-hidden pt-44"
             >
                 {/* Background Content Layer */}
-                <div className="hero-content-background absolute inset-0 flex flex-col items-center justify-center bg-white text-neutral-900 p-8">
-                    <div className="max-w-4xl text-center space-y-6">
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
-                            Your Next Chapter <br /> Starts Here
-                        </h1>
+                <div className="max-w-4xl text-center space-y-6">
+                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
+                        Your Next Chapter <br /> Starts Here
+                    </h1>
 
-                        <p className="text-xs sm:text-sm md:text-lg text-black/70 leading-relaxed font-medium max-w-xl mx-auto">
-                            The plan is yours. The pace is yours. When you’re ready to take on what comes next, reach for Red Bull® Gold and make room for another step, another challenge, another possibility.
-                        </p>
+                    <p className="text-xs sm:text-sm md:text-lg text-black/70 leading-relaxed font-medium max-w-xl mx-auto">
+                        The plan is yours. The pace is yours. When you’re ready to take on what comes next, reach for Red Bull® Gold and make room for another step, another challenge, another possibility.
+                    </p>
 
-                        <div className="pt-4 flex justify-center gap-4">
-                            <Button
-                                label="Discover Red Bull Gold"
-                                className="rounded-full"
-                            />
-                        </div>
+                    <div className="pt-4 flex justify-center gap-4">
+                        <Button
+                            label="Discover Red Bull Gold"
+                            className="rounded-full"
+                        />
                     </div>
                 </div>
 
-                {/* Front / Foreground Hands CTA Layer (meets in middle on scroll) */}
+                {/* Front / Foreground Hands CTA Layer (commented out) */}
+                {/*
                 <div className="hands-foreground-layer absolute inset-0 pointer-events-none select-none overflow-hidden z-20 flex items-center justify-center">
                     <div className="relative w-[150vw] sm:w-[125vw] md:w-full max-w-[1920px] aspect-[1678/937] flex items-center justify-center">
-                        {/* Right Hand (behind left hand, holding yellow/purple can) */}
                         <div
                             ref={rightHandRef}
                             className="absolute inset-0 flex items-center justify-center will-change-transform z-10"
@@ -134,7 +134,6 @@ export default function ProductCta() {
                             />
                         </div>
 
-                        {/* Left Hand (in front of right hand, holding blue/silver can) */}
                         <div
                             ref={leftHandRef}
                             className="absolute inset-0 flex items-center justify-center will-change-transform z-20"
@@ -148,6 +147,7 @@ export default function ProductCta() {
                         </div>
                     </div>
                 </div>
+                */}
             </div>
         </div>
     );

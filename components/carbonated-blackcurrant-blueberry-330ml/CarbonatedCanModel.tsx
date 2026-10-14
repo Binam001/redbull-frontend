@@ -88,9 +88,9 @@ export function CarbonatedCanModel({
           // Desktop: Starts on the RIGHT (+1.95), moves across to the LEFT (-1.8)
           // Mobile: Starts centered/upper half, moves to upper left
           const initialPosX = mobile ? 0 : 1.95;
-          const initialPosY = mobile ? 0.45 : -0.20;
+          const initialPosY = mobile ? 0.45 : 0.05;
           const targetPosX = mobile ? 0 : -1.8;
-          const targetPosY = mobile ? 0.45 : -0.10;
+          const targetPosY = mobile ? 0.20 : -0.42;
 
           // 1. Position animation (Right to Left on desktop)
           gsap.fromTo(
@@ -102,9 +102,9 @@ export function CarbonatedCanModel({
               z: 0,
               ease: "none",
               scrollTrigger: {
-                trigger: ".carbonated-hero-section-two",
-                start: "top bottom",
-                end: "top top",
+                trigger: ".carbonated-hero-scroll-container",
+                start: "top top",
+                end: "bottom bottom",
                 scrub: 1,
                 immediateRender: false,
                 onUpdate: (self) => {
@@ -128,9 +128,9 @@ export function CarbonatedCanModel({
               z: targetRotZ,
               ease: "none",
               scrollTrigger: {
-                trigger: ".carbonated-hero-section-two",
-                start: "top bottom",
-                end: "top top",
+                trigger: ".carbonated-hero-scroll-container",
+                start: "top top",
+                end: "bottom bottom",
                 scrub: 1,
                 immediateRender: false,
               },
@@ -150,9 +150,9 @@ export function CarbonatedCanModel({
               z: targetScale,
               ease: "none",
               scrollTrigger: {
-                trigger: ".carbonated-hero-section-two",
-                start: "top bottom",
-                end: "top top",
+                trigger: ".carbonated-hero-scroll-container",
+                start: "top top",
+                end: "bottom bottom",
                 scrub: 1,
                 immediateRender: false,
               },
@@ -187,7 +187,7 @@ export function CarbonatedCanModel({
 
   const initialScale = isMobile ? 0.22 : 0.29;
   const initialPosX = isMobile ? 0 : 1.95;
-  const initialPosY = isMobile ? 0.45 : -0.38;
+  const initialPosY = isMobile ? 0.45 : 0.05;
 
   return (
     <group

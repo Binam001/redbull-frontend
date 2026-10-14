@@ -403,7 +403,7 @@ export default function SvgPathHoverCardGrid() {
     return (
         <div
             ref={containerRef}
-            className="w-full text-neutral-900 font-sans selection:bg-neutral-200 pb-28 px-4 sm:px-8 md:px-12 lg:px-24 overflow-hidden"
+            className="w-full text-neutral-900 font-sans selection:bg-neutral-200 pt-28 px-4 sm:px-8 md:px-12 lg:px-24 overflow-hidden"
         // style={{
         //     fontFamily: "'BeausiteClassic-Light', -apple-system, BlinkMacSystemFont, sans-serif",
         // }}

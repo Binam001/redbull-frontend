@@ -47,7 +47,9 @@ const Navbar = () => {
   const { scrollY } = useScroll();
   const isExclusivePage = pathname.startsWith("/exclusive");
   const isEnergyDrinksPage = pathname.startsWith("/energy-drinks");
-  const isScrolledOrLight = scrolled;
+  const isAthleteDetailPage =
+    pathname.startsWith("/athletes/") && pathname !== "/athletes";
+  const isScrolledOrLight = scrolled || isAthleteDetailPage;
 
   useEffect(() => {
     const matched = navLinks.find(

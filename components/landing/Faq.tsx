@@ -333,7 +333,7 @@ export default function FaqSection() {
     return (
         <section
             ref={sectionRef}
-            className="faq relative w-full flex flex-col gap-8 xl:gap-16 justify-center items-center text-center overflow-hidden py-28"
+            className="faq relative w-full flex flex-col gap-8 xl:gap-16 justify-center items-center text-center overflow-hidden pt-28 pb-32 sm:pb-40"
         >
             <style>{`
         @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&family=Host+Grotesk:ital,wght@0,600;0,700;0,800;1,600;1,700;1,800&display=swap");
@@ -431,7 +431,7 @@ export default function FaqSection() {
                                 </div>
 
                                 {/* Content */}
-                                <div className="faq-content w-max max-w-full flex flex-col gap-4 text-left font-['Host_Grotesk',sans-serif] font-bold xl:text-[1.2vw] leading-relaxed text-white">
+                                <div className="faq-content w-max max-w-full flex flex-col gap-4 text-left font-primary xl:text-[1vw] leading-relaxed text-white">
                                     <p className="opacity-0">{item.question}</p>
                                 </div>
                             </div>
@@ -448,7 +448,7 @@ export default function FaqSection() {
                                 </div>
 
                                 {/* Content */}
-                                <div className="faq-content w-max max-w-full flex flex-col gap-4 text-left font-['Host_Grotesk',sans-serif] font-bold xl:text-[1.2vw] leading-relaxed">
+                                <div className="faq-content w-max max-w-full flex flex-col gap-4 text-left  xl:text-[1vw] leading-relaxed">
                                     {item.answers.map((answerPara, pIdx) => (
                                         <p key={pIdx} className="opacity-0">
                                             {answerPara}

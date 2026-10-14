@@ -44,7 +44,10 @@ export default function ProductsHero() {
       {/* ======================================================== */}
       {/* 2-SCREEN SCROLL CONTAINER WITH PINNED 3D GOLD CAN       */}
       {/* ======================================================== */}
-      <div ref={containerRef} className="relative w-full">
+      <div
+        ref={containerRef}
+        className="products-hero-scroll-container relative w-full"
+      >
         {/* ---------------- 3D CAN PINNED LAYER ---------------- */}
         <div
           ref={canvasWrapperRef}
@@ -54,11 +57,11 @@ export default function ProductsHero() {
         </div>
 
         {/* ---------------- SECTION 1 (Hero State 1) ---------------- */}
-        <section className="relative z-10 h-screen w-full overflow-hidden">
+        <section className="relative z-10 min-h-[70vh] xl:min-h-[75vh] w-full flex items-center justify-center py-10 xl:py-14 overflow-hidden">
           <div className="flex flex-col-reverse xl:flex-row items-center justify-center w-full h-full">
             {/* Left Column Text (Bottom half on mobile, Left half on desktop) */}
-            <div className="xl:w-1/2 w-full h-1/2 xl:h-full flex flex-col justify-center text-center xl:text-left gap-4 xl:gap-8 ">
-              <div className="flex flex-col gap-4 leading-relaxed">
+            <div className="xl:w-1/2 w-full flex flex-col justify-center text-center xl:text-left gap-4 xl:gap-6 pt-10 sm:pt-16 xl:pt-24">
+              <div className="flex flex-col gap-3 sm:gap-4 leading-relaxed">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
                   Every Great Journey,
                   <br />
@@ -72,19 +75,19 @@ export default function ProductsHero() {
             </div>
 
             {/* Spacer Column (Top half on mobile, Right half on desktop) where 3D gold can floats at first */}
-            <div className="w-full xl:w-1/2 h-1/2 xl:h-full pointer-events-none" />
+            <div className="w-full xl:w-1/2 h-36 sm:h-48 xl:h-auto pointer-events-none" />
           </div>
         </section>
 
         {/* ---------------- SECTION 2 (Hero State 2) ---------------- */}
-        <section className="products-hero-section-two relative z-10 h-screen w-full overflow-hidden">
+        <section className="products-hero-section-two relative z-10 min-h-[70vh] xl:min-h-[75vh] w-full flex items-center justify-center py-10 xl:py-14 overflow-hidden">
           <div className="flex flex-col xl:flex-row items-center justify-center w-full h-full">
             {/* Spacer Column (Top half on mobile, Left half on desktop) where 3D gold can lands tilted */}
-            <div className="w-full xl:w-1/2 h-1/2 xl:h-full pointer-events-none" />
+            <div className="w-full xl:w-1/2 h-36 sm:h-48 xl:h-auto pointer-events-none" />
 
             {/* Right Column Text (Bottom half on mobile, Right half on desktop) */}
-            <div className="xl:w-1/2 w-full h-1/2 xl:h-full flex flex-col justify-center xl:items-end text-center xl:text-right gap-4 xl:gap-8 px-6 sm:px-12 md:px-16 lg:px-24">
-              <div className="xl:ml-auto flex flex-col gap-4 leading-relaxed max-w-3xl">
+            <div className="xl:w-1/2 w-full flex flex-col justify-center xl:items-end text-center xl:text-right gap-4 xl:gap-6 px-6 sm:px-12 md:px-16 lg:px-24">
+              <div className="xl:ml-auto flex flex-col gap-3 sm:gap-4 leading-relaxed max-w-3xl">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
                   One Step Becomes
                   <br />

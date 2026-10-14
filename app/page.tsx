@@ -1,11 +1,13 @@
 import FeaturedEvents from "@/components/events/FeaturedEvents";
 import Cheers from "@/components/landing/Cheers";
 import Divider from "@/components/landing/Divider";
+import Cycle from "@/components/landing/Cycle";
 import FaqSection from "@/components/landing/Faq";
 import HeroCarousel from "@/components/landing/HeroCarousel";
 import HeroTry from "@/components/landing/HeroTry";
 import SvgPathHoverEffect from "@/components/landing/SvgPathHoverCardGrid";
 import ParagraphReveal from "@/components/shared/ParagraphReveal";
+import Faq from "@/components/landing/CleanFaq";
 
 const page = () => {
   return (
@@ -19,10 +21,11 @@ const page = () => {
       <HeroTry />
       <Cheers />
       {/* <Products /> */}
-      <FeaturedEvents />
       <SvgPathHoverEffect />
+      <FeaturedEvents />
       <Divider />
-      <FaqSection />
+      {/* <FaqSection /> */}
+      <Faq />
       {/* <RedBullAnimation /> */}
       {/* <RedBullAnimtaion2 /> */}
 

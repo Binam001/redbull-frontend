@@ -4,6 +4,7 @@ import LenisProvider from "@/providers/LenisProvider";
 import Navbar from "@/components/layout/Navbar";
 import Preloader from "@/components/layout/Preloader";
 import Footer from "@/components/layout/Footer";
+import Cycle from "@/components/landing/Cycle";
 
 export const metadata: Metadata = {
   title: "Red Bull",
@@ -23,6 +24,8 @@ export default function RootLayout({
         <LenisProvider>
           <Navbar />
           {children}
+          <Cycle />
+
           <Footer />
         </LenisProvider>
       </body>
