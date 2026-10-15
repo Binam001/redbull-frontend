@@ -35,7 +35,7 @@ export default function Intro({
             <div className="w-full max-w-350 mx-auto flex flex-col gap-12 items-center text-center">
 
                 <h1
-                    className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]"
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08] "
 
                 >
                     {titleLines.map((line, idx) => (

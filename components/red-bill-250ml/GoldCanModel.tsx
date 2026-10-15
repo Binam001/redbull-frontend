@@ -118,6 +118,7 @@ export function GoldCanModel({
                 end: "bottom bottom",
                 scrub: 1,
                 immediateRender: false,
+                refreshPriority: 10,
                 onUpdate: (self) => {
                   scrollProgressRef.current = self.progress;
                 },
@@ -144,6 +145,7 @@ export function GoldCanModel({
                 end: "bottom bottom",
                 scrub: 1,
                 immediateRender: false,
+                refreshPriority: 10,
               },
             }
           );
@@ -166,6 +168,7 @@ export function GoldCanModel({
                 end: "bottom bottom",
                 scrub: 1,
                 immediateRender: false,
+                refreshPriority: 10,
               },
             }
           );

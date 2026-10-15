@@ -107,6 +107,7 @@ export function CarbonatedCanModel({
                 end: "bottom bottom",
                 scrub: 1,
                 immediateRender: false,
+                refreshPriority: 10,
                 onUpdate: (self) => {
                   scrollProgressRef.current = self.progress;
                 },
@@ -133,13 +134,14 @@ export function CarbonatedCanModel({
                 end: "bottom bottom",
                 scrub: 1,
                 immediateRender: false,
+                refreshPriority: 10,
               },
             }
           );
 
           // 3. Scale animation
-          const initialScale = mobile ? 0.22 : 0.29;
-          const targetScale = mobile ? 0.20 : 0.28;
+          const initialScale = mobile ? 0.185 : 0.245;
+          const targetScale = mobile ? 0.175 : 0.235;
 
           gsap.fromTo(
             groupRef.current!.scale,
@@ -155,6 +157,7 @@ export function CarbonatedCanModel({
                 end: "bottom bottom",
                 scrub: 1,
                 immediateRender: false,
+                refreshPriority: 10,
               },
             }
           );
@@ -185,7 +188,7 @@ export function CarbonatedCanModel({
     metalMaterial.roughness = 0.35;
   }
 
-  const initialScale = isMobile ? 0.22 : 0.29;
+  const initialScale = isMobile ? 0.185 : 0.245;
   const initialPosX = isMobile ? 0 : 1.95;
   const initialPosY = isMobile ? 0.45 : 0.05;
 

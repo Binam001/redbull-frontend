@@ -45,9 +45,9 @@ export default function CarbonatedCanCanvas({
         }}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={1.7} />
-          <directionalLight position={[5, 8, 6]} intensity={3.5} />
-          <directionalLight position={[-5, 4, 4]} intensity={2.5} color="#ffffff" />
+          <ambientLight intensity={1.8} />
+          <directionalLight position={[4, 6, 4]} intensity={2.8} color="#ffffff" />
+          <directionalLight position={[-4, 4, -2]} intensity={1.8} color="#ffeedd" />
           <directionalLight position={[0, 0, 7]} intensity={2.0} color="#ffffff" />
           <directionalLight position={[0, -5, 4]} intensity={1.2} color="#ffffff" />
 
@@ -60,11 +60,7 @@ export default function CarbonatedCanCanvas({
             <CarbonatedCanModel rotate={rotate} setRotate={setRotate} />
           </Float>
 
-          <Environment
-            preset="studio"
-            environmentRotation={[0, 0, 0.25 * Math.PI]}
-            environmentIntensity={0.2}
-          />
+          <Environment preset="warehouse" />
         </Suspense>
       </Canvas>
     </div>

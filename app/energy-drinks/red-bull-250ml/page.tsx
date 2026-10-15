@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 export default function RedBull250mlPage() {
   return (
     <main className="relative">
+
       <ShortHero />
       <ProductsHero />
       <ProductDivider />

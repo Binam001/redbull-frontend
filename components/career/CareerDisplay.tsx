@@ -24,7 +24,7 @@ const CareerDisplay = () => {
             : CAREER_JOBS.filter((job) => job.category === selectedCategory);
 
     return (
-        <section className="relative w-full bg-[#fcfcfd] text-zinc-900 py-16 sm:py-24 lg:py-[6vw] px-4 sm:px-8 lg:px-[5vw] overflow-hidden">
+        <section className="relative w-full  text-zinc-900 py-16 sm:py-24 lg:py-[6vw] px-4 sm:px-8 lg:px-[5vw] overflow-hidden">
             {/* Top-Right Soft Ambient Radial Glow */}
             <div
                 className="absolute -top-16 -right-16 sm:top-0 sm:right-0 w-72 sm:w-96 md:w-[36rem] lg:w-[34vw] aspect-square rounded-full pointer-events-none -z-0"
@@ -46,8 +46,8 @@ const CareerDisplay = () => {
                     </div>
 
                     {/* Headline */}
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
-                        Be part of our mission
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08] capitalize">
+                        Be part of our <span className="text-primary">mission</span>
                     </h2>
 
                     {/* Subtitle Description */}

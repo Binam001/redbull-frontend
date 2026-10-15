@@ -10,10 +10,10 @@ interface AthletesHeroProps {
 const AthletesHero: React.FC<AthletesHeroProps> = ({
     title = "Beyond Limits",
     description = "Meet the athletes redefining what's possible.",
-    imageSrc = '/images/home/athletes/athletes.png',
+    imageSrc = '/images/athletes-bg.png',
 }) => {
     return (
-        <section className="relative w-full h-[48vh] sm:h-[54vh] lg:h-[70vh]  flex items-end justify-end overflow-hidden !py-0 px-4 sm:px-8 lg:px-[5vw] bg-black select-none">
+        <section className="relative w-full h-[48vh] sm:h-[54vh] lg:h-screen  flex items-end justify-end overflow-hidden !py-0 px-4 sm:px-8 lg:px-[5vw] bg-black select-none">
             {/* Background Photographic Image (Grayscale + High Contrast) */}
             <div className="absolute inset-0 z-0">
                 <Image
@@ -22,19 +22,19 @@ const AthletesHero: React.FC<AthletesHeroProps> = ({
                     fill
                     priority
                     sizes="100vw"
-                    className="object-cover object-top  pointer-events-none select-none scale-105"
+                    className="object-cover object-center  pointer-events-none select-none scale-105"
                 />
 
                 {/* Dark Tint & Filmic Vignette Overlays */}
-                <div className="absolute inset-0 bg-black/40 pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/85 pointer-events-none" />
-                <div
+                <div className="absolute inset-0 bg-black/50 pointer-events-none" />
+                {/* <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/20 to-black/85 pointer-events-none" /> */}
+                {/* <div
                     className="absolute inset-0 pointer-events-none"
                     style={{
                         background:
                             'radial-gradient(ellipse 90% 80% at 50% 50%, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%)',
                     }}
-                />
+                /> */}
             </div>
 
             {/* Centered Hero Headline */}
