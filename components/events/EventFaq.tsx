@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import { Icon } from "@iconify/react";
 import { EventData, EventFaq as EventFaqItem, DEFAULT_FAQS } from "@/constants/events";
+import Heading from "../shared/Heading";
 
 interface EventFaqProps {
   event: EventData;
@@ -18,42 +20,56 @@ export default function EventFaq({ event }: EventFaqProps) {
   return (
     <section className="w-full text-neutral-900 font-sans pb-14 sm:pb-20 md:pb-24 px-6 sm:px-10 md:px-16 lg:px-24 bg-white">
       <div className="flex flex-col gap-8 sm:gap-12">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-tight text-secondary leading-[1.08]">
-          Frequently Asked Questions
-        </h2>
+        <Heading
+          as="h2"
+          text="Frequently Asked Questions"
+          highlight="Questions"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight leading-[1.08]"
+        />
 
-        <div className="flex flex-col gap-2 sm:gap-3">
+        {/* ── Accordion List (Matching Home CleanFaq Design) ── */}
+        <div className="w-full">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
 
             return (
               <div
                 key={index}
-                className={`w-full transition-all duration-300 rounded-2xl ${
-                  isOpen
-                    ? "bg-[#f8f9fa] p-5 sm:p-6"
-                    : "p-4 sm:p-5 hover:bg-neutral-50/80"
-                }`}
+                className="border-b border-primary/15 first:border-t transition-colors duration-300"
               >
+                {/* ── Accordion Trigger Button ── */}
                 <button
                   type="button"
                   onClick={() => toggle(index)}
-                  className="w-full flex items-center justify-between text-left cursor-pointer select-none group"
                   aria-expanded={isOpen}
+                  className="w-full py-6 sm:py-8 flex items-center justify-between text-left group cursor-pointer select-none focus:outline-none"
                 >
-                  <span className="text-base sm:text-lg md:text-xl font-medium text-neutral-900 group-hover:text-primary transition-colors pr-6">
+                  <span className="font-primary text-xl sm:text-2xl text-black font-normal pr-6 group-hover:text-primary transition-colors duration-300 leading-snug">
                     {faq.question}
                   </span>
-                  <span className="text-2xl sm:text-3xl font-light text-neutral-400 group-hover:text-neutral-700 transition-colors shrink-0 leading-none">
-                    {isOpen ? "−" : "+"}
+
+                  <span className="shrink-0 flex items-center justify-center w-8 h-8 text-primary group-hover:text-primary/80 transition-colors duration-300">
+                    <Icon
+                      icon="ph:caret-up"
+                      className={`w-5 h-5 sm:w-6 sm:h-6 transform transition-transform duration-300 ease-out ${isOpen ? "rotate-0" : "rotate-180"
+                        }`}
+                    />
                   </span>
                 </button>
 
-                {isOpen && (
-                  <div className="mt-3 sm:mt-4 text-xs sm:text-sm md:text-base text-black/70 leading-relaxed font-normal">
-                    {faq.answer}
+                {/* ── Collapsible Answer Content (CSS Grid Smooth Accordion) ── */}
+                <div
+                  className={`grid transition-all duration-300 ease-in-out ${isOpen
+                      ? "grid-rows-[1fr] opacity-100"
+                      : "grid-rows-[0fr] opacity-0"
+                    }`}
+                >
+                  <div className="overflow-hidden">
+                    <p className="text-base sm:text-lg text-zinc-500 leading-relaxed pb-6 sm:pb-8 max-w-6xl font-normal">
+                      {faq.answer}
+                    </p>
                   </div>
-                )}
+                </div>
               </div>
             );
           })}

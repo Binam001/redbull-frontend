@@ -3,8 +3,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import EventCard, { EVENTS } from "./EventCard";
+import Heading from "../shared/Heading";
 
-export default function  FeaturedEvents() {
+export default function FeaturedEvents() {
     const [emblaRef, emblaApi] = useEmblaCarousel({
         align: "start",
         containScroll: "trimSnaps",
@@ -54,9 +55,16 @@ export default function  FeaturedEvents() {
             {/* Header with Title and Carousel Navigation Buttons */}
             <header className="w-full mb-6 sm:mb-10 lg:mb-[3vw] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 lg:gap-[1.2vw]">
                 <div>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
-                        Featured <span className="text-primary">Events</span>
-                    </h2>
+                    {/* <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
+                         <span className="text-primary"></span>
+                    </h2> */}
+                    <Heading
+                        as="h2"
+                        text="Featured Events"
+                        highlight="Events"
+                        className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight leading-[1.08]"
+                    />
+
                 </div>
 
                 {/* Arrow Controls */}

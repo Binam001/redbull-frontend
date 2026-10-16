@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import { EVENTS, type EventData } from "@/constants/events";
+import Heading from "../shared/Heading";
 
 function formatEventDate(event: EventData) {
     const raw = event.date || "";
@@ -64,9 +65,15 @@ export default function AllEvents() {
             {/* Header: Title on Left, Filter Pills on Right */}
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10 sm:mb-14">
                 <div>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
+                    {/* <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
                         All Events
-                    </h2>
+                    </h2> */}
+                    <Heading
+                        as="h2"
+                        text="All Events"
+                        highlight="Events"
+                        className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight leading-[1.08]"
+                    />
                 </div>
 
                 {/* Filter Pills on the Right */}

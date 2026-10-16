@@ -10,27 +10,31 @@ if (typeof window !== "undefined") {
 }
 
 interface ScrubWaveTextProps {
-  lines: string[];
-  triggerRef?: React.RefObject<HTMLDivElement | null>;
+  lines?: string[];
+  text?: string;
+  triggerRef?: React.RefObject<HTMLElement | null>;
   start?: string;
   end?: string;
   scrub?: boolean | number;
   className?: string;
   lineClassName?: string;
   continuous?: boolean;
+  as?: "h1" | "h2" | "h3" | "p" | "div" | "span";
 }
 
 export const ScrubWaveText: React.FC<ScrubWaveTextProps> = ({
   lines,
+  text,
   triggerRef,
   start = "top 75%",
   end = "top 20%",
   scrub = 0.8,
   className = "",
   lineClassName = "",
-  continuous = true,
+  continuous = false,
+  as: Component = "h2",
 }) => {
-  const containerRef = useRef<HTMLHeadingElement>(null);
+  const containerRef = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
@@ -69,14 +73,65 @@ export const ScrubWaveText: React.FC<ScrubWaveTextProps> = ({
         },
       );
     },
-    { scope: containerRef, dependencies: [triggerRef, start, end, scrub] },
+    { scope: containerRef, dependencies: [triggerRef, start, end, scrub, lines, text] },
   );
 
   let globalCharIndex = 0;
 
+  // Mode 1: Paragraph / Single Text with natural word wrapping
+  if (text !== undefined) {
+    const words = text.split(/\s+/).filter(Boolean);
+
+    return (
+      <Component
+        ref={containerRef as any}
+        className={`leading-relaxed ${className}`}
+      >
+        {words.map((word, wIdx) => (
+          <React.Fragment key={wIdx}>
+            <span
+              className={`inline-block whitespace-nowrap overflow-hidden align-bottom py-0.5 ${lineClassName}`}
+            >
+              {word.split("").map((char, cIdx) => {
+                const delayIndex = globalCharIndex++;
+                return (
+                  <span
+                    key={`${wIdx}-${cIdx}`}
+                    className="char-scrub inline-block will-change-transform"
+                    style={{ transformOrigin: "50% 100%" }}
+                  >
+                    <span
+                      className={`inline-block will-change-transform ${
+                        continuous ? "animate-char-wave" : ""
+                      }`}
+                      style={
+                        continuous
+                          ? { animationDelay: `${delayIndex * 0.08}s` }
+                          : undefined
+                      }
+                    >
+                      {char}
+                    </span>
+                  </span>
+                );
+              })}
+            </span>
+            {wIdx < words.length - 1 && " "}
+          </React.Fragment>
+        ))}
+      </Component>
+    );
+  }
+
+  // Mode 2: Multi-line fixed heading (Backward compatible)
+  const activeLines = lines || [];
+
   return (
-    <h2 ref={containerRef} className={`flex flex-col items-start ${className}`}>
-      {lines.map((line, lineIndex) => (
+    <Component
+      ref={containerRef as any}
+      className={`flex flex-col items-start ${className}`}
+    >
+      {activeLines.map((line, lineIndex) => (
         <span
           key={lineIndex}
           className={`inline-block overflow-hidden py-0.5 ${lineClassName}`}
@@ -108,7 +163,7 @@ export const ScrubWaveText: React.FC<ScrubWaveTextProps> = ({
           })}
         </span>
       ))}
-    </h2>
+    </Component>
   );
 };
 
