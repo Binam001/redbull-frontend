@@ -79,7 +79,7 @@ export default function EventGallery({ event }: EventGalleryProps) {
   return (
     <div className="w-full text-neutral-900 font-sans pt-6 pb-16 overflow-hidden bg-white">
       {/* ── Section Title ── */}
-      <div className="mb-6 sm:mb-10 px-6 sm:px-10 md:px-16 lg:px-24">
+      <div className="mb-6 sm:mb-10 max-w-6xl mx-auto">
         <Heading
           as="h2"
           text="Event Gallery"
@@ -124,7 +124,7 @@ export default function EventGallery({ event }: EventGalleryProps) {
                 <div
                   key={`${imgSrc}-${index}`}
                   onClick={() => onSlideClick(index)}
-                  className="shrink-0 min-w-0 pl-3 sm:pl-4 md:pl-6 basis-[82%] sm:basis-[68%] md:basis-[56%] lg:basis-[50%] select-none"
+                  className="shrink-0 min-w-0 pl-3 sm:pl-4 md:pl-6 basis-[82%] sm:basis-[68%] md:basis-[56%] lg:basis-[62%] select-none"
                 >
                   <div
                     className={`relative w-full aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden transition-[opacity,transform,filter] duration-500 ease-out ${isActive

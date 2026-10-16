@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { CAREER_JOBS } from "@/constants/careers";
 import CareerHero from "@/components/career/CareerHero";
 import CareerDetail from "@/components/career/CareerDetail";
+import CareerDetailHero from "@/components/career/CareerDetailHero";
 
 interface PageProps {
     params: Promise<{ slug: string }>;
@@ -42,8 +43,8 @@ export default async function CareerDetailPage({ params }: PageProps) {
     return (
         <main className="relative bg-black min-h-screen">
             {/* Hero Header with Grayscale Background & Job Title */}
-            <CareerHero title={job.title} />
-
+            {/* <CareerHero title={job.title} /> */}
+            <CareerDetailHero />
             {/* Application Form & Job Details Sidebar */}
             <CareerDetail job={job} />
         </main>

@@ -21,12 +21,14 @@ export default function RelatedEvents({ currentEvent }: RelatedEventsProps) {
         {/* <h2 className="text-3xl sm:text-4xl md:text-5xl tracking-tight text-secondary leading-[1.08]">
 
         </h2> */}
-        <Heading
-          as="h2"
-          text="Related Events"
-          highlight="Events"
-          className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight leading-[1.08]"
-        />
+        <div className="max-w-6xl mx-auto ">
+          <Heading
+            as="h2"
+            text="Related Events"
+            highlight="Events"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight leading-[1.08]"
+          />
+        </div>
 
         {/* 3-Column Grid using EventCard */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">

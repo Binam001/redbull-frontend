@@ -19,7 +19,7 @@ export default function EventFaq({ event }: EventFaqProps) {
 
   return (
     <section className="w-full text-neutral-900 font-sans pb-14 sm:pb-20 md:pb-24 px-6 sm:px-10 md:px-16 lg:px-24 bg-white">
-      <div className="flex flex-col gap-8 sm:gap-12">
+      <div className="flex flex-col gap-8 sm:gap-12 max-w-6xl mx-auto">
         <Heading
           as="h2"
           text="Frequently Asked Questions"
@@ -60,8 +60,8 @@ export default function EventFaq({ event }: EventFaqProps) {
                 {/* ── Collapsible Answer Content (CSS Grid Smooth Accordion) ── */}
                 <div
                   className={`grid transition-all duration-300 ease-in-out ${isOpen
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0"
+                    ? "grid-rows-[1fr] opacity-100"
+                    : "grid-rows-[0fr] opacity-0"
                     }`}
                 >
                   <div className="overflow-hidden">

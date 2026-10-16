@@ -18,6 +18,7 @@ interface ScrubWaveTextProps {
   scrub?: boolean | number;
   className?: string;
   lineClassName?: string;
+  firstLetterClassName?: string;
   continuous?: boolean;
   as?: "h1" | "h2" | "h3" | "p" | "div" | "span";
 }
@@ -31,6 +32,7 @@ export const ScrubWaveText: React.FC<ScrubWaveTextProps> = ({
   scrub = 0.8,
   className = "",
   lineClassName = "",
+  firstLetterClassName = "",
   continuous = false,
   as: Component = "h2",
 }) => {
@@ -87,38 +89,44 @@ export const ScrubWaveText: React.FC<ScrubWaveTextProps> = ({
         ref={containerRef as any}
         className={`leading-relaxed ${className}`}
       >
-        {words.map((word, wIdx) => (
-          <React.Fragment key={wIdx}>
-            <span
-              className={`inline-block whitespace-nowrap overflow-hidden align-bottom py-0.5 ${lineClassName}`}
-            >
-              {word.split("").map((char, cIdx) => {
-                const delayIndex = globalCharIndex++;
-                return (
-                  <span
-                    key={`${wIdx}-${cIdx}`}
-                    className="char-scrub inline-block will-change-transform"
-                    style={{ transformOrigin: "50% 100%" }}
-                  >
+        {words.map((word, wIdx) => {
+          const isFirstWord = wIdx === 0;
+          return (
+            <React.Fragment key={wIdx}>
+              <span
+                className={`inline-block whitespace-nowrap align-baseline ${lineClassName}`}
+              >
+                {word.split("").map((char, cIdx) => {
+                  const isFirstLetter = isFirstWord && cIdx === 0;
+                  const delayIndex = globalCharIndex++;
+                  return (
                     <span
-                      className={`inline-block will-change-transform ${
-                        continuous ? "animate-char-wave" : ""
+                      key={`${wIdx}-${cIdx}`}
+                      className={`char-scrub inline-block align-baseline will-change-transform ${
+                        isFirstLetter && firstLetterClassName ? firstLetterClassName : ""
                       }`}
-                      style={
-                        continuous
-                          ? { animationDelay: `${delayIndex * 0.08}s` }
-                          : undefined
-                      }
+                      style={{ transformOrigin: "50% 100%" }}
                     >
-                      {char}
+                      <span
+                        className={`inline-block align-baseline will-change-transform ${
+                          continuous ? "animate-char-wave" : ""
+                        }`}
+                        style={
+                          continuous
+                            ? { animationDelay: `${delayIndex * 0.08}s` }
+                            : undefined
+                        }
+                      >
+                        {char}
+                      </span>
                     </span>
-                  </span>
-                );
-              })}
-            </span>
-            {wIdx < words.length - 1 && " "}
-          </React.Fragment>
-        ))}
+                  );
+                })}
+              </span>
+              {wIdx < words.length - 1 && " "}
+            </React.Fragment>
+          );
+        })}
       </Component>
     );
   }
@@ -137,11 +145,14 @@ export const ScrubWaveText: React.FC<ScrubWaveTextProps> = ({
           className={`inline-block overflow-hidden py-0.5 ${lineClassName}`}
         >
           {line.split("").map((char, charIndex) => {
+            const isFirstLetter = lineIndex === 0 && charIndex === 0;
             const delayIndex = globalCharIndex++;
             return (
               <span
                 key={`${lineIndex}-${charIndex}`}
-                className="char-scrub inline-block will-change-transform"
+                className={`char-scrub inline-block will-change-transform ${
+                  isFirstLetter && firstLetterClassName ? firstLetterClassName : ""
+                }`}
                 style={{ transformOrigin: "50% 100%" }}
               >
                 <span

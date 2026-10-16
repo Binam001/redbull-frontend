@@ -42,7 +42,7 @@ export const navLinks: NavLink[] = [
   { name: "Events", href: "/events" },
   { name: "Career", href: "/career" },
   { name: "Athletes", href: "/athletes" },
-  { name: "Company", href: "/about" },
+  // { name: "Company", href: "/about" },
   { name: "Contact", href: "/contact" },
 ];
 

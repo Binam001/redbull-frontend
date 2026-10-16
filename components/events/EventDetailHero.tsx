@@ -106,6 +106,16 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
       : DEFAULT_HERO_IMAGES;
   }, [event.carouselImages]);
 
+  const startDateText = useMemo(() => {
+    if (event.month && event.day) {
+      const monthName =
+        event.month.charAt(0).toUpperCase() +
+        event.month.slice(1).toLowerCase();
+      return `Starts ${monthName} ${event.day}, 2026`;
+    }
+    return event.date;
+  }, [event.month, event.day, event.date]);
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mixRatioRef = useRef(0);
   const glRef = useRef<WebGLRenderingContext | null>(null);
@@ -363,7 +373,7 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
   }, [currentIndex, isTransitioning, nextSlide]);
 
   return (
-    <section className="relative w-full h-screen min-h-screen overflow-hidden select-none bg-black p-0 m-0">
+    <section className="relative w-full h-[90vh] min-h-[70vh] overflow-hidden select-none bg-black p-0 m-0">
       {/* WebGL Organic Liquid Dissolve Shader Canvas */}
       <canvas
         ref={canvasRef}
@@ -371,66 +381,38 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
       />
 
       {/* Cinematic Dark Vignettes for Maximum Readability */}
-      {/* <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/90 via-black/40 to-black/30" /> */}
-      <div className="absolute inset-0 pointer-events-none bg-linear-to-r from-black/85 via-black/45 to-transparent w-full md:w-4/5" />
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
 
-      {/* Fixed Bottom-Left Content (Event Name, Place, Date & Status) */}
-      <div className="absolute inset-0 flex flex-col justify-end px-6 sm:px-10 md:px-16 lg:px-24 pb-12 sm:pb-16 md:pb-20 z-10 pointer-events-none">
-        <div className="max-w-4xl pointer-events-auto">
-          {/* Status Pill Badge above Title (matching reference picture) */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs sm:text-[13px] font-bold tracking-wider uppercase mb-3 sm:mb-4 shadow-sm transition-colors">
-            <span className="w-2 h-2 rounded-full bg-[#cb2026]" />
-            <span>{event.statusCtaText || "Tickets LIVE NOW!"}</span>
-          </div>
-
-          {/* Event Title */}
-          <h1
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-white leading-[1.08]"
-          >
-            {event.title}
-          </h1>
-
-          {/* Location Subtitle */}
-          <p className="mt-2 text-base sm:text-lg md:text-xl text-neutral-300 font-medium">
-            {event.fullLocation || `${event.location}, ${event.country}`}
-          </p>
-
-          {/* Date Text (calendar badge and right location removed) */}
-          <p className="mt-3 sm:mt-4 text-white/80 font-medium text-sm sm:text-base tracking-wide">
-            {event.date}
-          </p>
-
-          {/* Carousel Slide Indicators moved to the left below date */}
-          <div className="mt-6 flex items-center gap-2">
-            {heroImages.map((_, idx) => {
-              const isActive = idx === currentIndex;
-              return (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => goToSlide(idx)}
-                  aria-label={`Go to slide ${idx + 1}`}
-                  className={`relative overflow-hidden transition-all duration-300 rounded-full cursor-pointer ${
-                    isActive
-                      ? "w-10 sm:w-12 h-1.5 bg-white/30"
-                      : "w-2 h-1.5 bg-white/40 hover:bg-white/75"
+      {/* Carousel Slide Indicators */}
+      <div className="absolute inset-x-0 bottom-24 sm:bottom-32 md:bottom-30 z-10 flex flex-col items-center justify-center pointer-events-none px-6">
+        <div className="flex items-center justify-center gap-2 pointer-events-auto bg-black/40 backdrop-blur-md px-3.5 py-2 rounded-full border border-white/15 shadow-lg">
+          {heroImages.map((_, idx) => {
+            const isActive = idx === currentIndex;
+            return (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => goToSlide(idx)}
+                aria-label={`Go to slide ${idx + 1}`}
+                className={`relative overflow-hidden transition-all duration-300 rounded-full cursor-pointer ${isActive
+                  ? "w-10 sm:w-12 h-1.5 bg-white/30"
+                  : "w-2 h-1.5 bg-white/40 hover:bg-white/75"
                   }`}
-                >
-                  {isActive && (
-                    <span
-                      className="absolute inset-y-0 left-0 bg-white rounded-full transition-none shadow-[0_0_8px_rgba(255,255,255,0.9)]"
-                      style={{ width: `${slideProgress}%` }}
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </div>
+              >
+                {isActive && (
+                  <span
+                    className="absolute inset-y-0 left-0 bg-white rounded-full transition-none shadow-[0_0_8px_rgba(255,255,255,0.9)]"
+                    style={{ width: `${slideProgress}%` }}
+                  />
+                )}
+              </button>
+            );
+          })}
         </div>
       </div>
 
       {/* Bottom-Right Controls: Same Carousel Navigation Button like Home Page */}
-      <div className="absolute right-6 sm:right-10 md:right-16 lg:right-24 bottom-12 sm:bottom-16 md:bottom-20 z-10 flex items-center gap-2 pointer-events-auto">
+      {/* <div className="absolute right-6 sm:right-10 md:right-16 lg:right-24 bottom-24 sm:bottom-32 md:bottom-30 z-10 flex items-center gap-2 pointer-events-auto">
         <button
           type="button"
           onClick={prevSlide}
@@ -454,7 +436,7 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </button>
-      </div>
+      </div> */}
     </section>
   );
 }
