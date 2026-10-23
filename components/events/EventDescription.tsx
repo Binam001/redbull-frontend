@@ -46,18 +46,23 @@ function renderMarkdownLinks(text: string) {
 
 export default function EventDescription({ event }: EventDescriptionProps) {
   const leadDesc = event.leadDescription || event.description;
-  const paragraphs = event.aboutEvent && event.aboutEvent.length > 0 ? event.aboutEvent : [event.description];
+  const paragraphs =
+    event.aboutEvent && event.aboutEvent.length > 0
+      ? event.aboutEvent
+      : [event.description];
   const venueImage = event.venueImage || "/images/demo-location.jpg";
   const venueParagraphs: string[] = Array.isArray(event.aboutVenue)
     ? event.aboutVenue
     : event.aboutVenue
       ? [event.aboutVenue]
       : [
-        `Each year the event takes place in ${event.fullLocation || `${event.location}, ${event.country}`}. Experience the atmosphere and high-energy excitement live at this world-class venue.`,
-      ];
+          `Each year the event takes place in ${event.fullLocation || `${event.location}, ${event.country}`}. Experience the atmosphere and high-energy excitement live at this world-class venue.`,
+        ];
 
   // Clean markdown links syntax [label](url) -> label for clean animated scrub typography
-  const cleanLeadDesc = leadDesc ? leadDesc.replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1") : "";
+  const cleanLeadDesc = leadDesc
+    ? leadDesc.replace(/\[([^\]]+)\]\(([^)]+)\)/g, "$1")
+    : "";
 
   return (
     <section className="relative w-full text-neutral-900 font-sans pb-14 sm:pb-20 px-6 sm:px-10 md:px-16 lg:px-24 bg-white">
@@ -82,9 +87,12 @@ export default function EventDescription({ event }: EventDescriptionProps) {
               end="top 20%"
               scrub={0.8}
               continuous={false}
-              firstLetterClassName="text-[#cb2026] font-bold text-[2em] leading-none align-baseline inline-block mr-0.5"
+              firstLetterClassName="text-primary font-bold text-[2em] leading-none align-baseline inline-block mr-0.5"
               className="text-base sm:text-lg md:text-xl lg:text-2xl text-neutral-800 leading-relaxed font-medium"
             />
+            {/* <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-neutral-800 leading-relaxed font-medium">
+              {cleanLeadDesc}
+            </p> */}
           </div>
         )}
 

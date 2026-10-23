@@ -55,7 +55,7 @@ const Navbar = () => {
     const matched = navLinks.find(
       (link) =>
         (link.href !== "/" && pathname.startsWith(link.href)) ||
-        link.dropdownItems?.some((sub) => pathname.startsWith(sub.href))
+        link.dropdownItems?.some((sub) => pathname.startsWith(sub.href)),
     );
     if (matched) {
       setActiveLink(matched.name);
@@ -139,10 +139,9 @@ const Navbar = () => {
         }}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: "easeInOut" }}
-        className={`fixed top-0 left-0 w-full z-210 px-4 sm:px-8 lg:px-[5vw] transition-all duration-300 ${scrolled
-          ? "py-3 lg:py-[0.75vw] bg-white"
-          : "py-4 lg:py-[1.1vw] bg-transparent"
-          }`}
+        className={`fixed top-0 left-0 w-full z-210 px-4 sm:px-8 lg:px-[5vw] py-1 transition-all duration-300 ${
+          scrolled ? "bg-white border border-foreground/10" : "bg-transparent"
+        }`}
       >
         <div className="w-full flex items-center justify-between">
           {/* Logo (Always on Left) */}
@@ -223,7 +222,7 @@ const Navbar = () => {
                               : isScrolledOrLight
                                 ? "text-black/75 hover:text-black"
                                 : "text-white/85 hover:text-white"
-                        }`}
+                      }`}
                     >
                       <span className="relative">
                         {link.name}
@@ -231,7 +230,9 @@ const Navbar = () => {
                         {/* Interactive Animated Underline */}
                         <span
                           className={`absolute -bottom-1 lg:-bottom-[0.2vw] left-0 h-[2px] lg:h-[0.11vw] ${
-                            isEnergyDrinksPage && !scrolled ? "bg-white" : "bg-[#CB2026]"
+                            isEnergyDrinksPage && !scrolled
+                              ? "bg-white"
+                              : "bg-[#CB2026]"
                           } rounded-full transition-all duration-300 ease-out ${
                             showUnderline || isDropdownOpen
                               ? "w-full opacity-100"
@@ -261,70 +262,80 @@ const Navbar = () => {
 
                     {/* Desktop Dropdown Popover */}
                     <AnimatePresence>
-                      {link.hasDropdown && isDropdownOpen && link.dropdownItems && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 8, scale: 0.97 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 8, scale: 0.97 }}
-                          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                          onMouseEnter={() => {
-                            if (dropdownTimeoutRef.current) {
-                              clearTimeout(dropdownTimeoutRef.current);
-                              dropdownTimeoutRef.current = null;
-                            }
-                          }}
-                          onMouseLeave={() => {
-                            setHoveredLink(null);
-                            dropdownTimeoutRef.current = setTimeout(() => {
-                              setActiveDropdown(null);
-                            }, 180);
-                          }}
-                          className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 lg:pt-[0.5vw] z-50 pointer-events-auto"
-                        >
-                          <div className="bg-black/80 backdrop-blur-2xl rounded-3xl lg:rounded-[1.2vw] p-2.5 lg:p-[0.6vw] border border-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.5)] flex flex-col gap-1.5 lg:gap-[0.35vw] w-[350px] sm:w-[380px] lg:w-[20vw]">
-                            {link.dropdownItems.map((subItem) => {
-                              const isSubActive = pathname.startsWith(subItem.href);
-                              return (
-                                <Link
-                                  key={subItem.name}
-                                  href={subItem.href}
-                                  onClick={() => {
-                                    setActiveLink(link.name);
-                                    setActiveDropdown(null);
-                                  }}
-                                  className={`group flex items-center gap-3.5 lg:gap-[0.7vw] p-2.5 lg:p-[0.5vw] rounded-2xl lg:rounded-[0.8vw] transition-all duration-200 cursor-pointer text-left ${isSubActive
-                                    ? "bg-white/15 text-white"
-                                    : "hover:bg-white/10 text-white"
+                      {link.hasDropdown &&
+                        isDropdownOpen &&
+                        link.dropdownItems && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                            transition={{
+                              duration: 0.2,
+                              ease: [0.16, 1, 0.3, 1],
+                            }}
+                            onMouseEnter={() => {
+                              if (dropdownTimeoutRef.current) {
+                                clearTimeout(dropdownTimeoutRef.current);
+                                dropdownTimeoutRef.current = null;
+                              }
+                            }}
+                            onMouseLeave={() => {
+                              setHoveredLink(null);
+                              dropdownTimeoutRef.current = setTimeout(() => {
+                                setActiveDropdown(null);
+                              }, 180);
+                            }}
+                            className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 lg:pt-[0.5vw] z-50 pointer-events-auto"
+                          >
+                            <div className="bg-black/80 backdrop-blur-2xl rounded-3xl lg:rounded-[1.2vw] p-2.5 lg:p-[0.6vw] border border-white/10 shadow-[0_24px_60px_rgba(0,0,0,0.5)] flex flex-col gap-1.5 lg:gap-[0.35vw] w-[350px] sm:w-[380px] lg:w-[20vw]">
+                              {link.dropdownItems.map((subItem) => {
+                                const isSubActive = pathname.startsWith(
+                                  subItem.href,
+                                );
+                                return (
+                                  <Link
+                                    key={subItem.name}
+                                    href={subItem.href}
+                                    onClick={() => {
+                                      setActiveLink(link.name);
+                                      setActiveDropdown(null);
+                                    }}
+                                    className={`group flex items-center gap-3.5 lg:gap-[0.7vw] p-2.5 lg:p-[0.5vw] rounded-2xl lg:rounded-[0.8vw] transition-all duration-200 cursor-pointer text-left ${
+                                      isSubActive
+                                        ? "bg-white/15 text-white"
+                                        : "hover:bg-white/10 text-white"
                                     }`}
-                                >
-                                  {/* Thumbnail container */}
-                                  <div className="relative w-14 h-14 sm:w-16 sm:h-16 lg:w-[3.3vw] lg:h-[3.3vw] rounded-xl lg:rounded-[0.6vw] overflow-hidden bg-black shrink-0 border border-white/10 flex items-center justify-center shadow-inner">
-                                    {subItem.image && (
-                                      <Image
-                                        src={subItem.image}
-                                        alt={subItem.name}
-                                        fill
-                                        sizes="64px"
-                                        className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
-                                      />
-                                    )}
-                                  </div>
+                                  >
+                                    {/* Thumbnail container */}
+                                    <div className="relative w-14 h-14 sm:w-16 sm:h-16 lg:w-[3.3vw] lg:h-[3.3vw] rounded-xl lg:rounded-[0.6vw] overflow-hidden bg-black shrink-0 border border-white/10 flex items-center justify-center shadow-inner">
+                                      {subItem.image && (
+                                        <Image
+                                          src={subItem.image}
+                                          alt={subItem.name}
+                                          fill
+                                          sizes="64px"
+                                          className="object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                                        />
+                                      )}
+                                    </div>
 
-                                  {/* Text info */}
-                                  <div className="flex flex-col justify-center min-w-0 flex-1 text-left">
-                                    <span className="text-[11px] sm:text-xs lg:text-[0.6vw] font-semibold tracking-wider text-white/60 uppercase">
-                                      {subItem.subtitle || subItem.badge || subItem.volume}
-                                    </span>
-                                    <span className="text-[14.5px] sm:text-[15.5px] lg:text-[0.8vw] font-bold text-white tracking-tight leading-snug group-hover:text-[#CB2026] transition-colors duration-200">
-                                      {subItem.name}
-                                    </span>
-                                  </div>
-                                </Link>
-                              );
-                            })}
-                          </div>
-                        </motion.div>
-                      )}
+                                    {/* Text info */}
+                                    <div className="flex flex-col justify-center min-w-0 flex-1 text-left">
+                                      <span className="text-[11px] sm:text-xs lg:text-[0.6vw] font-semibold tracking-wider text-white/60 uppercase">
+                                        {subItem.subtitle ||
+                                          subItem.badge ||
+                                          subItem.volume}
+                                      </span>
+                                      <span className="text-[14.5px] sm:text-[15.5px] lg:text-[0.8vw] font-bold text-white tracking-tight leading-snug group-hover:text-[#CB2026] transition-colors duration-200">
+                                        {subItem.name}
+                                      </span>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </motion.div>
+                        )}
                     </AnimatePresence>
                   </div>
                 );
@@ -350,20 +361,23 @@ const Navbar = () => {
                   animate={
                     isMenuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }
                   }
-                  className={`block w-6 h-0.5 transition-colors duration-300 ${isMenuOpen || isScrolledOrLight ? "bg-black" : "bg-white"
-                    }`}
+                  className={`block w-6 h-0.5 transition-colors duration-300 ${
+                    isMenuOpen || isScrolledOrLight ? "bg-black" : "bg-white"
+                  }`}
                 />
                 <motion.span
                   animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-                  className={`block w-6 h-0.5 transition-colors duration-300 ${isMenuOpen || isScrolledOrLight ? "bg-black" : "bg-white"
-                    }`}
+                  className={`block w-6 h-0.5 transition-colors duration-300 ${
+                    isMenuOpen || isScrolledOrLight ? "bg-black" : "bg-white"
+                  }`}
                 />
                 <motion.span
                   animate={
                     isMenuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }
                   }
-                  className={`block w-6 h-0.5 transition-colors duration-300 ${isMenuOpen || isScrolledOrLight ? "bg-black" : "bg-white"
-                    }`}
+                  className={`block w-6 h-0.5 transition-colors duration-300 ${
+                    isMenuOpen || isScrolledOrLight ? "bg-black" : "bg-white"
+                  }`}
                 />
               </button>
             </div>
@@ -399,21 +413,21 @@ const Navbar = () => {
                     <div className="w-full">
                       <button
                         type="button"
-                        onClick={() =>
-                          setMobileDropdownOpen((prev) => !prev)
-                        }
-                        className={`flex items-center justify-center gap-2 text-xl font-semibold py-2 transition-colors w-fit mx-auto cursor-pointer ${activeLink === link.name
-                          ? "text-[#CB2026]"
-                          : "text-black/60 hover:text-black"
-                          }`}
+                        onClick={() => setMobileDropdownOpen((prev) => !prev)}
+                        className={`flex items-center justify-center gap-2 text-xl font-semibold py-2 transition-colors w-fit mx-auto cursor-pointer ${
+                          activeLink === link.name
+                            ? "text-[#CB2026]"
+                            : "text-black/60 hover:text-black"
+                        }`}
                       >
                         {link.name}
                         <Icon
                           icon="mdi:chevron-down"
-                          className={`w-5 h-5 transition-transform duration-200 ${mobileDropdownOpen
-                            ? "rotate-180 text-[#CB2026]"
-                            : "text-black/40"
-                            }`}
+                          className={`w-5 h-5 transition-transform duration-200 ${
+                            mobileDropdownOpen
+                              ? "rotate-180 text-[#CB2026]"
+                              : "text-black/40"
+                          }`}
                         />
                       </button>
 
@@ -426,7 +440,9 @@ const Navbar = () => {
                             className="flex flex-col gap-2 mt-2 mb-2 overflow-hidden bg-[#181c22]/95 backdrop-blur-2xl rounded-3xl p-2.5 shadow-xl w-full max-w-sm border border-white/10"
                           >
                             {link.dropdownItems.map((subItem) => {
-                              const isSubActive = pathname.startsWith(subItem.href);
+                              const isSubActive = pathname.startsWith(
+                                subItem.href,
+                              );
                               return (
                                 <Link
                                   key={subItem.name}
@@ -435,10 +451,11 @@ const Navbar = () => {
                                     setActiveLink(link.name);
                                     setIsMenuOpen(false);
                                   }}
-                                  className={`group flex items-center gap-3 p-2.5 rounded-2xl transition-all duration-200 text-left ${isSubActive
-                                    ? "bg-white/15 text-white"
-                                    : "hover:bg-white/10 text-white"
-                                    }`}
+                                  className={`group flex items-center gap-3 p-2.5 rounded-2xl transition-all duration-200 text-left ${
+                                    isSubActive
+                                      ? "bg-white/15 text-white"
+                                      : "hover:bg-white/10 text-white"
+                                  }`}
                                 >
                                   <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-black shrink-0 border border-white/10 flex items-center justify-center">
                                     {subItem.image && (
@@ -453,7 +470,9 @@ const Navbar = () => {
                                   </div>
                                   <div className="flex flex-col justify-center min-w-0 flex-1 text-left">
                                     <span className="text-[10.5px] font-semibold tracking-wider text-white/60 uppercase">
-                                      {subItem.subtitle || subItem.badge || subItem.volume}
+                                      {subItem.subtitle ||
+                                        subItem.badge ||
+                                        subItem.volume}
                                     </span>
                                     <span className="text-[13.5px] font-bold text-white tracking-tight leading-snug truncate">
                                       {subItem.name}
@@ -473,10 +492,11 @@ const Navbar = () => {
                         setActiveLink(link.name);
                         setIsMenuOpen(false);
                       }}
-                      className={`flex items-center justify-center gap-2 text-xl font-semibold py-2 transition-colors w-fit mx-auto cursor-pointer ${activeLink === link.name
-                        ? "text-[#CB2026]"
-                        : "text-black/50 hover:text-black"
-                        }`}
+                      className={`flex items-center justify-center gap-2 text-xl font-semibold py-2 transition-colors w-fit mx-auto cursor-pointer ${
+                        activeLink === link.name
+                          ? "text-[#CB2026]"
+                          : "text-black/50 hover:text-black"
+                      }`}
                     >
                       {link.name}
                     </Link>

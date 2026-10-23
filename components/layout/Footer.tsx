@@ -6,9 +6,90 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { SparklesCore } from "../shared/Sparkles";
 
+interface FooterLink {
+  label: string;
+  href?: string;
+  isExternal?: boolean;
+}
+
+interface FooterSection {
+  title: string;
+  type?: "links" | "address";
+  items: FooterLink[];
+}
+
+const FOOTER_SECTIONS: FooterSection[] = [
+  {
+    title: "Links",
+    items: [
+      { label: "Home", href: "/" },
+      { label: "Energy Drinks", href: "/energy-drinks/red-bull-250ml" },
+      { label: "Events", href: "/events" },
+    ],
+  },
+  {
+    title: "Company",
+    items: [
+      { label: "Careers", href: "/career" },
+      { label: "Company", href: "/about" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  {
+    title: "Location",
+    type: "address",
+    items: [
+      {
+        label: "Maharajgunj,\nKathmandu, Nepal",
+        href: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23762.23085371139!2d85.32150772974944!3d27.70874025757573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb193854e20abb%3A0x8ff36d1f00e10346!2sMaharajgunj%2C%20Kathmandu%2C%20Bagmati%20Province%2044600!5e0!3m2!1sen!2snp!4v1792751300565!5m2!1sen!2snp",
+        isExternal: true,
+      },
+      { label: "01-4546409", href: "tel:014546409" },
+    ],
+  },
+  {
+    title: "Socials",
+    items: [
+      {
+        label: "Facebook",
+        href: "https://facebook.com/redbull",
+        isExternal: true,
+      },
+      {
+        label: "LinkedIn",
+        href: "https://linkedin.com/company/red-bull",
+        isExternal: true,
+      },
+      {
+        label: "Instagram",
+        href: "https://instagram.com/redbull",
+        isExternal: true,
+      },
+    ],
+  },
+];
+
+function LinkIcon({ className = "w-3.5 h-3.5" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth="2"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M7 17L17 7M17 7H7M17 7V17"
+      />
+    </svg>
+  );
+}
+
 const FooterContent = () => {
   return (
-    <footer className="relative w-full bg-black text-white overflow-hidden select-none min-h-[92vh] flex flex-col justify-between pt-16 sm:pt-20 pb-6 px-6 sm:px-10 lg:px-16 z-10">
+    <footer className="relative w-full bg-black text-white overflow-hidden min-h-[92vh] flex flex-col justify-between pt-16 sm:pt-20 pb-6 px-6 sm:px-10 lg:px-16 z-10">
       {/* Background Secondary (#233971) Blue Glow Layers */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
         {/* Layer 1: Ambient Atmospheric Glow */}
@@ -46,129 +127,49 @@ const FooterContent = () => {
       <div className="relative z-10 w-full flex flex-col justify-between flex-1">
         {/* Top Section: Links (Navigation & Company), Location & Socials matching the reference layout */}
         <div className="w-full max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-y-8 gap-x-6 sm:gap-x-10 lg:gap-16 pt-2 sm:pt-4">
-          {/* Column 1: Navigation */}
-          <div>
-            <ul className="space-y-3.5 text-sm sm:text-[15px] font-medium text-white/80 text-center">
+          {FOOTER_SECTIONS.map((section, idx) => (
+            <div key={idx} className="text-left flex flex-col items-start">
               <h4 className="text-sm sm:text-xl font-bold text-white tracking-tight mb-3.5">
-                Links
+                {section.title}
               </h4>
-              <li>
-                <Link
-                  href="/"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/energy-drinks/red-bull-250ml"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  Energy Drinks
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/events"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  Events
-                </Link>
-              </li>
-            </ul>
-          </div>
 
-          {/* Column 2: Company */}
-          <div>
-            <ul className="space-y-3.5 text-sm sm:text-[15px] font-medium text-white/80 text-center">
-              <h4 className="text-sm sm:text-xl font-bold text-white tracking-tight mb-3.5">
-                Links
-              </h4>
-              <li>
-                <Link
-                  href="/career"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/about"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  Company
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contact"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 3: Location */}
-          <div className="text-center">
-            <h4 className="text-sm sm:text-xl font-bold text-white tracking-tight mb-3.5">
-              Location
-            </h4>
-            <div className="space-y-1.5 text-sm sm:text-[15px] text-white/70">
-              <p>Maharajgunj,</p>
-              <p>Kathmandu, Nepal</p>
-              <p className="pt-2">
-                <a
-                  href="tel:014546409"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  01-4546409
-                </a>
-              </p>
+              <ul className="space-y-3.5 text-sm sm:text-[15px] font-medium text-white/80 text-left">
+                {section.items.map((item, itemIdx) => (
+                  <li key={itemIdx}>
+                    {!item.href ? (
+                      <span className="whitespace-pre-line text-white/70">{item.label}</span>
+                    ) : item.isExternal ? (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-end gap-1.5 text-white/70 hover:text-white group transition-colors duration-200"
+                      >
+                        <span className="whitespace-pre-line text-left">{item.label}</span>
+                        <LinkIcon className="w-3.5 h-3.5 mb-0.5 text-white/40 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 shrink-0" />
+                      </a>
+                    ) : item.href.startsWith("tel:") || item.href.startsWith("mailto:") ? (
+                      <a
+                        href={item.href}
+                        className="inline-flex items-center gap-1.5 text-white/70 hover:text-white group transition-colors duration-200"
+                      >
+                        <span className="whitespace-pre-line text-left">{item.label}</span>
+                        <LinkIcon className="w-3.5 h-3.5 text-white/40 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 shrink-0" />
+                      </a>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        className="inline-flex items-center gap-1.5 hover:text-white group transition-colors duration-200"
+                      >
+                        <span className="whitespace-pre-line text-left">{item.label}</span>
+                        <LinkIcon className="w-3.5 h-3.5 text-white/40 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 shrink-0" />
+                      </Link>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-
-          {/* Column 4: Socials */}
-          <div className="text-center">
-            <h4 className="text-sm sm:text-xl font-bold text-white tracking-tight mb-3.5">
-              Socials
-            </h4>
-            <ul className="space-y-3.5 text-sm sm:text-[15px] text-white/70">
-              <li>
-                <a
-                  href="https://facebook.com/redbull"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  Facebook
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://linkedin.com/company/red-bull"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  LinkedIn
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://instagram.com/redbull"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors duration-200"
-                >
-                  Instagram
-                </a>
-              </li>
-            </ul>
-          </div>
+          ))}
         </div>
 
         {/* Bottom / Dome Section: Red Bull Logo on bottom and Unleash Your BABAAL Energy */}
@@ -183,7 +184,7 @@ const FooterContent = () => {
             />
           </div>
           <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight sm:tracking-tighter uppercase drop-shadow-[0_0_35px_rgba(48,82,175,0.85)] mt-1 sm:mt-2 leading-none">
-            Unleash Your BABAAL  Energy!!
+            Unleash Your BABAAL Energy!!
           </h2>
         </div>
 
@@ -191,11 +192,14 @@ const FooterContent = () => {
         <div className="w-full flex flex-col md:flex-row items-center justify-between gap-4 border-t border-white/20 pt-4 sm:pt-5 mx-auto">
           {/* Copyright */}
           <span className="text-xs xl:text-[0.9vw] font-medium tracking-wide text-center sm:text-left select-none text-white/80">
-            Copyright © {new Date().getFullYear()} Red Bull. All Rights Reserved.
+            Copyright © {new Date().getFullYear()} Red Bull. All Rights
+            Reserved.
           </span>
 
           <div className="flex flex-col md:flex-row items-center gap-2">
-            <p className="text-xs xl:text-[0.9vw] text-white/80">Designed & Developed by</p>
+            <p className="text-xs xl:text-[0.9vw] text-white/80">
+              Designed & Developed by
+            </p>
             <Link
               target="_blank"
               rel="noopener noreferrer"

@@ -1,7 +1,9 @@
+import FloatingCircle from "@/components/red-bill-250ml/FloatingCircle";
+import HeroSection from "@/components/red-bill-250ml/HeroSection";
 import ProductCta from "@/components/red-bill-250ml/ProductCta";
 import ProductDivider from "@/components/red-bill-250ml/ProductDivider";
 import ProductsHero from "@/components/red-bill-250ml/ProductsHero";
-import ShortHero from "@/components/red-bill-250ml/ShortHero";
+import SideBullSection from "@/components/red-bill-250ml/SideBullSection";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,9 +15,11 @@ export const metadata: Metadata = {
 export default function RedBull250mlPage() {
   return (
     <main className="relative">
-
-      <ShortHero />
-      <ProductsHero />
+      <HeroSection />
+      <FloatingCircle />
+      <SideBullSection />
+      {/* <ShortHero /> */}
+      {/* <ProductsHero /> */}
       <ProductDivider />
       <ProductCta />
     </main>

@@ -31,7 +31,7 @@ export default function RelatedEvents({ currentEvent }: RelatedEventsProps) {
         </div>
 
         {/* 3-Column Grid using EventCard */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-[1.5vw]">
           {related.map((event) => (
             <div key={event.id} className="min-w-0 flex flex-col">
               <EventCard event={event} />

@@ -1,4 +1,4 @@
-export type EventStatus = "live" | "live-soon" | "tickets" | "past";
+export type EventStatus = "live" | "live-soon" | "tickets" | "upcoming" | "past";
 
 export interface EventFaq {
     question: string;
@@ -265,8 +265,8 @@ export const EVENTS: EventData[] = [
         fullLocation: "Buenos Aires, Argentina",
         flagEmoji: "🇦🇷",
         description: "The world's most electrifying Spanish freestyle rap showdown bringing razor-sharp verbal battles to Buenos Aires.",
-        status: "live-soon",
-        statusCtaText: "Live Soon",
+        status: "upcoming",
+        statusCtaText: "Upcoming",
         image: "/images/home/hero/adventure-2.jpg",
         carouselImages: [
             "/images/home/hero/hero-1.jpg",
@@ -301,8 +301,8 @@ export const EVENTS: EventData[] = [
         fullLocation: "Polignano a Mare, Italy",
         flagEmoji: "🇮🇹",
         description: "Divers execute incredible acrobatics from heights of up to 27m into the Adriatic Sea in the ultimate display of skill.",
-        status: "tickets",
-        statusCtaText: "Tickets LIVE NOW!",
+        status: "upcoming",
+        statusCtaText: "Upcoming",
         image: "/images/home/hero/adventure-1.jpg",
         carouselImages: [
             "/images/home/hero/hero-1.jpg",
@@ -321,6 +321,69 @@ export const EVENTS: EventData[] = [
             "The whitewashed seaside cliff perches of Polignano a Mare in southern Italy's Apulia region provide an unmatched natural amphitheater overlooking the azure Adriatic Sea, famed for dramatic limestone caves and sea-carved grottos.",
             "Unique to this historic fishing town, athletes must walk through a private civilian living room perched over the cliff edge before stepping onto the custom-built diving platforms suspended high above the Cala Porto cove.",
             "With sun-bleached houses clinging precariously to the 20-meter limestone gorge, the venue provides a breathtaking 360-degree viewing panorama for over 50,000 spectators who pack every vantage point of the pebble beach and clifftop promenades.",
+        ],
+    },
+    {
+        id: "event-7",
+        slug: "red-bull-hardline-wales",
+        title: "Red Bull Hardline Wales",
+        sport: "Downhill MTB",
+        date: "1 – 2 June 2026",
+        dateShort: "1–2 Jun",
+        month: "JUN",
+        day: "1",
+        location: "Dyfi Valley",
+        country: "United Kingdom",
+        fullLocation: "Dyfi Valley, Wales, United Kingdom",
+        flagEmoji: "🇬🇧",
+        description: "The toughest downhill mountain bike race in the world returns with massive road gaps and brutal technical terrain.",
+        status: "past",
+        statusCtaText: "Event Ended",
+        image: "/images/home/hero/adventure-3.jpg",
+        carouselImages: [
+            "/images/home/hero/hero-1.jpg",
+            "/images/home/hero/hero-2.jpg",
+            "/images/home/hero/hero-3.jpg",
+        ],
+        venueImage: "/images/demo-location.jpg",
+        leadDescription: "Red Bull Hardline returns to Wales' unforgiving Dyfi Valley. Known unanimously as the world's most demanding downhill mountain bike race, Hardline pushes riders to the absolute limit with enormous 90-foot road gaps, vertical rock drops, and treacherous root gardens through steep Welsh forestry.",
+        aboutEvent: [
+            "Conceived by Dan Atherton, Red Bull Hardline combines massive freestyle features with brutal downhill speed. Only an invitation-only group of the planet's most fearless riders take on the daunting course.",
+            "Riders hit speeds approaching 70 km/h before launching over gargantuan rock steps and canyon gaps where even the slightest misjudgment carries severe consequences.",
+        ],
+        aboutVenue: [
+            "Nestled in the remote mountains of the Dyfi Valley in Mid Wales, the venue features precipitous ridgelines and notoriously unpredictable Welsh weather conditions, transforming the track into a greasy, high-speed rollercoaster of mud and shale.",
+        ],
+    },
+    {
+        id: "event-8",
+        slug: "red-bull-dance-your-style-world-final",
+        title: "Red Bull Dance Your Style Final",
+        sport: "Street Dance",
+        date: "14 – 15 May 2026",
+        dateShort: "14–15 May",
+        month: "MAY",
+        day: "14",
+        location: "Mumbai",
+        country: "India",
+        fullLocation: "Mumbai, India",
+        flagEmoji: "🇮🇳",
+        description: "Street dancers battle across unpredictable soundtrack drops where the crowd decides who takes the crown.",
+        status: "past",
+        statusCtaText: "Event Ended",
+        image: "/images/home/hero/hero-2.jpg",
+        carouselImages: [
+            "/images/home/hero/hero-1.jpg",
+            "/images/home/hero/adventure-2.jpg",
+            "/images/home/hero/hero-3.jpg",
+        ],
+        venueImage: "/images/demo-location.jpg",
+        leadDescription: "Red Bull Dance Your Style celebrates the soul and versatility of street dance cultures. From popping and locking to hip hop and house, the globe's finest dancers perform to mainstream radio hits and throwback anthems with no judges except the energized live crowd holding blue and red voting cards.",
+        aboutEvent: [
+            "With no pre-planned choreography and music selected at random by the DJ, dancers must rely purely on improvisation, charisma, and musicality to win over the audience.",
+        ],
+        aboutVenue: [
+            "Set in the heart of Mumbai's bustling cultural quarter, the arena brings together thousands of passionate dance fans for a high-voltage celebration of global rhythm.",
         ],
     },
 ];

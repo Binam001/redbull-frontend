@@ -4,28 +4,32 @@ import Link from "next/link";
 import { Icon } from "@iconify/react";
 
 interface ButtonProps {
-  label: string;
+  label?: string;
+  children?: React.ReactNode;
   className?: string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLElement>;
   variant?: "solid" | "outline" | "white";
   href?: string;
-  icon?: string;
+  icon?: string | React.ReactNode;
+  as?: "button" | "span" | "div";
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
 }
 
 const Button = ({
   label,
+  children,
   className,
   onClick,
   variant = "solid",
   href,
   icon,
+  as,
   type = "button",
   disabled = false,
 }: ButtonProps) => {
   const baseStyles =
-    "w-fit px-8 py-2.5 transition-all duration-500 cursor-pointer text-sm md:text-base font-medium inline-flex items-center justify-center gap-2 group";
+    "w-fit px-8 py-2.5 transition-all duration-500 cursor-pointer rounded-full text-sm md:text-base font-medium inline-flex items-center justify-center gap-2 group";
 
   const variantStyles =
     variant === "solid"
@@ -38,13 +42,17 @@ const Button = ({
 
   const content = (
     <>
-      <span>{label}</span>
-      {icon && (
-        <Icon
-          icon={icon}
-          className="size-4 group-hover:translate-x-1 transition-transform"
-        />
-      )}
+      {label && <span>{label}</span>}
+      {children}
+      {icon &&
+        (typeof icon === "string" ? (
+          <Icon
+            icon={icon}
+            className="size-4 group-hover:translate-x-1 transition-transform"
+          />
+        ) : (
+          icon
+        ))}
     </>
   );
 
@@ -53,6 +61,22 @@ const Button = ({
       <Link href={href} className={combinedClassName} aria-label={label}>
         {content}
       </Link>
+    );
+  }
+
+  if (as === "span") {
+    return (
+      <span className={combinedClassName} aria-label={label}>
+        {content}
+      </span>
+    );
+  }
+
+  if (as === "div") {
+    return (
+      <div className={combinedClassName} aria-label={label}>
+        {content}
+      </div>
     );
   }
 

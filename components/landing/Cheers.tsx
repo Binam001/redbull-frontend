@@ -419,9 +419,7 @@ export default function Cheers() {
                     className="hands-foreground-layer absolute inset-0 pointer-events-none select-none overflow-hidden z-20 flex items-center justify-center"
                 >
                     <div
-                        onClick={() => playClinkSound()}
-                        className="relative w-[150vw] sm:w-[125vw] md:w-full lg:w-[100vw] lg:max-w-none aspect-[1678/937] flex items-center justify-center scale-75 sm:scale-[0.78] lg:scale-[0.8] origin-center pointer-events-auto cursor-pointer"
-                        title="Click to Cheers"
+                        className="relative w-[150vw] sm:w-[125vw] md:w-full lg:w-[100vw] lg:max-w-none aspect-[1678/937] flex items-center justify-center scale-75 sm:scale-[0.78] lg:scale-[0.8] origin-center"
                     >
                         {/* Right Hand (holding gold can) */}
                         <div

@@ -1,200 +1,212 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import Link from "next/link";
 import { EVENTS, type EventData } from "@/constants/events";
-import Heading from "../shared/Heading";
 
-function formatEventDate(event: EventData) {
-    const raw = event.date || "";
-    // Match "start – end Month Year" or "start - end Month"
-    const matchRange = raw.match(/(\d{1,2})\s*[-–—]\s*(\d{1,2})\s+([A-Za-z]+)(?:\s*[-–—]\s*([A-Za-z]+))?/);
-    if (matchRange) {
-        const d1 = matchRange[1].padStart(2, "0");
-        const d2 = matchRange[2].padStart(2, "0");
-        const m1 = matchRange[3].slice(0, 3);
-        const m2 = matchRange[4] ? matchRange[4].slice(0, 3) : m1;
-        return {
-            days: `${d1} – ${d2}`,
-            months: m1 === m2 ? `${m1}   ${m1}` : `${m1}   ${m2}`,
-        };
-    }
+const MONTH_MAP: Record<string, number> = {
+  jan: 0,
+  feb: 1,
+  mar: 2,
+  apr: 3,
+  may: 4,
+  jun: 5,
+  jul: 6,
+  aug: 7,
+  sep: 8,
+  oct: 9,
+  nov: 10,
+  dec: 11,
+};
 
-    // Match single day "day Month Year"
-    const matchSingle = raw.match(/(\d{1,2})\s+([A-Za-z]+)/);
-    if (matchSingle) {
-        const d = matchSingle[1].padStart(2, "0");
-        const m = matchSingle[2].slice(0, 3);
-        return {
-            days: `${d}`,
-            months: m,
-        };
-    }
+function getEventDateInfo(event: EventData) {
+  const mStr = (event.month || "Oct").toLowerCase().slice(0, 3);
+  const monthIdx = MONTH_MAP[mStr] ?? 9;
+  const dayNum = parseInt(event.day || "1", 10);
+  const d = new Date(2026, monthIdx, dayNum);
+  const weekday = d.toLocaleDateString("en-US", { weekday: "short" });
 
-    return {
-        days: (event.day || "01").padStart(2, "0"),
-        months: (event.month || "Oct").slice(0, 3),
-    };
+  return {
+    weekday,
+    day: dayNum,
+  };
 }
 
 export default function AllEvents() {
-    const [selectedSport, setSelectedSport] = useState<string>("all");
+  // Sort events chronologically
+  const sortedEvents = useMemo(() => {
+    return [...EVENTS].sort((a, b) => {
+      const monthA =
+        MONTH_MAP[a.month?.toLowerCase().slice(0, 3) || "oct"] ?? 9;
+      const monthB =
+        MONTH_MAP[b.month?.toLowerCase().slice(0, 3) || "oct"] ?? 9;
+      if (monthA !== monthB) return monthA - monthB;
+      return parseInt(a.day || "1", 10) - parseInt(b.day || "1", 10);
+    });
+  }, []);
 
-    // Dynamically derive unique sports from EVENTS
-    const sportOptions = useMemo(() => {
-        const unique = Array.from(new Set(EVENTS.map((e) => e.sport)));
-        return ["all", ...unique];
-    }, []);
+  // Group events by month for the clean calendar view
+  const eventsByMonth = useMemo(() => {
+    const groups: { monthTitle: string; events: EventData[] }[] = [];
+    const map = new Map<string, EventData[]>();
 
-    // Filter events based on criteria
-    const filteredEvents = useMemo(() => {
-        return EVENTS.filter((event) => {
-            return (
-                selectedSport === "all" ||
-                event.sport.toLowerCase() === selectedSport.toLowerCase()
-            );
-        });
-    }, [selectedSport]);
+    sortedEvents.forEach((ev) => {
+      const m = ev.month?.toUpperCase().slice(0, 3) || "OCT";
+      const fullMonthName =
+        m === "OCT"
+          ? "October 2026"
+          : m === "NOV"
+            ? "November 2026"
+            : `${ev.month} 2026`;
+      if (!map.has(fullMonthName)) {
+        map.set(fullMonthName, []);
+      }
+      map.get(fullMonthName)!.push(ev);
+    });
 
-    const handleReset = () => {
-        setSelectedSport("all");
-    };
+    map.forEach((events, monthTitle) => {
+      groups.push({ monthTitle, events });
+    });
 
-    return (
-        <section className="w-full text-neutral-900 font-sans py-14 sm:pb-20 md:pb-28 px-4 sm:px-8 md:px-12 lg:px-20 bg-white">
-            {/* Header: Title on Left, Filter Pills on Right */}
-            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-10 sm:mb-14">
-                <div>
-                    {/* <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
-                        All Events
-                    </h2> */}
-                    <Heading
-                        as="h2"
-                        text="All Events"
-                        highlight="Events"
-                        className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight leading-[1.08]"
-                    />
-                </div>
+    return groups;
+  }, [sortedEvents]);
 
-                {/* Filter Pills on the Right */}
-                <div className="flex items-center gap-2 sm:gap-2.5 flex-wrap">
-                    {sportOptions.map((sport) => {
-                        const isSelected = selectedSport.toLowerCase() === sport.toLowerCase();
-                        const label = sport === "all" ? "ALL" : sport.toUpperCase();
-
-                        return (
-                            <button
-                                key={sport}
-                                onClick={() => setSelectedSport(sport)}
-                                className={`px-4 py-1.5 sm:px-5 sm:py-2 rounded-full text-[11px] sm:text-xs font-semibold tracking-wider uppercase transition-all duration-200 cursor-pointer ${isSelected
-                                    ? "bg-primary text-white border border-secondary/50"
-                                    : "bg-transparent text-neutral-700 hover:text-black border border-neutral-300 hover:border-neutral-700"
-                                    }`}
-                            >
-                                {label}
-                            </button>
-                        );
-                    })}
-                </div>
+  return (
+    <section className="w-full text-neutral-900 font-sans py-14 sm:py-20 md:py-24 px-4 sm:px-8 md:px-12 lg:px-20">
+      <div className="max-w-6xl mx-auto space-y-12 sm:space-y-16">
+        {eventsByMonth.map((group) => (
+          <div key={group.monthTitle} className="space-y-3">
+            {/* Month Header: Clean typography, no top-right filter buttons */}
+            <div className="pb-4 border-b border-neutral-200/80">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-900">
+                {group.monthTitle}
+              </h2>
             </div>
 
-            {/* List Display: Date -> Ticket Image -> Title & Description */}
-            {filteredEvents.length > 0 ? (
-                <div className="flex flex-col divide-y divide-neutral-200 border-t border-b border-neutral-200">
-                    {filteredEvents.map((event) => {
-                        const dateInfo = formatEventDate(event);
+            {/* Event List */}
+            <div className="divide-y divide-neutral-200/60">
+              {group.events.map((event) => {
+                const dateInfo = getEventDateInfo(event);
 
-                        return (
-                            <Link
-                                key={event.id}
-                                href={`/events/${event.slug}`}
-                                className="group flex flex-col md:flex-row md:items-center gap-6 lg:gap-10 py-8 sm:py-10 transition-colors hover:bg-neutral-50/70 px-2 sm:px-6 rounded-2xl select-none"
+                return (
+                  <Link
+                    key={event.id}
+                    href={`/events/${event.slug}`}
+                    className="group flex flex-col md:flex-row md:items-start justify-between gap-6 lg:gap-10 py-8 sm:py-10 px-3 sm:px-6 rounded-2xl"
+                  >
+                    {/* Left & Middle Block: Date + Details */}
+                    <div className="flex gap-4 sm:gap-6 lg:gap-8 flex-1 min-w-0">
+                      {/* 1. Date: Calendar Tear-off Badge (Weekday + Day Number) */}
+                      <div className="shrink-0 self-start w-14 h-16 sm:w-16 sm:h-[72px] rounded-2xl bg-linear-to-b from-[#2d4991] to-secondary p-1.5 shadow-[0_6px_16px_-2px_rgba(35,57,113,0.2)] flex flex-col select-none">
+                        {/* Binder Slot / Ring */}
+                        <div className="flex justify-center items-center pb-1 pt-0.5">
+                          <div className="w-4 sm:w-5 h-1 rounded-full bg-[#152347] shadow-[inset_0_1px_2px_rgba(0,0,0,0.45)] flex items-center justify-center">
+                            <div className="w-2.5 sm:w-3 h-[2px] rounded-full bg-white/80 shadow-sm -mt-0.5" />
+                          </div>
+                        </div>
+
+                        {/* White Paper Sheet */}
+                        <div className="flex-1 bg-linear-to-b from-white via-white to-[#f4f7f9] rounded-xl overflow-hidden flex flex-col shadow-sm border border-black/5">
+                          {/* Weekday (e.g. Fri, Mon, Sat) */}
+                          <div className="py-0.5 text-center border-b border-neutral-200/70 bg-neutral-50/70">
+                            <span className="block text-[10px] sm:text-[11px] font-bold text-neutral-700 tracking-tight leading-none">
+                              {dateInfo.weekday}
+                            </span>
+                          </div>
+
+                          {/* Day Number (e.g. 17, 5, 8) */}
+                          <div className="flex-1 flex items-center justify-center">
+                            <span className="text-base sm:text-xl font-black text-secondary leading-none tracking-tight">
+                              {dateInfo.day}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 2. Middle Content (Hover Accent Border, Title, Venue, Description) */}
+                      <div className="flex-1 min-w-0 border-l-[3px] border-transparent group-hover:border-amber-400 pl-4 sm:pl-5 transition-colors duration-200">
+                        {/* Meta: Calendar Date */}
+                        <div className="flex items-center gap-2.5 text-xs sm:text-[13px] text-neutral-500 font-medium mb-1.5 flex-wrap">
+                          <span className="inline-flex items-center gap-1.5 text-neutral-500">
+                            <svg
+                              className="w-3.5 h-3.5 text-amber-500 shrink-0"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
                             >
-                                {/* 1. DATE: Large bold numbers with months below */}
-                                <div className="shrink-0 w-28 sm:w-32 lg:w-66 flex flex-col justify-center">
-                                    <span className="text-3xl sm:text-6xl font-normal text-primary tracking-tight leading-none">
-                                        {dateInfo.days}
-                                    </span>
-                                    <span className="text-xs sm:text-xl font-semibold uppercase tracking-wider text-neutral-500 mt-2 whitespace-pre">
-                                        {dateInfo.months}
-                                    </span>
-                                </div>
+                              <rect
+                                x="3"
+                                y="4"
+                                width="18"
+                                height="18"
+                                rx="2"
+                                ry="2"
+                                strokeWidth="2"
+                              />
+                              <line
+                                x1="16"
+                                y1="2"
+                                x2="16"
+                                y2="6"
+                                strokeWidth="2"
+                              />
+                              <line
+                                x1="8"
+                                y1="2"
+                                x2="8"
+                                y2="6"
+                                strokeWidth="2"
+                              />
+                              <line
+                                x1="3"
+                                y1="10"
+                                x2="21"
+                                y2="10"
+                                strokeWidth="2"
+                              />
+                            </svg>
+                            <span>{event.date}</span>
+                          </span>
+                        </div>
 
-                                {/* 2. IMAGE: Ticket Card with left & right notches */}
-                                <div className="relative w-full sm:w-64 md:w-72 lg:w-96 aspect-16/10 rounded-2xl overflow-hidden bg-neutral-900 shrink-0 shadow-sm border border-neutral-100">
-                                    {/* <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white z-20 pointer-events-none" />
-                                    <div className="absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-white z-20 pointer-events-none" /> */}
+                        {/* Event Title */}
+                        <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-neutral-900 group-hover:text-primary transition-colors leading-snug">
+                          {event.title}
+                        </h3>
 
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img
-                                        src={event.image}
-                                        alt={event.title}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                                        onError={(e) => {
-                                            e.currentTarget.src = "/images/marketing-cards/card_1_default.jpg";
-                                        }}
-                                        loading="lazy"
-                                    />
-                                </div>
+                        {/* Venue / Location */}
+                        <p className="text-xs sm:text-sm font-medium text-neutral-600 mt-1">
+                          {event.fullLocation || event.location}
+                        </p>
 
-                                {/* 3. TITLE & DESCRIPTION */}
-                                <div className="flex-1 min-w-0 flex flex-col justify-center">
-                                    {/* Status Badge */}
-                                    {/* <div className="flex items-center gap-2 mb-2">
-                                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-neutral-100 text-neutral-800">
-                                            <span>📢</span>
-                                            <span>Happening now</span>
-                                        </span>
-                                    </div> */}
+                        {/* Description */}
+                        <p className="text-xs sm:text-sm text-neutral-500 line-clamp-2 leading-relaxed mt-2.5 max-w-xl">
+                          {event.description}
+                        </p>
+                      </div>
+                    </div>
 
-                                    {/* Category / Sport */}
-                                    {/* <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-neutral-400 mb-1">
-                                        {event.sport}
-                                    </span> */}
-                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 mb-2 rounded-full border border-neutral-700 text-[10px] sm:text-xs font-semibold text-neutral-800 tracking-wider uppercase shrink-0 transition-colors group-hover:border-black w-fit">
-                                        {event.status === "live" && (
-                                            <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse" />
-                                        )}
-                                        <span>{event.sport}</span>
-                                    </span>
-
-                                    {/* Title */}
-                                    <h3 className="text-xl sm:text-2xl lg:text-4xl font-bold text-neutral-900 group-hover:text-secondary transition-colors font-primary leading-tight">
-                                        {event.title}
-                                    </h3>
-
-                                    {/* Description */}
-                                    <p className="mt-2 text-sm sm:text-lg text-neutral-600 line-clamp-2 leading-relaxed">
-                                        {event.description}
-                                    </p>
-
-                                    {/* Location with Flag */}
-                                    <div className="flex items-center gap-2 mt-3 text-lg font-bold text-neutral-600">
-                                        {/* <span className="text-base">{event.flagEmoji || "📍"}</span> */}
-                                        <span>{event.fullLocation || event.country || event.location}</span>
-                                    </div>
-                                </div>
-                            </Link>
-                        );
-                    })}
-                </div>
-            ) : (
-                /* Empty state when no events match */
-                <div className="text-center py-20 px-4 bg-neutral-50 rounded-2xl border border-dashed border-neutral-300">
-                    <p className="text-lg font-medium text-neutral-700 mb-2">
-                        No events found matching your criteria.
-                    </p>
-                    <p className="text-sm text-neutral-500 mb-6">
-                        Try selecting a different category.
-                    </p>
-                    <button
-                        onClick={handleReset}
-                        className="px-5 py-2.5 rounded-full bg-black text-white text-xs sm:text-sm font-semibold hover:bg-neutral-800 transition-colors cursor-pointer uppercase tracking-wider"
-                    >
-                        Reset Filters
-                    </button>
-                </div>
-            )}
-        </section>
-    );
+                    {/* 3. Image on Right */}
+                    <div className="w-full sm:w-48 md:w-52 lg:w-60 aspect-16/10 rounded-2xl overflow-hidden shrink-0 bg-neutral-100 shadow-sm border border-neutral-100">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={event.image}
+                        alt={event.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                        onError={(e) => {
+                          e.currentTarget.src =
+                            "/images/marketing-cards/card_1_default.jpg";
+                        }}
+                        loading="lazy"
+                      />
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 }

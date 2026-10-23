@@ -8,27 +8,30 @@ import HeroTry from "@/components/landing/HeroTry";
 import SvgPathHoverEffect from "@/components/landing/SvgPathHoverCardGrid";
 import ParagraphReveal from "@/components/shared/ParagraphReveal";
 import Faq from "@/components/landing/CleanFaq";
+import TextDivider1 from "@/components/landing/TextDivider1";
+import TextDivider2 from "@/components/landing/TextDivider2";
 
 const page = () => {
   return (
     <div className="relative">
       {/* <HeroSection /> */}
       <HeroCarousel />
-      <ParagraphReveal
+      {/* <ParagraphReveal
         text="Red Bull is made for the moments when you’re ready to do more when an early start, a demanding day, or one more attempt calls for renewed focus and drive. Its distinctive blend of ingredients helps you feel energized and alert, so you can keep moving through the work, training, and pursuits that matter to you."
         className="my-12 sm:my-16 lg:my-[5vw]"
-      />
+      /> */}
+      <TextDivider1 />
       <HeroTry />
       <Cheers />
       {/* <Products /> */}
-      <SvgPathHoverEffect />
       <FeaturedEvents />
+      <TextDivider2 />
+      <SvgPathHoverEffect />
       <Divider />
       {/* <FaqSection /> */}
       <Faq />
       {/* <RedBullAnimation /> */}
       {/* <RedBullAnimtaion2 /> */}
-
 
       {/* <RedBullAnimation3 /> */}
       {/* <HeroSection /> */}
