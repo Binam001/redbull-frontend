@@ -80,7 +80,7 @@ export default function EventDescription({ event }: EventDescriptionProps) {
               highlight=""
               className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight leading-[1.08] mb-8"
             />
-            <ScrubWaveText
+            {/* <ScrubWaveText
               as="p"
               text={cleanLeadDesc}
               start="top 95%"
@@ -89,10 +89,13 @@ export default function EventDescription({ event }: EventDescriptionProps) {
               continuous={false}
               firstLetterClassName="text-primary font-bold text-[2em] leading-none align-baseline inline-block mr-0.5"
               className="text-base sm:text-lg md:text-xl lg:text-2xl text-neutral-800 leading-relaxed font-medium"
-            />
-            {/* <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-neutral-800 leading-relaxed font-medium">
-              {cleanLeadDesc}
-            </p> */}
+            /> */}
+            <p className="md:text-lg lg:text-xl text-neutral-800 leading-relaxed font-medium">
+              <span className="text-primary font-bold text-[2em] leading-none align-baseline inline-block mr-0.5">
+                {cleanLeadDesc.charAt(0)}
+              </span>
+              {cleanLeadDesc.slice(1)}
+            </p>
           </div>
         )}
 

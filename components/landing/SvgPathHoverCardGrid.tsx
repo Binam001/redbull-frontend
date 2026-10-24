@@ -460,7 +460,7 @@ export default function SvgPathHoverCardGrid() {
       {/* <div className="w-full overflow-hidden" ref={emblaRef}> */}
       <div className="w-full overflow-hidden">
         <div className="flex -ml-4 sm:-ml-5 lg:-ml-5 xl:-ml-6 py-5">
-          {CARDS.map((card, idx) => (
+          {CARDS.slice(0, 4).map((card, idx) => (
             <div
               key={card.id}
               className="flex-[0_0_86%] sm:flex-[0_0_50%] md:flex-[0_0_33.33%] lg:flex-[0_0_25%] pl-4 sm:pl-5 lg:pl-5 xl:pl-6 min-w-0"

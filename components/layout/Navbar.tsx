@@ -61,6 +61,8 @@ const Navbar = () => {
       setActiveLink(matched.name);
     } else if (pathname === "/") {
       setActiveLink("Home");
+    } else {
+      setActiveLink("");
     }
   }, [pathname]);
 

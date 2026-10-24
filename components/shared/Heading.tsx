@@ -55,6 +55,11 @@ interface WordItem {
   chars: CharItem[];
 }
 
+interface LineItem {
+  words: WordItem[];
+  brClass?: string;
+}
+
 /**
  * Parses children / text prop and highlight rules into structured words and characters
  */
@@ -62,8 +67,13 @@ function parseContent(
   textProp?: string,
   childrenProp?: React.ReactNode,
   highlightProp?: string | string[] | RegExp,
-): { words: WordItem[]; plainText: string } {
-  const rawSegments: { text: string; isHighlight?: boolean; customClass?: string }[] = [];
+): { lines: LineItem[]; plainText: string } {
+  const rawSegments: {
+    text: string;
+    isHighlight?: boolean;
+    customClass?: string;
+    isLineBreak?: boolean;
+  }[] = [];
 
   const highlightTerms: string[] = [];
   let highlightRegex: RegExp | null = null;
@@ -107,6 +117,21 @@ function parseContent(
   const processString = (str: string, explicitHighlight?: boolean, explicitClass?: string) => {
     if (!str) return;
 
+    // Support line breaks from <br />, newlines (\n), or literal escaped \n
+    const breakPattern = /(<br\s*\/?>|\r?\n|\\n)/i;
+    if (breakPattern.test(str)) {
+      const parts = str.split(breakPattern);
+      for (const part of parts) {
+        if (!part) continue;
+        if (breakPattern.test(part)) {
+          rawSegments.push({ text: "\n", isLineBreak: true });
+        } else {
+          processString(part, explicitHighlight, explicitClass);
+        }
+      }
+      return;
+    }
+
     if (explicitHighlight !== undefined) {
       rawSegments.push({ text: str, isHighlight: explicitHighlight, customClass: explicitClass });
       return;
@@ -136,12 +161,16 @@ function parseContent(
   const walkNodes = (node: React.ReactNode) => {
     if (node === null || node === undefined || typeof node === "boolean") return;
 
-    if (typeof node === "string" || typeof node === "number") {
-      processString(String(node));
-      return;
-    }
-
     if (React.isValidElement(node)) {
+      if (
+        node.type === "br" ||
+        (typeof node.type === "string" && node.type.toLowerCase() === "br")
+      ) {
+        const brClass = (node.props as any)?.className || undefined;
+        rawSegments.push({ text: "\n", isLineBreak: true, customClass: brClass });
+        return;
+      }
+
       const element = node as React.ReactElement<{
         children?: React.ReactNode;
         className?: string;
@@ -169,6 +198,11 @@ function parseContent(
       return;
     }
 
+    if (typeof node === "string" || typeof node === "number") {
+      processString(String(node));
+      return;
+    }
+
     if (Array.isArray(node)) {
       node.forEach(walkNodes);
       return;
@@ -181,18 +215,29 @@ function parseContent(
     processString(textProp);
   }
 
-  // Convert raw segments into words of individual characters
-  const words: WordItem[] = [];
+  // Convert raw segments into lines and words of individual characters
+  const lines: LineItem[] = [{ words: [] }];
   let currentChars: CharItem[] = [];
 
+  const pushWord = () => {
+    if (currentChars.length > 0) {
+      const currentLine = lines[lines.length - 1];
+      currentLine.words.push({ chars: currentChars });
+      currentChars = [];
+    }
+  };
+
   for (const seg of rawSegments) {
+    if (seg.isLineBreak) {
+      pushWord();
+      lines.push({ words: [], brClass: seg.customClass });
+      continue;
+    }
+
     const chars = seg.text.split("");
     for (const ch of chars) {
       if (/\s/.test(ch)) {
-        if (currentChars.length > 0) {
-          words.push({ chars: currentChars });
-          currentChars = [];
-        }
+        pushWord();
       } else {
         currentChars.push({
           char: ch,
@@ -203,13 +248,18 @@ function parseContent(
     }
   }
 
-  if (currentChars.length > 0) {
-    words.push({ chars: currentChars });
+  pushWord();
+
+  const validLines = lines.filter((l) => l.words.length > 0);
+  if (validLines.length === 0) {
+    validLines.push({ words: [] });
   }
 
-  const plainText = words.map((w) => w.chars.map((c) => c.char).join("")).join(" ");
+  const plainText = validLines
+    .map((l) => l.words.map((w) => w.chars.map((c) => c.char).join("")).join(" "))
+    .join(" ");
 
-  return { words, plainText };
+  return { lines: validLines, plainText };
 }
 
 export const Heading: React.FC<HeadingProps> = ({
@@ -233,7 +283,7 @@ export const Heading: React.FC<HeadingProps> = ({
 }) => {
   const containerRef = useRef<HTMLElement | null>(null);
 
-  const { words, plainText } = useMemo(
+  const { lines, plainText } = useMemo(
     () => parseContent(text, children, highlight),
     [text, children, highlight],
   );
@@ -297,7 +347,7 @@ export const Heading: React.FC<HeadingProps> = ({
       ctx.revert();
     };
   }, [
-    words,
+    lines,
     animationDuration,
     ease,
     stagger,
@@ -317,23 +367,28 @@ export const Heading: React.FC<HeadingProps> = ({
       aria-label={plainText}
     >
       <span aria-hidden="true">
-        {words.map((word, wIdx) => (
-          <React.Fragment key={wIdx}>
-            <span className="inline-block whitespace-nowrap overflow-hidden align-bottom pb-[0.12em] pt-[0.1em] -mb-[0.12em] -mt-[0.1em]">
-              {word.chars.map((charObj, cIdx) => (
-                <span
-                  key={cIdx}
-                  className={`inline-block heading-char will-change-transform ${
-                    charObj.customClass ||
-                    (charObj.isHighlight ? highlightClassName : baseClassName)
-                  }`}
-                  style={{ display: "inline-block" }}
-                >
-                  {charObj.char}
+        {lines.map((line, lineIdx) => (
+          <React.Fragment key={lineIdx}>
+            {lineIdx > 0 && <br className={line.brClass} />}
+            {line.words.map((word, wIdx) => (
+              <React.Fragment key={wIdx}>
+                <span className="inline-block whitespace-nowrap overflow-hidden align-bottom pb-[0.12em] pt-[0.1em] -mb-[0.12em] -mt-[0.1em]">
+                  {word.chars.map((charObj, cIdx) => (
+                    <span
+                      key={cIdx}
+                      className={`inline-block heading-char will-change-transform ${
+                        charObj.customClass ||
+                        (charObj.isHighlight ? highlightClassName : baseClassName)
+                      }`}
+                      style={{ display: "inline-block" }}
+                    >
+                      {charObj.char}
+                    </span>
+                  ))}
                 </span>
-              ))}
-            </span>
-            {wIdx < words.length - 1 && " "}
+                {wIdx < line.words.length - 1 && " "}
+              </React.Fragment>
+            ))}
           </React.Fragment>
         ))}
       </span>
