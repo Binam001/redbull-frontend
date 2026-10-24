@@ -9,12 +9,12 @@ import Button from "@/components/shared/Button";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function CarbonatedCta() {
-    const containerRef = useRef<HTMLDivElement>(null);
-    // const leftHandRef = useRef<HTMLDivElement>(null);
-    // const rightHandRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  // const leftHandRef = useRef<HTMLDivElement>(null);
+  // const rightHandRef = useRef<HTMLDivElement>(null);
 
-    // Scroll-triggered hands entrance animation meeting in middle (commented out)
-    /*
+  // Scroll-triggered hands entrance animation meeting in middle (commented out)
+  /*
     useGSAP(
         () => {
             const container = containerRef.current;
@@ -94,32 +94,32 @@ export default function CarbonatedCta() {
     );
     */
 
-    return (
-        <div className="w-full">
-            <div
-                ref={containerRef}
-                className="relative w-full flex items-center justify-center bg-white text-neutral-900 select-none p-8 overflow-hidden pt-44"
-            >
-                {/* Background Content Layer */}
-                <div className="max-w-4xl text-center space-y-6">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
-                        Make Room <br /> for What’s Next
-                    </h1>
+  return (
+    <section className="w-full">
+      <div
+        ref={containerRef}
+        className="relative w-full flex items-center justify-center p-8 overflow-hidden"
+      >
+        {/* Background Content Layer */}
+        <div className="max-w-4xl text-center space-y-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-secondary leading-[1.08]">
+            Make Room <br /> for What’s Next
+          </h1>
 
-                    <p className="text-xs sm:text-sm md:text-lg text-black/70 leading-relaxed font-medium max-w-xl mx-auto">
-                        Whether you’re getting into work, studying late, gaming with friends, or gearing up to move, the New-Gen Can brings flavor and fizz along for the ride. Choose your moment, crack it open, and take on what’s next.
-                    </p>
+          <p className="text-xs sm:text-sm md:text-lg text-black/70 leading-relaxed font-medium max-w-xl mx-auto">
+            Whether you’re getting into work, studying late, gaming with
+            friends, or gearing up to move, the New-Gen Can brings flavor and
+            fizz along for the ride. Choose your moment, crack it open, and take
+            on what’s next.
+          </p>
 
-                    <div className="pt-4 flex justify-center gap-4">
-                        <Button
-                            label="Discover the New-Gen Can"
-                            className="rounded-full"
-                        />
-                    </div>
-                </div>
+          <div className="pt-4 flex justify-center gap-4">
+            <Button label="Discover the New-Gen Can" className="rounded-full" />
+          </div>
+        </div>
 
-                {/* Front / Foreground Hands CTA Layer (commented out) */}
-                {/*
+        {/* Front / Foreground Hands CTA Layer (commented out) */}
+        {/*
                 <div className="hands-foreground-layer absolute inset-0 pointer-events-none select-none overflow-hidden z-20 flex items-center justify-center">
                     <div className="relative w-[150vw] sm:w-[125vw] md:w-full max-w-[1920px] aspect-[1678/937] flex items-center justify-center">
                         <div
@@ -148,7 +148,7 @@ export default function CarbonatedCta() {
                     </div>
                 </div>
                 */}
-            </div>
-        </div>
-    );
+      </div>
+    </section>
+  );
 }

@@ -8,7 +8,7 @@ const CarbonatedDivider = () => {
       className="relative z-20 min-h-dvh w-full bg-black text-white overflow-hidden p-0"
     >
       <div className="flex flex-col-reverse xl:flex-row items-stretch justify-center w-full min-h-dvh">
-        <div className="xl:w-1/2 w-full flex flex-col justify-center text-center xl:text-left gap-4 xl:gap-8 px-6 sm:px-10 md:px-16 lg:px-20 xl:px-24 py-12 xl:py-0">
+        {/* <div className="xl:w-1/2 w-full flex flex-col justify-center text-center xl:text-left gap-4 xl:gap-8 px-6 sm:px-10 md:px-16 lg:px-20 xl:px-24 py-12 xl:py-0">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-white leading-[1.08]">
             A Fresh Flavor
             <br />
@@ -22,9 +22,9 @@ const CarbonatedDivider = () => {
             tasks, before a workout, or whenever you’re ready for a refreshing
             change.
           </p>
-        </div>
+        </div> */}
 
-        <div className="xl:w-1/2 w-full h-[50vh] xl:h-auto min-h-[50vh] xl:min-h-dvh z-0 pointer-events-none flex items-center justify-center">
+        <div className="w-full h-[50vh] xl:h-auto min-h-[50vh] xl:min-h-dvh z-0 pointer-events-none flex items-center justify-center">
           <div className="w-full h-full relative flex items-center justify-center">
             {/* <video
               src="/videos/shoes-video-11.mp4"
@@ -35,15 +35,16 @@ const CarbonatedDivider = () => {
               className="pointer-events-none object-cover w-full h-full brightness-105"
             /> */}
             <Image
-              src="/images/product/carbonated-divider.jpg"
+              src="/images/product/can-ad-1.jpg"
               alt="Carbonated Divider"
               fill
               sizes="(max-width: 1280px) 100vw, 50vw"
               className="object-cover"
               priority
             />
-            <div className="absolute inset-0 bg-linear-to-r from-black via-transparent to-transparent" />
-            <div className="absolute inset-0 bg-linear-to-b from-black via-20% via-transparent to-transparent" />
+            {/* <div className="absolute inset-0 bg-linear-to-r from-black via-transparent to-transparent" /> */}
+            <div className="absolute inset-0 bg-linear-to-t from-white via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-b from-black via-transparent to-transparent" />
           </div>
         </div>
       </div>
