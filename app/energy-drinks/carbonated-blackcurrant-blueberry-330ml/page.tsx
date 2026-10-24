@@ -3,6 +3,7 @@ import CarbonatedCta from "@/components/carbonated-blackcurrant-blueberry-330ml/
 import CarbonatedDivider from "@/components/carbonated-blackcurrant-blueberry-330ml/CarbonatedDivider";
 import CarbonatedHero from "@/components/carbonated-blackcurrant-blueberry-330ml/CarbonatedHero";
 import LongHero from "@/components/carbonated-blackcurrant-blueberry-330ml/LongHero";
+import TextDivider1 from "@/components/carbonated-blackcurrant-blueberry-330ml/TextDivider1";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -17,6 +18,7 @@ export default function CarbonatedBlackcurrantBlueberry330mlPage() {
     <main className="relative">
       {/* <LongHero /> */}
       <CanAnimation />
+      <TextDivider1 />
       {/* <CarbonatedHero /> */}
       <CarbonatedDivider />
       <CarbonatedCta />

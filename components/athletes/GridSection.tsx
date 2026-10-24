@@ -72,7 +72,7 @@ function GridCard({
         loading="lazy"
       />
       {/* Bottom Dark Gradient */}
-      <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/25 to-transparent pointer-events-none" />
       {/* Bottom Label */}
       <div className="absolute bottom-5 left-5 right-5 sm:bottom-6 sm:left-6 lg:bottom-[1.6vw] lg:left-[1.6vw] z-10">
         <span
@@ -99,7 +99,9 @@ export default function GridSection() {
             />
           </div>
           <p className="text-neutral-600 font-medium text-sm sm:text-base lg:text-[1.05vw] leading-relaxed max-w-md lg:max-w-xl">
-            Explore the elite disciplines, physical conditioning, and performance science that empower Red Bull athletes to shatter limits and redefine what&apos;s possible.
+            Explore the elite disciplines, physical conditioning, and
+            performance science that empower Red Bull athletes to shatter limits
+            and redefine what&apos;s possible.
           </p>
         </div>
         {/* Asymmetric Bento Layout Matching Reference Image */}

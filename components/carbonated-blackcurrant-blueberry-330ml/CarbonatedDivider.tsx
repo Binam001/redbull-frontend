@@ -12,13 +12,15 @@ const CarbonatedDivider = () => {
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-white leading-[1.08]">
             A Fresh Flavor
             <br />
-            <span className="whitespace-nowrap ">
-              with a Spark
-            </span>
+            <span className="whitespace-nowrap ">with a Spark</span>
             <br />
           </h2>
           <p className="text-xs sm:text-sm md:text-lg text-white/70 leading-relaxed font-medium max-w-xl ">
-            Meet Red Bull Carbonated Blackcurrant Blueberry 330ml: a ready-to-drink can made for active days and full schedules. Its fruity flavor and lively carbonation make it easy to enjoy between tasks, before a workout, or whenever you’re ready for a refreshing change.
+            Meet Red Bull Carbonated Blackcurrant Blueberry 330ml: a
+            ready-to-drink can made for active days and full schedules. Its
+            fruity flavor and lively carbonation make it easy to enjoy between
+            tasks, before a workout, or whenever you’re ready for a refreshing
+            change.
           </p>
         </div>
 
@@ -40,6 +42,8 @@ const CarbonatedDivider = () => {
               className="object-cover"
               priority
             />
+            <div className="absolute inset-0 bg-linear-to-r from-black via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-b from-black via-20% via-transparent to-transparent" />
           </div>
         </div>
       </div>
