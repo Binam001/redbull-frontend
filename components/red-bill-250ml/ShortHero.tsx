@@ -8,9 +8,11 @@ import Image from "next/image";
 import { useRef } from "react";
 import {
   LOGO_LEFT_BULL,
+  LOGO_LEFT_BULL_OUTER,
   LOGO_MASK_URI,
   LOGO_PATHS,
   LOGO_RIGHT_BULL,
+  LOGO_RIGHT_BULL_OUTER,
   LOGO_VIEWBOX,
 } from "./logoData";
 
@@ -45,7 +47,7 @@ export default function ShortHero() {
         return;
 
       const paths =
-        svgRef.current.querySelectorAll<SVGPathElement>("svg > path");
+        svgRef.current.querySelectorAll<SVGPathElement>("path");
 
       // 1. Initialize SVG path lengths so outline starts at 0% drawn and fill is transparent
       paths.forEach((path) => {
@@ -54,6 +56,7 @@ export default function ShortHero() {
           strokeDasharray: length,
           strokeDashoffset: length,
           fillOpacity: 0,
+          strokeOpacity: 1,
         });
       });
 
@@ -159,13 +162,14 @@ export default function ShortHero() {
         0.65,
       );
 
-      // F. Instead of fading out, fill the logo with its original Red Bull red and yellow colors!
+      // F. Instead of fading out, fill the logo with its authentic Red Bull colors and fade out outlines!
       paths.forEach((path) => {
         tl.to(
           path,
           {
             fillOpacity: 1,
-            duration: 0.22,
+            strokeOpacity: 0,
+            duration: 0.25,
             ease: "power1.out",
           },
           0.68,
@@ -254,8 +258,8 @@ export default function ShortHero() {
             {/* Mask to ensure the sun outline does not cut through the charging bulls */}
             <mask id="bulls-stroke-mask">
               <rect width="91" height="35" fill="white" />
-              <path d={LOGO_LEFT_BULL} fill="black" />
-              <path d={LOGO_RIGHT_BULL} fill="black" />
+              <path d={LOGO_LEFT_BULL_OUTER} fill="black" />
+              <path d={LOGO_RIGHT_BULL_OUTER} fill="black" />
             </mask>
           </defs>
           {LOGO_PATHS.map((item) => (
@@ -265,7 +269,7 @@ export default function ShortHero() {
               stroke={item.stroke}
               fill={item.fill}
               fillOpacity={0}
-              strokeWidth={0.55}
+              strokeWidth={0.28}
               strokeLinecap="round"
               strokeLinejoin="round"
               mask={item.mask}

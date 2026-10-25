@@ -76,20 +76,16 @@ export default function FeaturedEvents() {
   }, [emblaApi, filteredEvents]);
 
   return (
-    <section className="w-full lg:max-w-none text-neutral-900 font-sans py-12 sm:py-20 md:py-24 lg:py-[6vw] px-0 overflow-hidden">
+    <section className="w-full lg:max-w-none px-0 overflow-hidden">
       {/* Header with Title, Event Filters, and Carousel Navigation Buttons */}
       <header className="w-full mb-6 sm:mb-10 lg:mb-[3vw] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 lg:gap-[1.2vw] px-4 sm:px-8 lg:px-[4vw]">
-        <div>
+        <div className="flex items-center gap-8">
           <Heading
             as="h2"
-            text="Featured Events"
-            highlight="Events"
+            text="Events"
+            // highlight="Events"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-[3vw] tracking-tight leading-[1.08]"
           />
-        </div>
-
-        {/* Filters & Carousel Controls */}
-        <div className="flex items-center gap-3 sm:gap-4 lg:gap-[1.2vw] self-end sm:self-auto">
           {/* Event Filter (Upcoming / Past) */}
           <div className="flex items-center p-1 rounded-full bg-neutral-100 border border-black/10 shadow-xs">
             <button
@@ -115,7 +111,10 @@ export default function FeaturedEvents() {
               Past
             </button>
           </div>
+        </div>
 
+        {/* Filters & Carousel Controls */}
+        <div className="flex items-center gap-3 sm:gap-4 lg:gap-[1.2vw] self-end sm:self-auto">
           {/* Arrow Controls */}
           <div className="flex items-center gap-2 sm:gap-3 lg:gap-[0.8vw]">
             <button
@@ -164,11 +163,11 @@ export default function FeaturedEvents() {
 
       {/* Embla Carousel Viewport */}
       <div className="w-full overflow-hidden" ref={emblaRef}>
-        <div className="flex touch-pan-y -mx-2.5 sm:-mx-3.5 lg:-mx-[0.8vw]">
+        <div className="flex touch-pan-y pl-4 sm:pl-8 lg:pl-[4vw] gap-5 sm:gap-7 lg:gap-[1.6vw]">
           {filteredEvents.map((event) => (
             <div
               key={event.id}
-              className="flex-[0_0_85%] sm:flex-[0_0_46%] md:flex-[0_0_31%] lg:flex-[0_0_23.5%] min-w-0 flex flex-col px-2.5 sm:px-3.5 lg:px-[0.8vw]"
+              className="flex-[0_0_85%] sm:flex-[0_0_46%] md:flex-[0_0_31%] lg:flex-[0_0_23.5%] min-w-0 flex flex-col shrink-0 last:mr-4 sm:last:mr-8 lg:last:mr-[4vw]"
             >
               <EventCard event={event} />
             </div>

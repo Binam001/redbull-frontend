@@ -41,7 +41,7 @@ const CareerHero: React.FC<CareerHeroProps> = ({
 
       const circle = document.createElementNS(
         "http://www.w3.org/2000/svg",
-        "circle"
+        "circle",
       );
       circle.setAttribute("cx", x.toString());
       circle.setAttribute("cy", y.toString());
@@ -53,7 +53,7 @@ const CareerHero: React.FC<CareerHeroProps> = ({
       const targetRadius = gsap.utils.clamp(
         config.minRadius,
         config.maxRadius,
-        config.minRadius + speedRatio * 40
+        config.minRadius + speedRatio * 40,
       );
 
       const proxy = { r: 0 };
@@ -78,7 +78,7 @@ const CareerHero: React.FC<CareerHeroProps> = ({
           duration: config.dissolveDuration,
           ease: "power2.inOut",
         },
-        `+=${0.05}`
+        `+=${0.05}`,
       );
     };
 
@@ -198,6 +198,14 @@ const CareerHero: React.FC<CareerHeroProps> = ({
           </mask>
         </defs>
 
+        {/* Solid black base layer inside the dissolve mask: completely conceals the underlying logo until hovered */}
+        <rect
+          width="100%"
+          height="100%"
+          fill="#000000"
+          mask="url(#career-dissolve-mask)"
+        />
+
         {/* Foreground athlete image rendered inside SVG with luminance dissolve mask */}
         <image
           href={imageSrc}
@@ -205,14 +213,6 @@ const CareerHero: React.FC<CareerHeroProps> = ({
           width="100%"
           height="100%"
           preserveAspectRatio="xMidYMid slice"
-          mask="url(#career-dissolve-mask)"
-        />
-        {/* Subtle dark tint that dissolves together with the image */}
-        <rect
-          width="100%"
-          height="100%"
-          fill="black"
-          fillOpacity="0.35"
           mask="url(#career-dissolve-mask)"
         />
       </svg>
@@ -223,7 +223,8 @@ const CareerHero: React.FC<CareerHeroProps> = ({
           Make Your Mark. <br /> Move the World.
         </h1>
         <p className="text-xs sm:text-sm md:text-lg text-white/90 leading-relaxed font-medium max-w-xl mx-auto drop-shadow-md">
-          Bring your ideas, energy, and ambition to a team that turns bold thinking into meaningful action.
+          Bring your ideas, energy, and ambition to a team that turns bold
+          thinking into meaningful action.
         </p>
       </div>
     </section>

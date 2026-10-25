@@ -105,7 +105,7 @@ function HeroCanModel({
     );
 
     // 4. Subtle scale respiration (expands slightly when spinning past hero text)
-    const targetScale = 0.30 + Math.sin(p * Math.PI) * 0.025;
+    const targetScale = 0.24 + Math.sin(p * Math.PI) * 0.02;
     groupRef.current.scale.x = THREE.MathUtils.damp(
       groupRef.current.scale.x,
       targetScale,
@@ -127,7 +127,7 @@ function HeroCanModel({
   });
 
   return (
-    <group ref={groupRef} scale={0.30} position={[0, -0.05, 0]} dispose={null}>
+    <group ref={groupRef} scale={0.24} position={[0, -0.05, 0]} dispose={null}>
       <Center>
         {/* Main printed can body */}
         {nodes.BezierCurve001 && (
@@ -203,10 +203,22 @@ export default function HeroTryCanCanvas({
       >
         <Suspense fallback={null}>
           <ambientLight intensity={1.7} />
-          <directionalLight position={[5, 8, 6]} intensity={3.5} />
-          <directionalLight position={[-5, 4, 4]} intensity={2.5} color="#ffffff" />
-          <directionalLight position={[0, 0, 7]} intensity={2.0} color="#ffffff" />
-          <directionalLight position={[0, -5, 4]} intensity={1.2} color="#ffffff" />
+          <directionalLight position={[5, 8, 6]} intensity={2.5} />
+          <directionalLight
+            position={[-5, 4, 4]}
+            intensity={1.5}
+            color="#ffffff"
+          />
+          <directionalLight
+            position={[0, 0, 7]}
+            intensity={1.0}
+            color="#ffffff"
+          />
+          <directionalLight
+            position={[0, -5, 4]}
+            intensity={1.2}
+            color="#ffffff"
+          />
 
           {/* Zero-G floating levitation */}
           <Float
@@ -218,11 +230,11 @@ export default function HeroTryCanCanvas({
             <HeroCanModel scrollProgressRef={scrollProgressRef} />
           </Float>
 
-          <Environment
+          {/* <Environment
             preset="studio"
             environmentRotation={[0, 0, 0.25 * Math.PI]}
             environmentIntensity={0.25}
-          />
+          /> */}
         </Suspense>
       </Canvas>
     </div>

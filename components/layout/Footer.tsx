@@ -90,11 +90,11 @@ function LinkIcon({ className = "w-3.5 h-3.5" }: { className?: string }) {
 const FooterContent = () => {
   return (
     <footer className="relative w-full bg-black text-white overflow-hidden min-h-[92vh] flex flex-col justify-between pt-16 sm:pt-20 pb-6 px-6 sm:px-10 lg:px-16 z-10">
-      {/* Background Secondary (#233971) Blue Glow Layers */}
+      {/* Background Secondary (#233971) Blue Glow Layers with Centered Breathing Animation */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Layer 1: Ambient Atmospheric Glow */}
+        {/* Layer 1: Ambient Atmospheric Glow - Full Width, Steady Ambient Breath */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="animate-footer-ambient-breath absolute inset-0 pointer-events-none"
           style={{
             background:
               "radial-gradient(ellipse 95% 75% at 50% 82%, rgba(35, 57, 113, 0.65) 0%, rgba(35, 57, 113, 0.42) 32%, rgba(20, 32, 68, 0.18) 58%, transparent 85%)",
@@ -102,9 +102,9 @@ const FooterContent = () => {
           }}
         />
 
-        {/* Layer 2: Primary Curved Dome Glow */}
+        {/* Layer 2: Primary Curved Dome Glow - Full Width, Smooth Vertical Wave */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="animate-footer-dome-vertical-wave absolute inset-0 pointer-events-none"
           style={{
             background:
               "radial-gradient(ellipse 75% 65% at 50% 84%, rgba(48, 82, 175, 0.95) 0%, rgba(35, 57, 113, 0.85) 28%, rgba(26, 44, 92, 0.45) 55%, rgba(12, 20, 45, 0.08) 78%, transparent 100%)",
@@ -112,9 +112,9 @@ const FooterContent = () => {
           }}
         />
 
-        {/* Layer 3: Hot Saturated Core Highlight behind Logo & Slogan */}
+        {/* Layer 3: Hot Saturated Core Highlight - Centered Breathing Pulse behind Logo & Slogan */}
         <div
-          className="absolute bottom-16 left-1/2 -translate-x-1/2 w-[85vw] max-w-5xl h-[55%] pointer-events-none"
+          className="animate-footer-center-core-breathe absolute bottom-16 inset-x-0 mx-auto w-[85vw] max-w-5xl h-[55%] pointer-events-none"
           style={{
             background:
               "radial-gradient(ellipse 65% 70% at 50% 65%, rgba(65, 115, 230, 0.95) 0%, rgba(45, 78, 165, 0.8) 30%, rgba(35, 57, 113, 0.4) 60%, transparent 85%)",
@@ -183,8 +183,17 @@ const FooterContent = () => {
               className="object-contain"
             />
           </div>
-          <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight sm:tracking-tighter uppercase drop-shadow-[0_0_35px_rgba(48,82,175,0.85)] mt-1 sm:mt-2 leading-none">
-            Unleash Your BABAAL Energy!!
+          <h2 className="relative inline-block text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white tracking-tight sm:tracking-tighter uppercase drop-shadow-[0_0_35px_rgba(48,82,175,0.85)] mt-1 sm:mt-2 leading-none select-none">
+            {/* Permanent white base text: never hidden or erased */}
+            <span>Unleash Your BABAAL Energy!!</span>
+
+            {/* Left-to-right primary color highlight overlay */}
+            <span
+              aria-hidden="true"
+              className="footer-highlight-overlay absolute inset-0 select-none pointer-events-none"
+            >
+              Unleash Your BABAAL Energy!!
+            </span>
           </h2>
         </div>
 

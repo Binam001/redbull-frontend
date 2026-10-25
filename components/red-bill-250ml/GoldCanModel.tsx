@@ -24,6 +24,7 @@ type GLTFResult = GLTF & {
 interface GoldCanModelProps {
   rotate?: boolean;
   setRotate?: (v: boolean) => void;
+  standalone?: boolean;
   [key: string]: any;
 }
 
@@ -33,6 +34,7 @@ const INITIAL_Y_ROTATION = degToRad(-40);
 export function GoldCanModel({
   rotate = false,
   setRotate = () => { },
+  standalone = false,
   ...props
 }: GoldCanModelProps) {
   const { nodes, materials } = useGLTF(
@@ -58,7 +60,7 @@ export function GoldCanModel({
   // dampening seamlessly as user scrolls into Section 2
   useFrame((state, delta) => {
     if (idleGroupRef.current) {
-      const factor = Math.max(0, 1 - scrollProgressRef.current * 2.5);
+      const factor = standalone ? 1 : Math.max(0, 1 - scrollProgressRef.current * 2.5);
       const t = state.clock.getElapsedTime();
 
       // Continuous spin around Y
@@ -84,6 +86,7 @@ export function GoldCanModel({
 
   // Scroll animation: travels from RIGHT to LEFT with 360° spin and landing tilt
   useLayoutEffect(() => {
+    if (standalone) return;
     if (!rotationGroupRef.current || !groupRef.current) return;
 
     const ctx = gsap.context(() => {
@@ -179,9 +182,34 @@ export function GoldCanModel({
     return () => ctx.revert();
   }, [isMobile]);
 
-  const initialScale = isMobile ? 1.45 : 1.95;
-  const initialPosX = isMobile ? 0 : 2.15;
-  const initialPosY = isMobile ? 0.45 : 0.05;
+  const initialScale = standalone ? (isMobile ? 1.45 : 1.75) : (isMobile ? 1.45 : 1.95);
+  const initialPosX = standalone ? 0 : (isMobile ? 0 : 2.15);
+  const initialPosY = standalone ? (isMobile ? 0.2 : 0) : (isMobile ? 0.45 : 0.05);
+
+  const canMesh =
+    (nodes?.Pepsi_Can ||
+      (nodes as any)?.["Pepsi Can"] ||
+      (nodes as any)?.["Pepsi_Can"] ||
+      Object.values(nodes || {}).find((n: any) => n?.isMesh)) as THREE.Mesh | undefined;
+
+  const rawMaterial =
+    materials?.["Pepsi Can.003"] ||
+    (materials as any)?.["Pepsi_Can.003"] ||
+    (Object.values(materials || {})[0] as THREE.MeshStandardMaterial | undefined);
+
+  // When Environment map is disabled, default PBR metalness (1.0) absorbs diffuse light and reflects pure black.
+  // By cloning the material with low metalness (0.1) and balanced roughness (0.32),
+  // the gold baseColor texture is brightly and vividly illuminated by scene lights without dark shadows.
+  const canMaterial = React.useMemo(() => {
+    if (!rawMaterial) return undefined;
+    if (standalone) {
+      const cloned = rawMaterial.clone();
+      cloned.metalness = 0.68;
+      cloned.roughness = 0.28;
+      return cloned;
+    }
+    return rawMaterial;
+  }, [rawMaterial, standalone]);
 
   return (
     <group
@@ -196,13 +224,13 @@ export function GoldCanModel({
         {/* Idle smooth continuous rotation group */}
         <group ref={idleGroupRef}>
           <Center>
-            {nodes.Pepsi_Can && (
+            {canMesh && (
               <mesh
                 name="Pepsi_Can"
                 castShadow
                 receiveShadow
-                geometry={nodes.Pepsi_Can.geometry}
-                material={materials["Pepsi Can.003"]}
+                geometry={canMesh.geometry}
+                material={canMaterial}
                 scale={[11.568, 10.72, 11.786]}
               />
             )}

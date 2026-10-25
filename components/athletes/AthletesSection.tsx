@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 import Heading from "../shared/Heading";
+import { getAthleteBySlug } from "@/constants/athletes";
 
 export interface Athlete {
   id: string;
@@ -10,6 +12,9 @@ export interface Athlete {
   countryCode: string;
   sport: string;
   avatar: string;
+  gold?: number;
+  silver?: number;
+  bronze?: number;
 }
 
 const ATHLETES: Athlete[] = [
@@ -21,6 +26,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "nl",
     avatar:
       "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 61,
+    silver: 32,
+    bronze: 15,
   },
   {
     id: "armand-duplantis",
@@ -30,6 +38,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "se",
     avatar:
       "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 18,
+    silver: 5,
+    bronze: 2,
   },
   {
     id: "eileen-gu",
@@ -39,6 +50,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "cn",
     avatar:
       "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 12,
+    silver: 6,
+    bronze: 3,
   },
   {
     id: "marc-marquez",
@@ -48,6 +62,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "es",
     avatar:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 59,
+    silver: 24,
+    bronze: 12,
   },
   {
     id: "chloe-kim",
@@ -57,6 +74,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "us",
     avatar:
       "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 10,
+    silver: 4,
+    bronze: 2,
   },
   {
     id: "carissa-moore",
@@ -66,6 +86,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "us",
     avatar:
       "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 14,
+    silver: 8,
+    bronze: 5,
   },
   {
     id: "siya-kolisi",
@@ -75,6 +98,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "za",
     avatar:
       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 8,
+    silver: 4,
+    bronze: 3,
   },
   {
     id: "kai-lenny",
@@ -84,6 +110,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "us",
     avatar:
       "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 11,
+    silver: 5,
+    bronze: 4,
   },
   {
     id: "leticia-bufoni",
@@ -93,6 +122,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "br",
     avatar:
       "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 6,
+    silver: 3,
+    bronze: 3,
   },
   {
     id: "trent-alexander-arnold",
@@ -102,6 +134,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "gb",
     avatar:
       "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 8,
+    silver: 5,
+    bronze: 2,
   },
   {
     id: "lucia-martino",
@@ -111,6 +146,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "es",
     avatar:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 4,
+    silver: 3,
+    bronze: 2,
   },
   {
     id: "henrik-harlaut",
@@ -120,6 +158,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "se",
     avatar:
       "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 8,
+    silver: 5,
+    bronze: 2,
   },
   {
     id: "tom-pidcock",
@@ -129,6 +170,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "gb",
     avatar:
       "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 6,
+    silver: 4,
+    bronze: 2,
   },
   {
     id: "dominic-thiem",
@@ -138,6 +182,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "at",
     avatar:
       "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 17,
+    silver: 11,
+    bronze: 4,
   },
   {
     id: "justine-dupont",
@@ -147,6 +194,9 @@ const ATHLETES: Athlete[] = [
     countryCode: "fr",
     avatar:
       "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 7,
+    silver: 3,
+    bronze: 2,
   },
   {
     id: "sergio-perez",
@@ -156,8 +206,93 @@ const ATHLETES: Athlete[] = [
     countryCode: "mx",
     avatar:
       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=300&h=300&q=80",
+    gold: 6,
+    silver: 12,
+    bronze: 21,
   },
 ];
+
+function MedalIcon({ variant }: { variant: "gold" | "silver" | "bronze" }) {
+  if (variant === "gold") {
+    return (
+      <svg
+        className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 drop-shadow-[0_1px_1.5px_rgba(0,0,0,0.12)]"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        {/* Ribbon Left */}
+        <path d="M7 2L10.5 10.5H8.2L4.8 2H7Z" fill="#F59E0B" />
+        {/* Ribbon Right */}
+        <path d="M17 2L13.5 10.5H15.8L19.2 2H17Z" fill="#D97706" />
+        {/* Ribbon Center Fold */}
+        <path d="M10.5 10.5H13.5L12 12L10.5 10.5Z" fill="#B45309" />
+        {/* Outer Ring */}
+        <circle cx="12" cy="16" r="6" fill="#F59E0B" stroke="#D97706" strokeWidth="0.8" />
+        {/* Inner Coin */}
+        <circle cx="12" cy="16" r="4.6" fill="#FDE68A" />
+        {/* Embossed Star */}
+        <path
+          d="M12 13.6L12.7 15.1L14.3 15.3L13.1 16.4L13.4 18L12 17.1L10.6 18L10.9 16.4L9.7 15.3L11.3 15.1L12 13.6Z"
+          fill="#D97706"
+        />
+      </svg>
+    );
+  }
+  if (variant === "silver") {
+    return (
+      <svg
+        className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 drop-shadow-[0_1px_1.5px_rgba(0,0,0,0.12)]"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        {/* Ribbon Left */}
+        <path d="M7 2L10.5 10.5H8.2L4.8 2H7Z" fill="#94A3B8" />
+        {/* Ribbon Right */}
+        <path d="M17 2L13.5 10.5H15.8L19.2 2H17Z" fill="#64748B" />
+        {/* Ribbon Center Fold */}
+        <path d="M10.5 10.5H13.5L12 12L10.5 10.5Z" fill="#475569" />
+        {/* Outer Ring */}
+        <circle cx="12" cy="16" r="6" fill="#94A3B8" stroke="#64748B" strokeWidth="0.8" />
+        {/* Inner Coin */}
+        <circle cx="12" cy="16" r="4.6" fill="#F1F5F9" />
+        {/* Embossed Star */}
+        <path
+          d="M12 13.6L12.7 15.1L14.3 15.3L13.1 16.4L13.4 18L12 17.1L10.6 18L10.9 16.4L9.7 15.3L11.3 15.1L12 13.6Z"
+          fill="#64748B"
+        />
+      </svg>
+    );
+  }
+  return (
+    <svg
+      className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 drop-shadow-[0_1px_1.5px_rgba(0,0,0,0.12)]"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      {/* Ribbon Left */}
+      <path d="M7 2L10.5 10.5H8.2L4.8 2H7Z" fill="#D97706" />
+      {/* Ribbon Right */}
+      <path d="M17 2L13.5 10.5H15.8L19.2 2H17Z" fill="#B45309" />
+      {/* Ribbon Center Fold */}
+      <path d="M10.5 10.5H13.5L12 12L10.5 10.5Z" fill="#78350F" />
+      {/* Outer Ring */}
+      <circle cx="12" cy="16" r="6" fill="#CD7F32" stroke="#9A3412" strokeWidth="0.8" />
+      {/* Inner Coin */}
+      <circle cx="12" cy="16" r="4.6" fill="#FFEDD5" />
+      {/* Embossed Star */}
+      <path
+        d="M12 13.6L12.7 15.1L14.3 15.3L13.1 16.4L13.4 18L12 17.1L10.6 18L10.9 16.4L9.7 15.3L11.3 15.1L12 13.6Z"
+        fill="#9A3412"
+      />
+    </svg>
+  );
+}
 
 export default function AthletesSection() {
   const [selectedSport, setSelectedSport] = useState<string>("All");
@@ -191,7 +326,7 @@ export default function AthletesSection() {
 
   return (
     <section className="w-full text-neutral-900 font-sans py-12 sm:py-16 md:py-20 lg:py-[5vw] px-4 sm:px-8 lg:px-[4vw]">
-      <div className="w-full max-w-7xl lg:max-w-none mx-auto space-y-8 lg:space-y-12">
+      <div className="w-full max-w-7xl lg:max-w-none mx-auto space-y-8 lg:space-y-10">
         {/* Section Header with Title and Category Dropdown */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-2">
           <div>
@@ -275,49 +410,131 @@ export default function AthletesSection() {
           </div>
         </div>
 
-        {/* 2-Column Grid with Increased Card Size */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
-          {displayedAthletes.map((athlete) => (
-            <div
-              key={athlete.id}
-              className="group relative flex items-center gap-4 sm:gap-6 p-4 sm:p-5 lg:p-6 rounded-3xl bg-neutral-50/70 hover:bg-white border border-neutral-200/80 hover:border-neutral-300 transition-all duration-300 cursor-pointer shadow-xs hover:shadow-sm"
-            >
-              {/* Online Avatar (Enlarged) */}
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 rounded-2xl sm:rounded-3xl overflow-hidden shrink-0 bg-neutral-200 shadow-inner">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={athlete.avatar}
-                  alt={athlete.name}
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
-                  loading="lazy"
-                />
-              </div>
+        {/* Leaderboard Table Card */}
+        <div className="w-full bg-white rounded-2xl sm:rounded-3xl border border-neutral-200/80 shadow-xs overflow-hidden">
+          {/* Table Header */}
+          <div className="grid grid-cols-12 items-center px-4 sm:px-6 md:px-8 py-3.5 sm:py-4 border-b border-neutral-200/80 text-xs sm:text-sm font-semibold text-neutral-400 select-none">
+            <div className="col-span-5 sm:col-span-4 text-left">Name</div>
+            <div className="col-span-3 sm:col-span-4 text-center">Sport</div>
+            <div className="col-span-4 sm:col-span-4 text-right">Medals</div>
+          </div>
 
-              {/* Player Info */}
-              <div className="flex-1 min-w-0 pr-2">
-                {/* 1st Row: Athlete Name + Country Flag on the right */}
-                <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
-                  <h3 className="text-lg sm:text-xl lg:text-2xl font-black text-neutral-900 group-hover:text-primary transition-colors duration-200 leading-tight">
-                    {athlete.name}
-                  </h3>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={`https://flagcdn.com/w40/${athlete.countryCode.toLowerCase()}.png`}
-                    srcSet={`https://flagcdn.com/w80/${athlete.countryCode.toLowerCase()}.png 2x`}
-                    alt={athlete.country}
-                    title={athlete.country}
-                    className="w-6 h-4 sm:w-7 sm:h-4.5 object-cover rounded-xs shadow-xs shrink-0 border border-black/10 inline-block align-middle"
-                    loading="lazy"
-                  />
+          {/* Table Rows */}
+          <div className="divide-y divide-neutral-100">
+            {displayedAthletes.map((athlete) => {
+              const detail = getAthleteBySlug(athlete.id);
+              const hasAnyMedals =
+                (athlete.gold !== undefined && athlete.gold > 0) ||
+                (athlete.silver !== undefined && athlete.silver > 0) ||
+                (athlete.bronze !== undefined && athlete.bronze > 0);
+
+              const rowInner = (
+                <>
+                  {/* 1. Name Column (Avatar + Name with Country Flag on side) */}
+                  <div className="col-span-5 sm:col-span-4 flex items-center gap-2.5 sm:gap-3.5 pr-2 min-w-0">
+                    {/* Avatar */}
+                    <div className="relative w-9 h-9 sm:w-11 sm:h-11 rounded-full overflow-hidden shrink-0 bg-neutral-100 ring-1 ring-neutral-200/80">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={athlete.avatar}
+                        alt={athlete.name}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
+
+                    {/* Name + Country Flag */}
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="font-bold text-neutral-900 text-xs sm:text-sm md:text-base leading-snug truncate group-hover:text-primary transition-colors">
+                        {athlete.name}
+                      </span>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`https://flagcdn.com/w40/${athlete.countryCode.toLowerCase()}.png`}
+                        srcSet={`https://flagcdn.com/w80/${athlete.countryCode.toLowerCase()}.png 2x`}
+                        alt={athlete.country}
+                        title={athlete.country}
+                        className="w-5 h-3.5 sm:w-5.5 sm:h-4 object-cover rounded-xs border border-black/10 shadow-2xs shrink-0"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+
+                  {/* 2. Sport Column (Centered) */}
+                  <div className="col-span-3 sm:col-span-4 flex items-center justify-center min-w-0">
+                    <span className="inline-flex items-center px-2.5 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-semibold bg-neutral-100 text-neutral-700 group-hover:bg-neutral-200/70 group-hover:text-neutral-900 transition-colors truncate">
+                      {athlete.sport}
+                    </span>
+                  </div>
+
+                  {/* 3. Medals Column (Right: Gold, Silver, Bronze conditionally rendered) */}
+                  <div className="col-span-4 sm:col-span-4 flex items-center justify-end gap-3 sm:gap-4 md:gap-5">
+                    {hasAnyMedals ? (
+                      <>
+                        {/* Gold */}
+                        {athlete.gold !== undefined && athlete.gold > 0 && (
+                          <div
+                            className="flex items-center gap-1.5 sm:gap-2"
+                            title={`${athlete.gold} Gold Medals`}
+                          >
+                            <MedalIcon variant="gold" />
+                            <span className="font-bold text-neutral-900 text-xs sm:text-sm md:text-base">
+                              {athlete.gold}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Silver */}
+                        {athlete.silver !== undefined && athlete.silver > 0 && (
+                          <div
+                            className="flex items-center gap-1.5 sm:gap-2"
+                            title={`${athlete.silver} Silver Medals`}
+                          >
+                            <MedalIcon variant="silver" />
+                            <span className="font-bold text-neutral-900 text-xs sm:text-sm md:text-base">
+                              {athlete.silver}
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Bronze */}
+                        {athlete.bronze !== undefined && athlete.bronze > 0 && (
+                          <div
+                            className="flex items-center gap-1.5 sm:gap-2"
+                            title={`${athlete.bronze} Bronze Medals`}
+                          >
+                            <MedalIcon variant="bronze" />
+                            <span className="font-bold text-neutral-900 text-xs sm:text-sm md:text-base">
+                              {athlete.bronze}
+                            </span>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <span className="text-xs sm:text-sm text-neutral-400 font-medium">—</span>
+                    )}
+                  </div>
+                </>
+              );
+
+              const rowClassName =
+                "group grid grid-cols-12 items-center px-4 sm:px-6 md:px-8 py-3.5 sm:py-4 transition-colors duration-150 hover:bg-neutral-50/70 cursor-pointer";
+
+              return detail ? (
+                <Link
+                  key={athlete.id}
+                  href={`/athletes/${detail.slug}`}
+                  className={rowClassName}
+                >
+                  {rowInner}
+                </Link>
+              ) : (
+                <div key={athlete.id} className={rowClassName}>
+                  {rowInner}
                 </div>
-
-                {/* 2nd Row: Sport Only */}
-                <p className="font-semibold text-neutral-400 group-hover:text-neutral-700 transition-colors duration-200 mt-1.5 sm:mt-2">
-                  {athlete.sport}
-                </p>
-              </div>
-            </div>
-          ))}
+              );
+            })}
+          </div>
         </div>
 
         {/* Load More Button */}

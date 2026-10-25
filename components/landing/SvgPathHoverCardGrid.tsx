@@ -304,7 +304,13 @@ function CardCanvas({
   );
 }
 
-export default function SvgPathHoverCardGrid() {
+interface SvgPathHoverCardGridProps {
+  showViewAllButton?: boolean;
+}
+
+export default function SvgPathHoverCardGrid({
+  showViewAllButton = true,
+}: SvgPathHoverCardGridProps = {}) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Embla Carousel Hook
@@ -397,22 +403,26 @@ export default function SvgPathHoverCardGrid() {
   }, []);
 
   return (
-    <div
+    <section
       ref={containerRef}
-      className="w-full text-neutral-900 font-sans selection:bg-neutral-200 py-8 md:py-16 px-0 overflow-hidden"
+      className="w-full text-neutral-900 font-sans selection:bg-neutral-200 py-8 md:py-16 overflow-hidden"
       // style={{
       //     fontFamily: "'BeausiteClassic-Light', -apple-system, BlinkMacSystemFont, sans-serif",
       // }}
     >
       {/* Header with Title and Carousel Controls */}
-      {/* <header className="w-full mb-4 md:mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-x">
+      <header className="w-full mb-4 md:mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3vw] tracking-tight text-secondary leading-[1.08]">
             Our <span className="text-primary"> Athletes</span>
           </h1>
         </div>
-
-        <div className="flex items-center gap-3 self-end sm:self-auto">
+        {showViewAllButton && (
+          <div className="flex justify-center items-center">
+            <Button label="View Our Athletes" href="/athletes" />
+          </div>
+        )}
+        {/* <div className="flex items-center gap-3 self-end sm:self-auto">
           <button
             onClick={scrollPrev}
             disabled={prevBtnDisabled}
@@ -453,8 +463,8 @@ export default function SvgPathHoverCardGrid() {
               />
             </svg>
           </button>
-        </div>
-      </header> */}
+        </div> */}
+      </header>
 
       {/* Embla Carousel Viewport */}
       {/* <div className="w-full overflow-hidden" ref={emblaRef}> */}
@@ -466,8 +476,8 @@ export default function SvgPathHoverCardGrid() {
               className="flex-[0_0_86%] sm:flex-[0_0_50%] md:flex-[0_0_33.33%] lg:flex-[0_0_25%] pl-4 sm:pl-5 lg:pl-5 xl:pl-6 min-w-0"
             >
               <div
-                // onMouseEnter={() => handleMouseEnter(idx)}
-                // onMouseLeave={() => handleMouseLeave(idx)}
+                onMouseEnter={() => handleMouseEnter(idx)}
+                onMouseLeave={() => handleMouseLeave(idx)}
                 className="athlete-card group relative w-full aspect-[3/4.1] cursor-pointer will-change-transform shadow-xl select-none"
                 style={{
                   clipPath: "inset(0 round 24px)",
@@ -570,9 +580,6 @@ export default function SvgPathHoverCardGrid() {
           ))}
         </div>
       )} */}
-      <div className="w-full flex justify-center items-center">
-        <Button label="View Our Athletes" href="/athletes" />
-      </div>
 
       {/* Scoped Styles for Hover Clip-Path and Lift Transition */}
       <style jsx>{`
@@ -588,6 +595,6 @@ export default function SvgPathHoverCardGrid() {
           box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
         }
       `}</style>
-    </div>
+    </section>
   );
 }

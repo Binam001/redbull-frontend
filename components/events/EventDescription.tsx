@@ -120,12 +120,12 @@ export default function EventDescription({ event }: EventDescriptionProps) {
         </div>
 
         {/* 3. About the Venue Section */}
-        <div className="flex flex-col gap-6 sm:gap-8 mt-4 ">
+        <div className="flex flex-col gap-6 sm:gap-8 max-w-6xl mt-4 mx-auto">
           <Heading
             as="h2"
             text="About the venue"
             highlight="venue"
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight leading-[1.08]  pl-75 "
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight leading-[1.08]"
           />
 
           {/* Venue Image */}

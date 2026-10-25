@@ -72,8 +72,8 @@ export default function AllEvents() {
   }, [sortedEvents]);
 
   return (
-    <section className="w-full text-neutral-900 font-sans py-14 sm:py-20 md:py-24 px-4 sm:px-8 md:px-12 lg:px-20">
-      <div className="max-w-6xl mx-auto space-y-12 sm:space-y-16">
+    <section className="w-full">
+      <div className="max-w-6xl mx-auto space-y-8 md:space-y-16">
         {eventsByMonth.map((group) => (
           <div key={group.monthTitle} className="space-y-3">
             {/* Month Header: Clean typography, no top-right filter buttons */}

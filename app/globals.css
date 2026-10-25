@@ -138,3 +138,103 @@ body,
 .animate-char-wave {
   animation: continuousTextWave 2.8s ease-in-out infinite;
 }
+
+@keyframes footerHighlightSweep {
+  0% {
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+  }
+  75% {
+    -webkit-mask-position: 0% 0;
+    mask-position: 0% 0;
+  }
+  100% {
+    -webkit-mask-position: 0% 0;
+    mask-position: 0% 0;
+  }
+}
+
+.footer-highlight-overlay {
+  color: var(--color-primary, #cb2026);
+  text-shadow: 0 0 25px rgba(203, 32, 38, 0.75);
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 36%,
+    rgba(0, 0, 0, 1) 45%,
+    rgba(0, 0, 0, 1) 55%,
+    transparent 64%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 36%,
+    rgba(0, 0, 0, 1) 45%,
+    rgba(0, 0, 0, 1) 55%,
+    transparent 64%,
+    transparent 100%
+  );
+  -webkit-mask-size: 280% 100%;
+  mask-size: 280% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  animation: footerHighlightSweep 7.5s ease-in-out infinite;
+}
+
+.footer-highlight-overlay:hover {
+  animation-duration: 4.5s;
+}
+
+/* Footer Background Dome Breathing & Waving Animations */
+@keyframes footerAmbientBreath {
+  0%,
+  100% {
+    opacity: 0.88;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes footerDomeVerticalWave {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.88;
+  }
+  50% {
+    transform: translateY(-12px);
+    opacity: 1;
+  }
+}
+
+@keyframes footerCenterCoreBreathe {
+  0%,
+  100% {
+    transform: scale(0.94);
+    opacity: 0.74;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+.animate-footer-ambient-breath {
+  animation: footerAmbientBreath 6.8s ease-in-out infinite;
+  will-change: opacity;
+}
+
+.animate-footer-dome-vertical-wave {
+  animation: footerDomeVerticalWave 5.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-footer-center-core-breathe {
+  transform-origin: 50% 65%;
+  animation: footerCenterCoreBreathe 4.5s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+
