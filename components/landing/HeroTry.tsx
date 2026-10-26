@@ -65,12 +65,12 @@ export default function HeroTry() {
 
         tl
           // Step 1: Can 1 starts center, glides left, Text 1 appears on right
-          .to({}, { duration: 0.6 })
+          // .to({}, { duration: 0.6 })
           .to(
             can1ContainerRef.current,
             {
               xPercent: -26,
-              duration: 1.5,
+              duration: 1,
               ease: "power2.inOut",
             },
             "step1",
@@ -80,10 +80,10 @@ export default function HeroTry() {
             {
               opacity: 1,
               x: 0,
-              duration: 1.5,
+              duration: 1,
               ease: "power2.out",
             },
-            "step1+=0.2",
+            "<0.5",
           )
 
           // Step 2: Hold Section 1

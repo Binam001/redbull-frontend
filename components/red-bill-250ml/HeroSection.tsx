@@ -159,7 +159,7 @@ export default function HeroSection() {
                 className="w-full h-auto will-change-transform flex justify-center"
               >
                 <Image
-                  src="/images/product/short-can-hero.png"
+                  src="/images/product/short-can-hero.webp"
                   alt="Red Bull 250ml inside circle"
                   width={1300}
                   height={1000}
@@ -189,7 +189,7 @@ export default function HeroSection() {
           <Button
             label="Find Your Next Step"
             variant="white"
-            href="/about"
+            href="/company"
             className="!bg-transparent !text-white !border-2 !border-white hover:!bg-white hover:!text-black !rounded-md tracking-wider uppercase font-medium text-xs sm:text-sm px-7 py-3 transition-all duration-300"
           />
         </div> */}
@@ -205,7 +205,7 @@ export default function HeroSection() {
           className="w-full h-auto will-change-transform flex justify-center"
         >
           <Image
-            src="/images/product/short-can-hero.png"
+            src="/images/product/short-can-hero.webp"
             alt="Red Bull 250ml short can"
             width={1300}
             height={1000}

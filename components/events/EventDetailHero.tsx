@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import gsap from "gsap";
 import { EventData } from "@/constants/events";
 
@@ -9,9 +15,9 @@ interface EventDetailHeroProps {
 }
 
 const DEFAULT_HERO_IMAGES = [
-  "/images/home/hero/hero-1.jpg",
-  "/images/home/hero/hero-2.jpg",
-  "/images/home/hero/hero-3.jpg",
+  "/images/home/hero/hero-1.webp",
+  "/images/home/hero/hero-2.webp",
+  "/images/home/hero/hero-3.webp",
 ];
 
 const VERT_SHADER = `
@@ -175,7 +181,7 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
     gl.bufferData(
       gl.ARRAY_BUFFER,
       new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
-      gl.STATIC_DRAW
+      gl.STATIC_DRAW,
     );
 
     const posAttr = gl.getAttribLocation(prog, "position");
@@ -199,7 +205,14 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
       gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_T, gl!.CLAMP_TO_EDGE);
       gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MIN_FILTER, gl!.LINEAR);
       gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MAG_FILTER, gl!.LINEAR);
-      gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.RGB, gl!.RGB, gl!.UNSIGNED_BYTE, image);
+      gl!.texImage2D(
+        gl!.TEXTURE_2D,
+        0,
+        gl!.RGB,
+        gl!.RGB,
+        gl!.UNSIGNED_BYTE,
+        image,
+      );
       return tex;
     }
 
@@ -217,7 +230,11 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
       canvas.width = Math.floor(rect.width * dpr);
       canvas.height = Math.floor(rect.height * dpr);
       gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.uniform2f(uniformLocsRef.current.uPlaneResolution, canvas.width, canvas.height);
+      gl.uniform2f(
+        uniformLocsRef.current.uPlaneResolution,
+        canvas.width,
+        canvas.height,
+      );
       render();
     }
     handleResize();
@@ -235,7 +252,10 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
         const tex = createTexture(img);
         if (tex) {
           loadedTextures[idx] = tex;
-          loadedResolutions[idx] = { width: img.naturalWidth || 1920, height: img.naturalHeight || 1080 };
+          loadedResolutions[idx] = {
+            width: img.naturalWidth || 1920,
+            height: img.naturalHeight || 1080,
+          };
         }
         loadedCount++;
         if (loadedCount === heroImages.length) {
@@ -245,12 +265,20 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
           gl.activeTexture(gl.TEXTURE0);
           gl.bindTexture(gl.TEXTURE_2D, loadedTextures[0]);
           gl.uniform1i(locs.uTexture1, 0);
-          gl.uniform2f(locs.uTexRes1, loadedResolutions[0].width, loadedResolutions[0].height);
+          gl.uniform2f(
+            locs.uTexRes1,
+            loadedResolutions[0].width,
+            loadedResolutions[0].height,
+          );
 
           gl.activeTexture(gl.TEXTURE1);
           gl.bindTexture(gl.TEXTURE_2D, loadedTextures[0]);
           gl.uniform1i(locs.uTexture2, 1);
-          gl.uniform2f(locs.uTexRes2, loadedResolutions[0].width, loadedResolutions[0].height);
+          gl.uniform2f(
+            locs.uTexRes2,
+            loadedResolutions[0].width,
+            loadedResolutions[0].height,
+          );
 
           mixRatioRef.current = 0;
           render();
@@ -274,68 +302,87 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
   }, [heroImages]);
 
   // Slide Transition Handler: Only the image changes!
-  const goToSlide = useCallback((targetIndex: number) => {
-    if (targetIndex === currentIndexRef.current || isTransitioning) return;
+  const goToSlide = useCallback(
+    (targetIndex: number) => {
+      if (targetIndex === currentIndexRef.current || isTransitioning) return;
 
-    const gl = glRef.current;
-    const locs = uniformLocsRef.current;
-    const textures = texturesRef.current;
-    const resolutions = texResolutionsRef.current;
+      const gl = glRef.current;
+      const locs = uniformLocsRef.current;
+      const textures = texturesRef.current;
+      const resolutions = texResolutionsRef.current;
 
-    if (!gl || !locs || textures.length < heroImages.length) {
-      setCurrentIndex(targetIndex);
-      return;
-    }
+      if (!gl || !locs || textures.length < heroImages.length) {
+        setCurrentIndex(targetIndex);
+        return;
+      }
 
-    setIsTransitioning(true);
-    setSlideProgress(0);
-    progressStartTimeRef.current = Date.now();
+      setIsTransitioning(true);
+      setSlideProgress(0);
+      progressStartTimeRef.current = Date.now();
 
-    const fromIdx = currentIndexRef.current;
-    const toIdx = targetIndex;
+      const fromIdx = currentIndexRef.current;
+      const toIdx = targetIndex;
 
-    gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, textures[fromIdx]);
-    gl.uniform1i(locs.uTexture1, 0);
-    gl.uniform2f(locs.uTexRes1, resolutions[fromIdx].width, resolutions[fromIdx].height);
+      gl.activeTexture(gl.TEXTURE0);
+      gl.bindTexture(gl.TEXTURE_2D, textures[fromIdx]);
+      gl.uniform1i(locs.uTexture1, 0);
+      gl.uniform2f(
+        locs.uTexRes1,
+        resolutions[fromIdx].width,
+        resolutions[fromIdx].height,
+      );
 
-    gl.activeTexture(gl.TEXTURE1);
-    gl.bindTexture(gl.TEXTURE_2D, textures[toIdx]);
-    gl.uniform1i(locs.uTexture2, 1);
-    gl.uniform2f(locs.uTexRes2, resolutions[toIdx].width, resolutions[toIdx].height);
+      gl.activeTexture(gl.TEXTURE1);
+      gl.bindTexture(gl.TEXTURE_2D, textures[toIdx]);
+      gl.uniform1i(locs.uTexture2, 1);
+      gl.uniform2f(
+        locs.uTexRes2,
+        resolutions[toIdx].width,
+        resolutions[toIdx].height,
+      );
 
-    mixRatioRef.current = 0;
-    renderFnRef.current?.();
+      mixRatioRef.current = 0;
+      renderFnRef.current?.();
 
-    const tweenObj = { val: 0 };
-    gsap.to(tweenObj, {
-      val: 1,
-      duration: 2.2,
-      ease: "sine.inOut",
-      onUpdate: () => {
-        mixRatioRef.current = tweenObj.val;
-        renderFnRef.current?.();
-      },
-      onComplete: () => {
-        gl.activeTexture(gl.TEXTURE0);
-        gl.bindTexture(gl.TEXTURE_2D, textures[toIdx]);
-        gl.uniform1i(locs.uTexture1, 0);
-        gl.uniform2f(locs.uTexRes1, resolutions[toIdx].width, resolutions[toIdx].height);
+      const tweenObj = { val: 0 };
+      gsap.to(tweenObj, {
+        val: 1,
+        duration: 2.2,
+        ease: "sine.inOut",
+        onUpdate: () => {
+          mixRatioRef.current = tweenObj.val;
+          renderFnRef.current?.();
+        },
+        onComplete: () => {
+          gl.activeTexture(gl.TEXTURE0);
+          gl.bindTexture(gl.TEXTURE_2D, textures[toIdx]);
+          gl.uniform1i(locs.uTexture1, 0);
+          gl.uniform2f(
+            locs.uTexRes1,
+            resolutions[toIdx].width,
+            resolutions[toIdx].height,
+          );
 
-        gl.activeTexture(gl.TEXTURE1);
-        gl.bindTexture(gl.TEXTURE_2D, textures[toIdx]);
-        gl.uniform1i(locs.uTexture2, 1);
-        gl.uniform2f(locs.uTexRes2, resolutions[toIdx].width, resolutions[toIdx].height);
+          gl.activeTexture(gl.TEXTURE1);
+          gl.bindTexture(gl.TEXTURE_2D, textures[toIdx]);
+          gl.uniform1i(locs.uTexture2, 1);
+          gl.uniform2f(
+            locs.uTexRes2,
+            resolutions[toIdx].width,
+            resolutions[toIdx].height,
+          );
 
-        mixRatioRef.current = 0;
-        renderFnRef.current?.();
+          mixRatioRef.current = 0;
+          renderFnRef.current?.();
 
-        setCurrentIndex(toIdx);
-        setIsTransitioning(false);
-        progressStartTimeRef.current = Date.now();
-      },
-    });
-  }, [isTransitioning, heroImages.length]);
+          setCurrentIndex(toIdx);
+          setIsTransitioning(false);
+          progressStartTimeRef.current = Date.now();
+        },
+      });
+    },
+    [isTransitioning, heroImages.length],
+  );
 
   const nextSlide = useCallback(() => {
     const next = (currentIndexRef.current + 1) % heroImages.length;
@@ -343,7 +390,8 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
   }, [goToSlide, heroImages.length]);
 
   const prevSlide = useCallback(() => {
-    const prev = (currentIndexRef.current - 1 + heroImages.length) % heroImages.length;
+    const prev =
+      (currentIndexRef.current - 1 + heroImages.length) % heroImages.length;
     goToSlide(prev);
   }, [goToSlide, heroImages.length]);
 
@@ -394,10 +442,11 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
                 type="button"
                 onClick={() => goToSlide(idx)}
                 aria-label={`Go to slide ${idx + 1}`}
-                className={`relative overflow-hidden transition-all duration-300 rounded-full cursor-pointer ${isActive
-                  ? "w-10 sm:w-12 h-1.5 bg-white/30"
-                  : "w-2 h-1.5 bg-white/40 hover:bg-white/75"
-                  }`}
+                className={`relative overflow-hidden transition-all duration-300 rounded-full cursor-pointer ${
+                  isActive
+                    ? "w-10 sm:w-12 h-1.5 bg-white/30"
+                    : "w-2 h-1.5 bg-white/40 hover:bg-white/75"
+                }`}
               >
                 {isActive && (
                   <span

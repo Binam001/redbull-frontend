@@ -16,14 +16,14 @@ export default function EventGallery({ event }: EventGalleryProps) {
     const raw =
       event.galleryImages && event.galleryImages.length > 0
         ? event.galleryImages
-        : [
-          event.image,
-          event.venueImage,
-          ...(event.carouselImages || []),
-          "/images/home/hero/adventure-5.jpg",
-          "/images/home/hero/adventure-6.jpg",
-          "/images/home/hero/adventure-4.jpg",
-        ].filter(Boolean) as string[];
+        : ([
+            event.image,
+            event.venueImage,
+            ...(event.carouselImages || []),
+            "/images/home/hero/adventure-5.webp",
+            "/images/home/hero/adventure-6.webp",
+            "/images/home/hero/adventure-4.webp",
+          ].filter(Boolean) as string[]);
 
     const unique = Array.from(new Set(raw));
     // Ensure sufficient slides for smooth infinite loop without snapping gaps
@@ -65,7 +65,7 @@ export default function EventGallery({ event }: EventGalleryProps) {
     (index: number) => {
       if (emblaApi) emblaApi.scrollTo(index);
     },
-    [emblaApi]
+    [emblaApi],
   );
 
   const onSlideClick = useCallback(
@@ -73,7 +73,7 @@ export default function EventGallery({ event }: EventGalleryProps) {
       if (!emblaApi) return;
       emblaApi.scrollTo(index);
     },
-    [emblaApi]
+    [emblaApi],
   );
 
   return (
@@ -97,8 +97,18 @@ export default function EventGallery({ event }: EventGalleryProps) {
           aria-label="Previous gallery image"
           className="absolute left-3 sm:left-6 md:left-10 lg:left-14 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-black/15 bg-white/95 backdrop-blur-xs text-secondary hover:bg-primary hover:text-white hover:border-primary shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center cursor-pointer active:scale-95 focus:outline-none"
         >
-          <svg className="w-5 h-5 -translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7" />
+          <svg
+            className="w-5 h-5 -translate-x-0.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2.5"
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
         </button>
 
@@ -109,13 +119,26 @@ export default function EventGallery({ event }: EventGalleryProps) {
           aria-label="Next gallery image"
           className="absolute right-3 sm:right-6 md:right-10 lg:right-14 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-full border border-black/15 bg-white/95 backdrop-blur-xs text-secondary hover:bg-primary hover:text-white hover:border-primary shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center cursor-pointer active:scale-95 focus:outline-none"
         >
-          <svg className="w-5 h-5 translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+          <svg
+            className="w-5 h-5 translate-x-0.5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2.5"
+              d="M9 5l7 7-7 7"
+            />
           </svg>
         </button>
 
         {/* Carousel Viewport */}
-        <div ref={emblaRef} className="overflow-hidden cursor-grab active:cursor-grabbing w-full">
+        <div
+          ref={emblaRef}
+          className="overflow-hidden cursor-grab active:cursor-grabbing w-full"
+        >
           <div className="flex items-center -ml-3 sm:-ml-4 md:-ml-6 py-4">
             {images.map((imgSrc, index) => {
               const isActive = selectedIndex === index;
@@ -127,10 +150,11 @@ export default function EventGallery({ event }: EventGalleryProps) {
                   className="shrink-0 min-w-0 pl-3 sm:pl-4 md:pl-6 basis-[82%] sm:basis-[68%] md:basis-[56%] lg:basis-[62%] select-none"
                 >
                   <div
-                    className={`relative w-full aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden transition-[opacity,transform,filter] duration-500 ease-out ${isActive
-                      ? "scale-100 opacity-100 ring-1 ring-black/5"
-                      : "scale-[0.93] opacity-40 brightness-75 hover:opacity-60 cursor-pointer"
-                      }`}
+                    className={`relative w-full aspect-[16/10] rounded-2xl sm:rounded-3xl overflow-hidden transition-[opacity,transform,filter] duration-500 ease-out ${
+                      isActive
+                        ? "scale-100 opacity-100 ring-1 ring-black/5"
+                        : "scale-[0.93] opacity-40 brightness-75 hover:opacity-60 cursor-pointer"
+                    }`}
                   >
                     <Image
                       src={imgSrc}
@@ -155,10 +179,11 @@ export default function EventGallery({ event }: EventGalleryProps) {
               type="button"
               onClick={() => scrollTo(idx)}
               aria-label={`Go to slide ${idx + 1}`}
-              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${selectedIndex === idx
-                ? "w-8 bg-primary"
-                : "w-2 bg-neutral-300 hover:bg-neutral-400"
-                }`}
+              className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                selectedIndex === idx
+                  ? "w-8 bg-primary"
+                  : "w-2 bg-neutral-300 hover:bg-neutral-400"
+              }`}
             />
           ))}
         </div>
@@ -166,4 +191,3 @@ export default function EventGallery({ event }: EventGalleryProps) {
     </div>
   );
 }
-

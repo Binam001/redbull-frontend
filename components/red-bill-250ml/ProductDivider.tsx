@@ -12,13 +12,14 @@ const ProductDivider = () => {
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight text-white leading-[1.08]">
             A Golden Can
             <br />
-            <span className="whitespace-nowrap ">
-              with a Purpose
-            </span>
+            <span className="whitespace-nowrap ">with a Purpose</span>
             <br />
           </h2>
           <p className="text-xs sm:text-sm md:text-lg text-white/70 leading-relaxed font-medium max-w-xl ">
-            Known by many as Red Bull® Gold, this 250ml can brings together taurine, B-group vitamins, amino acids and carbohydrates in a distinctive functional beverage. Every detail is part of a blend created for people who like to keep their days in motion.
+            Known by many as Red Bull® Gold, this 250ml can brings together
+            taurine, B-group vitamins, amino acids and carbohydrates in a
+            distinctive functional beverage. Every detail is part of a blend
+            created for people who like to keep their days in motion.
           </p>
         </div>
 
@@ -32,8 +33,9 @@ const ProductDivider = () => {
               playsInline
               className="pointer-events-none object-cover w-full h-full brightness-105"
             /> */}
+            <div className="absolute inset-0 bg-linear-to-r from-black via-transparent to-transparent z-10" />
             <Image
-              src="/images/product/small-can.jpg"
+              src="/images/product/small-can.webp"
               alt="Carbonated Divider"
               fill
               sizes="(max-width: 1280px) 100vw, 50vw"

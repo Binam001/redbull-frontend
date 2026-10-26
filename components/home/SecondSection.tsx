@@ -3,7 +3,6 @@
 import React from "react";
 import Image from "next/image";
 
-
 const SecondSection = () => {
   return (
     <section className="relative w-full select-none mb-16 ">
@@ -65,7 +64,7 @@ const SecondSection = () => {
           {/* Card 3 (Bottom-Left): Vitalizes Body. Sharpens Mind. */}
           <div className="lg:col-span-5 relative h-[280px] sm:h-[340px] md:h-[380px] rounded-[28px] sm:rounded-[32px] bg-linear-to-br from-[#161c28] via-[#0f131c] to-[#0a0d13] p-6 sm:p-8 md:p-10 flex flex-col justify-end text-white overflow-hidden shadow-lg border border-white/10">
             <Image
-              src="/images/home/red-bull-can.jpg"
+              src="/images/home/red-bull-can.webp"
               alt="Stratospheric Focus"
               fill
               className="object-cover"

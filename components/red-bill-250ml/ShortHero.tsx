@@ -46,8 +46,7 @@ export default function ShortHero() {
       )
         return;
 
-      const paths =
-        svgRef.current.querySelectorAll<SVGPathElement>("path");
+      const paths = svgRef.current.querySelectorAll<SVGPathElement>("path");
 
       // 1. Initialize SVG path lengths so outline starts at 0% drawn and fill is transparent
       paths.forEach((path) => {
@@ -234,7 +233,7 @@ export default function ShortHero() {
                 className="w-full h-auto will-change-transform flex justify-center"
               >
                 <Image
-                  src="/images/product/short-can-hero.png"
+                  src="/images/product/short-can-hero.webp"
                   alt="Red Bull 250ml inside logo"
                   width={1300}
                   height={1000}
@@ -311,7 +310,7 @@ export default function ShortHero() {
           className="w-full h-auto will-change-transform flex justify-center"
         >
           <Image
-            src="/images/product/short-can-hero.png"
+            src="/images/product/short-can-hero.webp"
             alt="Red Bull 250ml short can"
             width={1300}
             height={1000}

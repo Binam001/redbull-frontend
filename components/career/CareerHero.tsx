@@ -11,7 +11,7 @@ interface CareerHeroProps {
 
 const CareerHero: React.FC<CareerHeroProps> = ({
   title = "Make Your Mark. Move the World.",
-  imageSrc = "/images/career-bg.png",
+  imageSrc = "/images/career-bg.webp",
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const smudgeBlobsRef = useRef<SVGGElement>(null);

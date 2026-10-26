@@ -8,7 +8,7 @@ const HeroSection = () => {
       {/* 1. Background Image (bottom of stack) */}
       {/* <div className="absolute inset-0 z-10">
         <Image
-            src="/images/career-bg.png"
+            src="/images/career-bg.webp"
           alt="Red lip lady"
           fill
           priority
@@ -29,7 +29,7 @@ const HeroSection = () => {
       {/* 2. Fluid Canvas (middle of stack, reveals fluid effect on interaction) */}
       <FluidCursor
         // imageSrc="/logo.svg"
-        imageSrc="/images/career-bg.png"
+        imageSrc="/images/career-bg.webp"
         objectPosition="center"
         className="absolute inset-0 z-20 pointer-events-none w-full h-full"
       />

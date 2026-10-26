@@ -61,7 +61,7 @@ export default function GooeyReveal() {
 
       const circle = document.createElementNS(
         "http://www.w3.org/2000/svg",
-        "circle"
+        "circle",
       );
       circle.setAttribute("cx", x.toString());
       circle.setAttribute("cy", y.toString());
@@ -74,7 +74,7 @@ export default function GooeyReveal() {
       const targetRadius = gsap.utils.clamp(
         config.minRadius,
         config.maxRadius,
-        config.minRadius + speedRatio * 35
+        config.minRadius + speedRatio * 35,
       );
 
       const proxy = { r: 0 };
@@ -100,7 +100,7 @@ export default function GooeyReveal() {
           duration: config.dissolveDuration,
           ease: "power2.inOut",
         },
-        `+=${0.05}`
+        `+=${0.05}`,
       );
     };
 
@@ -184,7 +184,6 @@ export default function GooeyReveal() {
             </div>
 
             {/* Foreground Text Content */}
-
           </div>
           <div className="absolute bottom-16 z-10 space-y-6">
             <h1 className="uppercase text-3xl sm:text-4xl md:text-5xl lg:text-[5vw] tracking-tight text-white leading-[1.08]">
@@ -211,7 +210,7 @@ export default function GooeyReveal() {
           }}
         >
           <Image
-            src="/images/contact/contact-2.jpg"
+            src="/images/contact/contact-2.webp"
             alt="Surface Background"
             fill
             className="w-full h-full object-cover object-center pointer-events-none select-none"

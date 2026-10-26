@@ -50,7 +50,7 @@ export default function EventDescription({ event }: EventDescriptionProps) {
     event.aboutEvent && event.aboutEvent.length > 0
       ? event.aboutEvent
       : [event.description];
-  const venueImage = event.venueImage || "/images/demo-location.jpg";
+  const venueImage = event.venueImage || "/images/demo-location.webp";
   const venueParagraphs: string[] = Array.isArray(event.aboutVenue)
     ? event.aboutVenue
     : event.aboutVenue

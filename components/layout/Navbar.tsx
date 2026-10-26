@@ -68,7 +68,7 @@ const Navbar = () => {
 
   const isExclusive =
     [
-      "/about",
+      "/company",
       "/contact",
       "/events",
       "/cart",

@@ -25,8 +25,8 @@ const CARDS: CardData[] = [
     name: "Monika Grace",
     description:
       "Precision aerodynamics meet raw asphalt adrenaline. Pushing cutting-edge engineering past 340 km/h to capture the checkered flag.",
-    hoverImage: "/images/athletes/athlete-2-back.jpg",
-    defaultImage: "/images/athletes/athlete-2.jpg",
+    hoverImage: "/images/athletes/athlete-2-back.webp",
+    defaultImage: "/images/athletes/athlete-2.webp",
   },
   {
     id: "card-2",
@@ -36,8 +36,8 @@ const CARDS: CardData[] = [
     name: "Mike Carter",
     description:
       "Launching forty feet into thin air, defying gravity with heart-stopping tsunami flips and uncompromising two-wheeled mastery.",
-    hoverImage: "/images/home/athletes/athlete-2.jpg",
-    defaultImage: "/images/athletes/athlete-3.jpg",
+    hoverImage: "/images/athletes/athlete-3-back.webp",
+    defaultImage: "/images/athletes/athlete-3.webp",
   },
   {
     id: "card-3",
@@ -47,8 +47,8 @@ const CARDS: CardData[] = [
     name: "Emily Blunt",
     description:
       "Carving towering 50-foot monster swells where split-second composure and raw nerve separate immortality from wipeout.",
-    hoverImage: "/images/home/athletes/hover-athlete-3.jpg",
-    defaultImage: "/images/athletes/athlete-1.jpg",
+    hoverImage: "/images/athletes/athlete-1-back.webp",
+    defaultImage: "/images/athletes/athlete-1.webp",
   },
   {
     id: "card-4",
@@ -58,8 +58,8 @@ const CARDS: CardData[] = [
     name: "Varun Dev",
     description:
       "Pushing physiological thresholds over 42.195 km of grueling asphalt, where pace precision and mental fortitude redefine human endurance.",
-    hoverImage: "/images/home/hero/adventure-5.jpg",
-    defaultImage: "/images/athletes/athlete-4.jpg",
+    hoverImage: "/images/home/hero/adventure-5.webp",
+    defaultImage: "/images/athletes/athlete-4.webp",
   },
   {
     id: "card-5",
@@ -69,8 +69,8 @@ const CARDS: CardData[] = [
     name: "Mike Carter",
     description:
       "Transforming raw city concrete into an arena of technical innovation, balance, and relentless boundary-pushing skate progression.",
-    hoverImage: "/images/home/athletes/hover-athlete-2.jpg",
-    defaultImage: "/images/home/athletes/athlete-2.jpg",
+    hoverImage: "/images/home/athletes/hover-athlete-2.webp",
+    defaultImage: "/images/athletes/athlete-3-back.webp",
   },
   {
     id: "card-6",
@@ -80,8 +80,8 @@ const CARDS: CardData[] = [
     name: "Emily Blunt",
     description:
       "Ascending sheer monolithic granite walls with unyielding grip, pure mental clarity, and zero margin for error.",
-    hoverImage: "/images/home/athletes/hover-athlete-3.jpg",
-    defaultImage: "/images/home/athletes/athlete-3.jpg",
+    hoverImage: "/images/athletes/athlete-1-back.webp",
+    defaultImage: "/images/athletes/athlete-6.webp",
   },
 ];
 

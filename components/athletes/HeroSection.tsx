@@ -6,7 +6,7 @@ const HeroSection = () => {
     <div className="h-dvh relative flex justify-center items-center">
       <div className="absolute inset-0 w-full h-full">
         <Image
-          src="/images/athletes/bg-3.jpg"
+          src="/images/athletes/bg-3.webp"
           alt="Athletes background"
           fill
           className="object-cover"

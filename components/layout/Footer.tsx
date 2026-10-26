@@ -31,7 +31,7 @@ const FOOTER_SECTIONS: FooterSection[] = [
     title: "Company",
     items: [
       { label: "Careers", href: "/career" },
-      { label: "Company", href: "/about" },
+      { label: "Company", href: "/company" },
       { label: "Contact", href: "/contact" },
     ],
   },
@@ -137,7 +137,9 @@ const FooterContent = () => {
                 {section.items.map((item, itemIdx) => (
                   <li key={itemIdx}>
                     {!item.href ? (
-                      <span className="whitespace-pre-line text-white/70">{item.label}</span>
+                      <span className="whitespace-pre-line text-white/70">
+                        {item.label}
+                      </span>
                     ) : item.isExternal ? (
                       <a
                         href={item.href}
@@ -145,15 +147,20 @@ const FooterContent = () => {
                         rel="noopener noreferrer"
                         className="inline-flex items-end gap-1.5 text-white/70 hover:text-white group transition-colors duration-200"
                       >
-                        <span className="whitespace-pre-line text-left">{item.label}</span>
+                        <span className="whitespace-pre-line text-left">
+                          {item.label}
+                        </span>
                         <LinkIcon className="w-3.5 h-3.5 mb-0.5 text-white/40 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 shrink-0" />
                       </a>
-                    ) : item.href.startsWith("tel:") || item.href.startsWith("mailto:") ? (
+                    ) : item.href.startsWith("tel:") ||
+                      item.href.startsWith("mailto:") ? (
                       <a
                         href={item.href}
                         className="inline-flex items-center gap-1.5 text-white/70 hover:text-white group transition-colors duration-200"
                       >
-                        <span className="whitespace-pre-line text-left">{item.label}</span>
+                        <span className="whitespace-pre-line text-left">
+                          {item.label}
+                        </span>
                         <LinkIcon className="w-3.5 h-3.5 text-white/40 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 shrink-0" />
                       </a>
                     ) : (
@@ -161,7 +168,9 @@ const FooterContent = () => {
                         href={item.href}
                         className="inline-flex items-center gap-1.5 hover:text-white group transition-colors duration-200"
                       >
-                        <span className="whitespace-pre-line text-left">{item.label}</span>
+                        <span className="whitespace-pre-line text-left">
+                          {item.label}
+                        </span>
                         <LinkIcon className="w-3.5 h-3.5 text-white/40 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200 shrink-0" />
                       </Link>
                     )}

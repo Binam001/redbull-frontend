@@ -23,8 +23,8 @@ const CARDS: CardData[] = [
     name: "Monika Grace",
     description:
       "Precision aerodynamics meet raw asphalt adrenaline. Pushing cutting-edge engineering past 340 km/h to capture the checkered flag.",
-    defaultImage: "/images/athletes/athlete-2-back.jpg",
-    hoverImage: "/images/athletes/athlete-2.jpg",
+    defaultImage: "/images/athletes/athlete-2-back.webp",
+    hoverImage: "/images/athletes/athlete-2.webp",
   },
   {
     id: "card-2",
@@ -33,8 +33,8 @@ const CARDS: CardData[] = [
     name: "Mike Carter",
     description:
       "Launching forty feet into thin air, defying gravity with heart-stopping tsunami flips and uncompromising two-wheeled mastery.",
-    defaultImage: "/images/home/athletes/athlete-2.jpg",
-    hoverImage: "/images/athletes/athlete-3.jpg",
+    defaultImage: "/images/athletes/athlete-3-back.webp",
+    hoverImage: "/images/athletes/athlete-3.webp",
   },
   {
     id: "card-3",
@@ -43,8 +43,8 @@ const CARDS: CardData[] = [
     name: "Emily Blunt",
     description:
       "Carving towering 50-foot monster swells where split-second composure and raw nerve separate immortality from wipeout.",
-    defaultImage: "/images/home/athletes/hover-athlete-3.jpg",
-    hoverImage: "/images/athletes/athlete-1.jpg",
+    defaultImage: "/images/athletes/athlete-1-back.webp",
+    hoverImage: "/images/athletes/athlete-1.webp",
   },
   {
     id: "card-4",
@@ -53,8 +53,8 @@ const CARDS: CardData[] = [
     name: "Varun Dev",
     description:
       "Pushing physiological thresholds over 42.195 km of grueling asphalt, where pace precision and mental fortitude redefine human endurance.",
-    defaultImage: "/images/home/hero/adventure-5.jpg",
-    hoverImage: "/images/athletes/athlete-4.jpg",
+    defaultImage: "/images/home/hero/adventure-5.webp",
+    hoverImage: "/images/athletes/athlete-4.webp",
   },
 ];
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -15,12 +15,12 @@ const STATIC_IMAGES = [
   // "/images/home/kavita-nepali-1.webp",
   // "/images/home/sky-diver-2.webp",
   // Hero Carousel Images
-  "/images/home/hero/adventure-5.jpg",
-  "/images/home/hero/npl-2.jpeg",
-  "/images/home/hero/adventure-6.jpg",
-  "/images/home/hero/adventure-4.jpg",
-  "/images/home/hero/adventure-2.jpg",
-  "/images/home/hero/adventure-1.jpg",
+  "/images/home/hero/adventure-5.webp",
+  "/images/home/hero/npl-2.webp",
+  "/images/home/hero/adventure-6.webp",
+  "/images/home/hero/adventure-4.webp",
+  "/images/home/hero/adventure-2.webp",
+  "/images/home/hero/adventure-1.webp",
 ];
 
 const GLTF_MODELS = [
@@ -28,7 +28,7 @@ const GLTF_MODELS = [
   "/models/redbull.glb",
 ];
 
-const AUDIO_ASSETS = ["/audios/bgm.mp3", "/audios/can-popup-1.mpeg"];
+const AUDIO_ASSETS = ["/audios/bgm.mp3"];
 
 // Pre-generate image frame sequence paths
 const footerFrames = Array.from(
@@ -40,7 +40,6 @@ const Preloader = () => {
   const pathname = usePathname();
   const [isExiting, setIsExiting] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const popupAudioRef = useRef<HTMLAudioElement | null>(null);
 
   // If directly loaded or refreshed from a subpage (e.g. /events), mark entered and bypass preloader
   useEffect(() => {
@@ -76,13 +75,7 @@ const Preloader = () => {
       fetch(src).catch(() => {});
     });
 
-    // 4. Preload Audio files with dedicated can-popup-1 element
-    const popupAudio = new Audio("/audios/can-popup-1.mpeg");
-    popupAudio.preload = "auto";
-    popupAudio.volume = 1;
-    popupAudio.load();
-    popupAudioRef.current = popupAudio;
-
+    // 4. Preload Audio files
     AUDIO_ASSETS.forEach((src) => {
       const audio = new Audio();
       audio.src = src;
@@ -90,31 +83,14 @@ const Preloader = () => {
     });
   }, []);
 
-  const playCanPopup = () => {
-    try {
-      if (popupAudioRef.current) {
-        popupAudioRef.current.currentTime = 0;
-        popupAudioRef.current.play().catch(() => {});
-      }
-    } catch {
-      // Ignore audio playback errors if restricted by browser
-    }
-  };
-
   const handleEnter = (withAudio: boolean) => {
-    // 1. Play popup sound instantaneously
-    playCanPopup();
-
     sessionStorage.setItem("hasEnteredSite", "true");
     localStorage.setItem("audioPreference", withAudio ? "on" : "off");
     (window as Window & { hasEnteredIntro?: boolean }).hasEnteredIntro = true;
 
-    // 2. Slight delay (400ms) for popup audio to play before preloader slides up
-    setTimeout(() => {
-      window.dispatchEvent(new Event("audioPreferenceChanged"));
-      window.dispatchEvent(new Event("preloaderExit"));
-      setIsExiting(true);
-    }, 400);
+    window.dispatchEvent(new Event("audioPreferenceChanged"));
+    window.dispatchEvent(new Event("preloaderExit"));
+    setIsExiting(true);
   };
 
   if (pathname !== "/" || isLoaded) return null;

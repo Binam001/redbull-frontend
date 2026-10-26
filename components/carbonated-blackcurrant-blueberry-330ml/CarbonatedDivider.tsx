@@ -35,7 +35,7 @@ const CarbonatedDivider = () => {
               className="pointer-events-none object-cover w-full h-full brightness-105"
             /> */}
             <Image
-              src="/images/product/can-ad-1.jpg"
+              src="/images/product/can-ad-1.webp"
               alt="Carbonated Divider"
               fill
               sizes="(max-width: 1280px) 100vw, 50vw"

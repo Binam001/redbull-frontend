@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Heading from "../shared/Heading";
 import { getAthleteBySlug } from "@/constants/athletes";
+import Button from "../shared/Button";
 
 export interface Athlete {
   id: string;
@@ -229,7 +230,14 @@ function MedalIcon({ variant }: { variant: "gold" | "silver" | "bronze" }) {
         {/* Ribbon Center Fold */}
         <path d="M10.5 10.5H13.5L12 12L10.5 10.5Z" fill="#B45309" />
         {/* Outer Ring */}
-        <circle cx="12" cy="16" r="6" fill="#F59E0B" stroke="#D97706" strokeWidth="0.8" />
+        <circle
+          cx="12"
+          cy="16"
+          r="6"
+          fill="#F59E0B"
+          stroke="#D97706"
+          strokeWidth="0.8"
+        />
         {/* Inner Coin */}
         <circle cx="12" cy="16" r="4.6" fill="#FDE68A" />
         {/* Embossed Star */}
@@ -256,7 +264,14 @@ function MedalIcon({ variant }: { variant: "gold" | "silver" | "bronze" }) {
         {/* Ribbon Center Fold */}
         <path d="M10.5 10.5H13.5L12 12L10.5 10.5Z" fill="#475569" />
         {/* Outer Ring */}
-        <circle cx="12" cy="16" r="6" fill="#94A3B8" stroke="#64748B" strokeWidth="0.8" />
+        <circle
+          cx="12"
+          cy="16"
+          r="6"
+          fill="#94A3B8"
+          stroke="#64748B"
+          strokeWidth="0.8"
+        />
         {/* Inner Coin */}
         <circle cx="12" cy="16" r="4.6" fill="#F1F5F9" />
         {/* Embossed Star */}
@@ -282,7 +297,14 @@ function MedalIcon({ variant }: { variant: "gold" | "silver" | "bronze" }) {
       {/* Ribbon Center Fold */}
       <path d="M10.5 10.5H13.5L12 12L10.5 10.5Z" fill="#78350F" />
       {/* Outer Ring */}
-      <circle cx="12" cy="16" r="6" fill="#CD7F32" stroke="#9A3412" strokeWidth="0.8" />
+      <circle
+        cx="12"
+        cy="16"
+        r="6"
+        fill="#CD7F32"
+        stroke="#9A3412"
+        strokeWidth="0.8"
+      />
       {/* Inner Coin */}
       <circle cx="12" cy="16" r="4.6" fill="#FFEDD5" />
       {/* Embossed Star */}
@@ -511,7 +533,9 @@ export default function AthletesSection() {
                         )}
                       </>
                     ) : (
-                      <span className="text-xs sm:text-sm text-neutral-400 font-medium">—</span>
+                      <span className="text-xs sm:text-sm text-neutral-400 font-medium">
+                        —
+                      </span>
                     )}
                   </div>
                 </>
@@ -539,8 +563,8 @@ export default function AthletesSection() {
 
         {/* Load More Button */}
         {hasMore && (
-          <div className="flex justify-center pt-4 sm:pt-6">
-            <button
+          <div className="flex justify-center">
+            {/* <button
               type="button"
               onClick={() => setVisibleCount((prev) => prev + 8)}
               className="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 sm:px-10 sm:py-4 rounded-full bg-secondary hover:bg-secondary/90 text-white font-bold text-sm sm:text-base tracking-wider uppercase transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 cursor-pointer"
@@ -559,7 +583,12 @@ export default function AthletesSection() {
                   d="M19 9l-7 7-7-7"
                 />
               </svg>
-            </button>
+            </button> */}
+            <Button
+              label="Load More"
+              onClick={() => setVisibleCount((prev) => prev + 8)}
+              className="text-xs md:text-sm"
+            />
           </div>
         )}
       </div>
