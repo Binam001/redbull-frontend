@@ -40,8 +40,8 @@ export default function HeroTry() {
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
-      // Desktop & Tablet Animation
-      mm.add("(min-width: 768px)", () => {
+      // Desktop Animation (>= 1024px: Side-by-Side layout)
+      mm.add("(min-width: 1024px)", () => {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: container,
@@ -55,21 +55,34 @@ export default function HeroTry() {
           },
         });
 
-        // Initial setup
+        // Initial setup for Desktop
         gsap.set(section1Ref.current, { xPercent: 0, x: 0 });
         gsap.set(section2Ref.current, { xPercent: 100, x: 0 });
-        gsap.set(can1ContainerRef.current, { xPercent: 0, x: 0 });
-        gsap.set(can2ContainerRef.current, { xPercent: -26, x: 0 });
-        gsap.set(heroText1LayerRef.current, { opacity: 0, x: 60 });
-        gsap.set(heroText2LayerRef.current, { opacity: 1, x: 0 });
+        gsap.set(can1ContainerRef.current, {
+          xPercent: 0,
+          x: 0,
+          yPercent: 0,
+          y: 0,
+          scale: 1,
+        });
+        gsap.set(can2ContainerRef.current, {
+          xPercent: -26,
+          x: 0,
+          yPercent: 0,
+          y: 0,
+          scale: 1,
+        });
+        gsap.set(heroText1LayerRef.current, { opacity: 0, x: 60, y: 0 });
+        gsap.set(heroText2LayerRef.current, { opacity: 1, x: 0, y: 0 });
 
         tl
           // Step 1: Can 1 starts center, glides left, Text 1 appears on right
-          // .to({}, { duration: 0.6 })
           .to(
             can1ContainerRef.current,
             {
               xPercent: -26,
+              yPercent: 0,
+              scale: 1,
               duration: 1,
               ease: "power2.inOut",
             },
@@ -80,16 +93,14 @@ export default function HeroTry() {
             {
               opacity: 1,
               x: 0,
+              y: 0,
               duration: 1,
               ease: "power2.out",
             },
             "<0.5",
           )
 
-          // Step 2: Hold Section 1
-          // .to({}, { duration: 2.0 })
-
-          // Step 3: Slide transition: Section 1 moves off to left, Section 2 slides in from right
+          // Step 2: Slide transition: Section 1 moves off to left, Section 2 slides in from right
           .to(
             section1Ref.current,
             {
@@ -110,24 +121,92 @@ export default function HeroTry() {
             },
             "slide",
           );
-
-        // Step 4: Hold Section 2 (Gold Can layout)
-        // .to({}, { duration: 2.2 })
-
-        // Step 5: Final animation: Section 2 moves off to the left side of the screen
-        // .to(
-        //   section2Ref.current,
-        //   {
-        //     xPercent: -100,
-        //     x: 0,
-        //     duration: 2.8,
-        //     ease: "power2.inOut",
-        //   },
-        //   "slideOut2",
-        // );
       });
 
-      // Mobile Animation
+      // Tablet Animation (768px - 1023px: Vertical Stack with scaled-down can)
+      mm.add("(min-width: 768px) and (max-width: 1023px)", () => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: container,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1,
+            refreshPriority: 12,
+            onUpdate: (self) => {
+              scrollProgressRef.current = self.progress;
+            },
+          },
+        });
+
+        // Initial setup for Tablet: can in dead-center initially with scale 0.88
+        gsap.set(section1Ref.current, { xPercent: 0, x: 0 });
+        gsap.set(section2Ref.current, { xPercent: 100, x: 0 });
+        gsap.set(can1ContainerRef.current, {
+          xPercent: 0,
+          x: 0,
+          yPercent: 0,
+          y: 0,
+          scale: 0.88,
+        });
+        gsap.set(can2ContainerRef.current, {
+          xPercent: 0,
+          x: 0,
+          yPercent: -10,
+          y: 0,
+          scale: 0.90,
+        });
+        gsap.set(heroText1LayerRef.current, { opacity: 0, x: 0, y: 30 });
+        gsap.set(heroText2LayerRef.current, { opacity: 1, x: 0, y: 0 });
+
+        tl
+          // Step 1: Can 1 glides up gently to clear text, Text 1 appears centered at bottom
+          .to(
+            can1ContainerRef.current,
+            {
+              yPercent: -10,
+              xPercent: 0,
+              scale: 0.88,
+              duration: 1,
+              ease: "power2.inOut",
+            },
+            "step1",
+          )
+          .to(
+            heroText1LayerRef.current,
+            {
+              opacity: 1,
+              x: 0,
+              y: 0,
+              duration: 1,
+              ease: "power2.out",
+            },
+            "<0.5",
+          )
+
+          // Step 2: Slide transition
+          .to(
+            section1Ref.current,
+            {
+              xPercent: -100,
+              x: 0,
+              duration: 1.0,
+              ease: "power2.inOut",
+            },
+            "slide",
+          )
+          .to(
+            section2Ref.current,
+            {
+              xPercent: 0,
+              x: 0,
+              duration: 1.0,
+              ease: "power2.inOut",
+            },
+            "slide",
+          );
+      });
+
+      // Mobile Animation (< 768px)
       mm.add("(max-width: 767px)", () => {
         const tl = gsap.timeline({
           scrollTrigger: {
@@ -142,20 +221,35 @@ export default function HeroTry() {
           },
         });
 
-        // Initial setup
+        // Initial setup for Mobile: can on top, content at bottom
         gsap.set(section1Ref.current, { xPercent: 0, x: 0 });
         gsap.set(section2Ref.current, { xPercent: 100, x: 0 });
-        gsap.set(can1ContainerRef.current, { xPercent: 0, x: 0 });
-        gsap.set(can2ContainerRef.current, { xPercent: -18, x: 0 });
-        gsap.set(heroText1LayerRef.current, { opacity: 0, y: 30 });
-        gsap.set(heroText2LayerRef.current, { opacity: 1, y: 0 });
+        gsap.set(can1ContainerRef.current, {
+          xPercent: 0,
+          x: 0,
+          yPercent: 0,
+          y: 0,
+          scale: 0.82,
+        });
+        gsap.set(can2ContainerRef.current, {
+          xPercent: 0,
+          x: 0,
+          yPercent: -6,
+          y: 0,
+          scale: 0.95,
+        });
+        gsap.set(heroText1LayerRef.current, { opacity: 0, x: 0, y: 30 });
+        gsap.set(heroText2LayerRef.current, { opacity: 1, x: 0, y: 0 });
 
-        tl.to({}, { duration: 0.6 })
+        tl
+          // Step 1: Can 1 glides up to top, Text 1 appears at bottom
           .to(
             can1ContainerRef.current,
             {
-              xPercent: -18,
-              duration: 2.2,
+              yPercent: -6,
+              xPercent: 0,
+              scale: 0.80,
+              duration: 1,
               ease: "power2.inOut",
             },
             "step1",
@@ -164,19 +258,21 @@ export default function HeroTry() {
             heroText1LayerRef.current,
             {
               opacity: 1,
+              x: 0,
               y: 0,
-              duration: 1.8,
+              duration: 1,
               ease: "power2.out",
             },
-            "step1+=0.2",
+            "<0.5",
           )
-          .to({}, { duration: 1.8 })
+
+          // Step 2: Slide transition: Section 1 moves off to left, Section 2 slides in from right
           .to(
             section1Ref.current,
             {
               xPercent: -100,
               x: 0,
-              duration: 3.0,
+              duration: 1.0,
               ease: "power2.inOut",
             },
             "slide",
@@ -186,21 +282,10 @@ export default function HeroTry() {
             {
               xPercent: 0,
               x: 0,
-              duration: 3.0,
+              duration: 1.0,
               ease: "power2.inOut",
             },
             "slide",
-          )
-          .to({}, { duration: 2.2 })
-          .to(
-            section2Ref.current,
-            {
-              xPercent: -100,
-              x: 0,
-              duration: 2.8,
-              ease: "power2.inOut",
-            },
-            "slideOut2",
           );
       });
     }, container);
@@ -223,7 +308,7 @@ export default function HeroTry() {
       {/* ========================================================================= */}
       <div
         ref={stickyRef}
-        className="sticky top-0 h-screen w-full overflow-hidden flex items-center justify-center"
+        className="sticky top-0 h-svh w-full overflow-hidden flex items-center justify-center"
       >
         {/* ========================================================================= */}
         {/* SECTION 1: Blueberry Blackcurrant Can (Slides Left Off Screen) */}
@@ -232,17 +317,17 @@ export default function HeroTry() {
           ref={section1Ref}
           className="absolute inset-0 w-full h-full flex items-center justify-center will-change-transform z-10"
         >
-          {/* Text 1: Right Heading ("THE ULTIMATE ENERGY DRINK") */}
+          {/* Text 1: Heading & CTA Button (Bottom on mobile/tablet, Right on desktop) */}
           <div
             ref={heroText1LayerRef}
-            className="absolute inset-y-0 right-0 w-[55%] md:w-[50%] flex flex-col justify-center items-start px-4 sm:px-8 md:px-10 lg:px-14 xl:px-18 z-10 will-change-transform will-change-opacity"
+            className="absolute bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-0 inset-x-0 lg:inset-x-auto lg:top-0 lg:inset-y-0 lg:right-0 w-full lg:w-[50%] flex flex-col justify-end lg:justify-center items-center lg:items-start text-center lg:text-left px-6 sm:px-8 md:px-12 lg:px-14 xl:px-18 z-30 will-change-transform will-change-opacity pointer-events-auto"
             style={{ opacity: 0 }}
           >
-            <div className="max-w-xl space-y-4">
+            <div className="max-w-xl space-y-3 sm:space-y-4 flex flex-col items-center lg:items-start text-center lg:text-left">
               <h2
-                className="text-secondary font-bold uppercase tracking-tight leading-[0.92] font-primary"
+                className="text-secondary font-bold uppercase tracking-tight leading-[0.92] font-primary text-center lg:text-left"
                 style={{
-                  fontSize: "clamp(1.8rem, 4.4vw, 5.2rem)",
+                  fontSize: "clamp(1.75rem, 4.4vw, 5.2rem)",
                   letterSpacing: "-0.01em",
                 }}
               >
@@ -251,14 +336,16 @@ export default function HeroTry() {
                   <span className="text-primary">ENERGY</span> DRINK
                 </span>
               </h2>
-              <p className="text-xs sm:text-sm md:text-lg text-secondary/70 max-w-md font-sans leading-relaxed hidden sm:block">
+              <p className="text-xs sm:text-sm md:text-base lg:text-lg text-secondary/70 max-w-md font-sans leading-relaxed hidden sm:block text-center lg:text-left">
                 Engineered for world-class athletes, peak performers, and
                 non-stop active lifestyles.
               </p>
-              <Button
-                label="View Product"
-                href="/energy-drinks/carbonated-blackcurrant-blueberry-330ml"
-              />
+              <div className="flex justify-center lg:justify-start w-full">
+                <Button
+                  label="View Product"
+                  href="/energy-drinks/carbonated-blackcurrant-blueberry-330ml"
+                />
+              </div>
             </div>
           </div>
 
@@ -278,16 +365,16 @@ export default function HeroTry() {
           ref={section2Ref}
           className="absolute inset-0 w-full h-full flex items-center justify-center will-change-transform z-20"
         >
-          {/* Text 2: Right Heading ("THE ORIGINAL GOLD FORMULA") */}
+          {/* Text 2: Heading & CTA Button (Bottom on mobile/tablet, Right on desktop) */}
           <div
             ref={heroText2LayerRef}
-            className="absolute inset-y-0 right-0 w-[55%] md:w-[50%] flex flex-col justify-center items-start px-4 sm:px-8 md:px-10 lg:px-14 xl:px-18 z-10 will-change-transform will-change-opacity"
+            className="absolute bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-0 inset-x-0 lg:inset-x-auto lg:top-0 lg:inset-y-0 lg:right-0 w-full lg:w-[50%] flex flex-col justify-end lg:justify-center items-center lg:items-start text-center lg:text-left px-6 sm:px-8 md:px-12 lg:px-14 xl:px-18 z-30 will-change-transform will-change-opacity pointer-events-auto"
           >
-            <div className="max-w-xl space-y-4">
+            <div className="max-w-xl space-y-3 sm:space-y-4 flex flex-col items-center lg:items-start text-center lg:text-left">
               <h2
-                className="text-secondary font-bold uppercase tracking-tight leading-[0.92] font-primary"
+                className="text-secondary font-bold uppercase tracking-tight leading-[0.92] font-primary text-center lg:text-left"
                 style={{
-                  fontSize: "clamp(1.8rem, 4.4vw, 5.2rem)",
+                  fontSize: "clamp(1.75rem, 4.4vw, 5.2rem)",
                   letterSpacing: "-0.01em",
                 }}
               >
@@ -296,14 +383,16 @@ export default function HeroTry() {
                   <span className="text-primary">ENERGY</span> DRINK
                 </span>
               </h2>
-              <p className="text-xs sm:text-sm md:text-lg text-secondary/70 max-w-md font-sans leading-relaxed hidden sm:block">
+              <p className="text-xs sm:text-sm md:text-base lg:text-lg text-secondary/70 max-w-md font-sans leading-relaxed hidden sm:block text-center lg:text-left">
                 Engineered for world-class athletes, peak performers, and
                 non-stop active lifestyles.
               </p>
-              <Button
-                label="View Product"
-                href="/energy-drinks/red-bull-250ml"
-              />
+              <div className="flex justify-center lg:justify-start w-full">
+                <Button
+                  label="View Product"
+                  href="/energy-drinks/red-bull-250ml"
+                />
+              </div>
             </div>
           </div>
 

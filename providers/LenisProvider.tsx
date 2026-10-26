@@ -49,12 +49,25 @@ export const LenisProvider = ({ children, options }: LenisProviderProps) => {
 
   useEffect(() => {
     // Disable automatic browser scroll restoration on reload
-    if (typeof window !== "undefined" && "scrollRestoration" in window.history) {
+    if (
+      typeof window !== "undefined" &&
+      "scrollRestoration" in window.history
+    ) {
       window.history.scrollRestoration = "manual";
     }
 
     // Ensure native scroll position is at the very top immediately
     window.scrollTo(0, 0);
+
+    // Fix for mobile layout shifts and pinning issues
+    ScrollTrigger.config({
+      ignoreMobileResize: true,
+      autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
+    });
+
+    // Normalize scroll handles address bar resizing on mobile by intercepting the scroll
+    // Removed normalizeScroll as it conflicts with Lenis and causes severe iOS bugs/freezing
+    ScrollTrigger.normalizeScroll(true);
 
     const lenisInstance = new Lenis({
       duration: 1.2,

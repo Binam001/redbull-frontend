@@ -27,7 +27,7 @@ export const navLinks: NavLink[] = [
         subtitle: "RED BULL® GOLD",
         volume: "250ml",
         badge: "Classic Gold",
-        image: "/images/home/hero/short-can.jpg",
+        image: "/images/home/hero/short-can.webp",
       },
       {
         name: "Carbonated Blackcurrant Blueberry 330ml",
@@ -35,7 +35,7 @@ export const navLinks: NavLink[] = [
         subtitle: "RED BULL® NEW-GEN",
         volume: "330ml",
         badge: "New-Gen Flavor",
-        image: "/images/home/hero/long-can.jpg",
+        image: "/images/home/hero/long-can.webp",
       },
     ],
   },

@@ -317,10 +317,22 @@ function MedalIcon({ variant }: { variant: "gold" | "silver" | "bronze" }) {
 }
 
 export default function AthletesSection() {
+  const INITIAL_VISIBLE_COUNT = 8;
   const [selectedSport, setSelectedSport] = useState<string>("All");
-  const [visibleCount, setVisibleCount] = useState<number>(8);
+  const [visibleCount, setVisibleCount] = useState<number>(INITIAL_VISIBLE_COUNT);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLDivElement>(null);
+
+  const handleShowLess = () => {
+    setVisibleCount(INITIAL_VISIBLE_COUNT);
+    if (tableRef.current) {
+      const rect = tableRef.current.getBoundingClientRect();
+      if (rect.top < 0) {
+        tableRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -347,8 +359,8 @@ export default function AthletesSection() {
   const hasMore = visibleCount < filteredAthletes.length;
 
   return (
-    <section className="w-full text-neutral-900 font-sans py-12 sm:py-16 md:py-20 lg:py-[5vw] px-4 sm:px-8 lg:px-[4vw]">
-      <div className="w-full max-w-7xl lg:max-w-none mx-auto space-y-8 lg:space-y-10">
+    <section className="w-full">
+      <div className="w-full max-w-7xl lg:max-w-none mx-auto space-y-4 lg:space-y-8">
         {/* Section Header with Title and Category Dropdown */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-2">
           <div>
@@ -366,7 +378,7 @@ export default function AthletesSection() {
               <button
                 type="button"
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-white border border-neutral-200 hover:border-neutral-300 text-neutral-900 font-bold text-sm sm:text-base shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer min-w-[240px] justify-between"
+                className="flex items-center gap-3 px-5 py-3 rounded-2xl bg-white border border-neutral-200 hover:border-neutral-300 text-neutral-900 font-bold text-sm sm:text-base transition-all duration-200 min-w-[240px] justify-between"
               >
                 <span className="flex items-center gap-2 truncate">
                   <span className="text-neutral-400 font-normal text-xs uppercase tracking-wider">
@@ -433,9 +445,12 @@ export default function AthletesSection() {
         </div>
 
         {/* Leaderboard Table Card */}
-        <div className="w-full bg-white rounded-2xl sm:rounded-3xl border border-neutral-200/80 shadow-xs overflow-hidden">
+        <div
+          ref={tableRef}
+          className="w-full bg-white rounded-2xl sm:rounded-3xl border border-neutral-200/80 overflow-hidden"
+        >
           {/* Table Header */}
-          <div className="grid grid-cols-12 items-center px-4 sm:px-6 md:px-8 py-3.5 sm:py-4 border-b border-neutral-200/80 text-xs sm:text-sm font-semibold text-neutral-400 select-none">
+          <div className="grid grid-cols-12 items-center px-2 sm:px-4 md:px-8 py-3.5 sm:py-4 border-b border-neutral-200/80 text-xs sm:text-sm font-semibold text-neutral-400 select-none">
             <div className="col-span-5 sm:col-span-4 text-left">Name</div>
             <div className="col-span-3 sm:col-span-4 text-center">Sport</div>
             <div className="col-span-4 sm:col-span-4 text-right">Medals</div>
@@ -453,9 +468,9 @@ export default function AthletesSection() {
               const rowInner = (
                 <>
                   {/* 1. Name Column (Avatar + Name with Country Flag on side) */}
-                  <div className="col-span-5 sm:col-span-4 flex items-center gap-2.5 sm:gap-3.5 pr-2 min-w-0">
+                  <div className="col-span-5 sm:col-span-4 flex items-center gap-2.5 sm:gap-3.5 pr-1 lg:pr-2 min-w-0">
                     {/* Avatar */}
-                    <div className="relative w-9 h-9 sm:w-11 sm:h-11 rounded-full overflow-hidden shrink-0 bg-neutral-100 ring-1 ring-neutral-200/80">
+                    <div className="relative size-9 md:size-11 rounded-full overflow-hidden shrink-0 bg-neutral-100 ring-1 ring-neutral-200/80">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={athlete.avatar}
@@ -466,7 +481,7 @@ export default function AthletesSection() {
                     </div>
 
                     {/* Name + Country Flag */}
-                    <div className="flex items-center gap-2 min-w-0">
+                    <div className="flex flex-col lg:flex-row lg:items-center gap-1 lg:gap-2 min-w-0">
                       <span className="font-bold text-neutral-900 text-xs sm:text-sm md:text-base leading-snug truncate group-hover:text-primary transition-colors">
                         {athlete.name}
                       </span>
@@ -476,7 +491,7 @@ export default function AthletesSection() {
                         srcSet={`https://flagcdn.com/w80/${athlete.countryCode.toLowerCase()}.png 2x`}
                         alt={athlete.country}
                         title={athlete.country}
-                        className="w-5 h-3.5 sm:w-5.5 sm:h-4 object-cover rounded-xs border border-black/10 shadow-2xs shrink-0"
+                        className="w-5 h-3.5 sm:w-5.5 sm:h-4 object-cover rounded-xs border border-black/10 shrink-0"
                         loading="lazy"
                       />
                     </div>
@@ -484,7 +499,7 @@ export default function AthletesSection() {
 
                   {/* 2. Sport Column (Centered) */}
                   <div className="col-span-3 sm:col-span-4 flex items-center justify-center min-w-0">
-                    <span className="inline-flex items-center px-2.5 py-1 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-semibold bg-neutral-100 text-neutral-700 group-hover:bg-neutral-200/70 group-hover:text-neutral-900 transition-colors truncate">
+                    <span className="inline-flex items-center px-2.5 py-1 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-sm font-semibold bg-neutral-100 text-neutral-700 group-hover:bg-neutral-200/70 group-hover:text-neutral-900 transition-colors truncate">
                       {athlete.sport}
                     </span>
                   </div>
@@ -496,7 +511,7 @@ export default function AthletesSection() {
                         {/* Gold */}
                         {athlete.gold !== undefined && athlete.gold > 0 && (
                           <div
-                            className="flex items-center gap-1.5 sm:gap-2"
+                            className="flex flex-col lg:flex-row items-center gap-1.5 sm:gap-2"
                             title={`${athlete.gold} Gold Medals`}
                           >
                             <MedalIcon variant="gold" />
@@ -509,7 +524,7 @@ export default function AthletesSection() {
                         {/* Silver */}
                         {athlete.silver !== undefined && athlete.silver > 0 && (
                           <div
-                            className="flex items-center gap-1.5 sm:gap-2"
+                            className="flex flex-col lg:flex-row items-center gap-1.5 sm:gap-2"
                             title={`${athlete.silver} Silver Medals`}
                           >
                             <MedalIcon variant="silver" />
@@ -522,7 +537,7 @@ export default function AthletesSection() {
                         {/* Bronze */}
                         {athlete.bronze !== undefined && athlete.bronze > 0 && (
                           <div
-                            className="flex items-center gap-1.5 sm:gap-2"
+                            className="flex flex-col lg:flex-row items-center gap-1.5 sm:gap-2"
                             title={`${athlete.bronze} Bronze Medals`}
                           >
                             <MedalIcon variant="bronze" />
@@ -542,7 +557,7 @@ export default function AthletesSection() {
               );
 
               const rowClassName =
-                "group grid grid-cols-12 items-center px-4 sm:px-6 md:px-8 py-3.5 sm:py-4 transition-colors duration-150 hover:bg-neutral-50/70 cursor-pointer";
+                "group grid grid-cols-12 items-center px-2 sm:px-4 md:px-8 py-3.5 sm:py-4 transition-colors duration-150 hover:bg-neutral-50/70 cursor-pointer";
 
               return detail ? (
                 <Link
@@ -561,34 +576,24 @@ export default function AthletesSection() {
           </div>
         </div>
 
-        {/* Load More Button */}
-        {hasMore && (
-          <div className="flex justify-center">
-            {/* <button
-              type="button"
-              onClick={() => setVisibleCount((prev) => prev + 8)}
-              className="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 sm:px-10 sm:py-4 rounded-full bg-secondary hover:bg-secondary/90 text-white font-bold text-sm sm:text-base tracking-wider uppercase transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 cursor-pointer"
-            >
-              <span>Load More</span>
-              <svg
-                className="w-4 h-4 transition-transform duration-300 group-hover:translate-y-0.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2.5}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </button> */}
-            <Button
-              label="Load More"
-              onClick={() => setVisibleCount((prev) => prev + 8)}
-              className="text-xs md:text-sm"
-            />
+        {/* Load More & Show Less Buttons */}
+        {(hasMore || visibleCount > INITIAL_VISIBLE_COUNT) && (
+          <div className="flex items-center justify-center gap-3 sm:gap-4 pt-2">
+            {hasMore && (
+              <Button
+                label="Load More"
+                onClick={() => setVisibleCount((prev) => prev + 8)}
+                className="text-xs md:text-sm"
+              />
+            )}
+            {visibleCount > INITIAL_VISIBLE_COUNT && (
+              <Button
+                label="Show Less"
+                variant="outline"
+                onClick={handleShowLess}
+                className="text-xs md:text-sm"
+              />
+            )}
           </div>
         )}
       </div>

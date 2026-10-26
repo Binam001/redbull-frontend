@@ -127,8 +127,8 @@ function HeroCanModel({
   });
 
   return (
-    <group ref={groupRef} scale={0.24} position={[0, -0.05, 0]} dispose={null}>
-      <Center>
+    <group ref={groupRef} scale={0.24} position={[0, 0, 0]} dispose={null}>
+      <Center disableX>
         {/* Main printed can body */}
         {nodes.BezierCurve001 && (
           <mesh

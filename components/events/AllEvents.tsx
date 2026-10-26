@@ -180,7 +180,7 @@ export default function AllEvents() {
                         </p>
 
                         {/* Description */}
-                        <p className="text-xs sm:text-sm text-neutral-500 line-clamp-2 leading-relaxed mt-2.5 max-w-xl">
+                        <p className="hidden md:block text-xs sm:text-sm text-neutral-500 line-clamp-2 leading-relaxed mt-2.5 max-w-xl">
                           {event.description}
                         </p>
                       </div>

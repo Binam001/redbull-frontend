@@ -65,31 +65,22 @@ export default function EventDescription({ event }: EventDescriptionProps) {
     : "";
 
   return (
-    <section className="relative w-full text-neutral-900 font-sans pb-14 sm:pb-20 px-6 sm:px-10 md:px-16 lg:px-24 bg-white">
+    <section className="relative">
       {/* ── Event Ticket Pass Card (Overlapping Hero & Overview) ── */}
       <EventTicketCard event={event} />
 
-      <div className="flex flex-col gap-12 sm:gap-16 md:gap-20 mt-10 sm:mt-14">
+      <div className="flex flex-col gap-12 sm:gap-16 md:gap-20 mt-8 lg:mt-12">
         {/* 1. Lead Short Description (Overview) */}
 
         {leadDesc && (
-          <div className="my-8 sm:my-12 lg:my-[1vw] max-w-6xl mx-auto">
+          <div className="my-4 md:my-8 lg:my-[1vw] max-w-6xl mx-auto">
             <Heading
               as="h2"
               text="Overview"
               highlight=""
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight leading-[1.08] mb-8"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight leading-[1.08] mb-4"
             />
-            {/* <ScrubWaveText
-              as="p"
-              text={cleanLeadDesc}
-              start="top 95%"
-              end="top 20%"
-              scrub={0.8}
-              continuous={false}
-              firstLetterClassName="text-primary font-bold text-[2em] leading-none align-baseline inline-block mr-0.5"
-              className="text-base sm:text-lg md:text-xl lg:text-2xl text-neutral-800 leading-relaxed font-medium"
-            /> */}
+
             <p className="md:text-lg lg:text-xl text-neutral-800 leading-relaxed font-medium">
               <span className="text-primary font-bold text-[2em] leading-none align-baseline inline-block mr-0.5">
                 {cleanLeadDesc.charAt(0)}
@@ -100,7 +91,7 @@ export default function EventDescription({ event }: EventDescriptionProps) {
         )}
 
         {/* 2. About the Event Section */}
-        <div className="flex flex-col gap-6 sm:gap-8 max-w-6xl mx-auto">
+        <div className="flex flex-col gap-4 max-w-6xl mx-auto">
           <Heading
             as="h2"
             text="About the event"

@@ -68,20 +68,22 @@ const FRAG_SHADER = `
     return 130.0 * dot(m, g);
   }
 
-  void main() {
-    vec2 ratio1 = clamp(
-      vec2(uPlaneResolution.x / uPlaneResolution.y / (uTextureResolution1.x / uTextureResolution1.y), 1.0) /
-      vec2(1.0, uPlaneResolution.y / uPlaneResolution.x / (uTextureResolution1.y / uTextureResolution1.x)),
-      vec2(0.0), vec2(1.0)
+  vec2 getCoverUV(vec2 uv, vec2 planeRes, vec2 texRes) {
+    float planeAspect = planeRes.x / max(planeRes.y, 1.0);
+    float texAspect = texRes.x / max(texRes.y, 1.0);
+    vec2 scale = vec2(
+      min(planeAspect / texAspect, 1.0),
+      min(texAspect / planeAspect, 1.0)
     );
-    vec2 ratio2 = clamp(
-      vec2(uPlaneResolution.x / uPlaneResolution.y / (uTextureResolution2.x / uTextureResolution2.y), 1.0) /
-      vec2(1.0, uPlaneResolution.y / uPlaneResolution.x / (uTextureResolution2.y / uTextureResolution2.x)),
-      vec2(0.0), vec2(1.0)
+    return vec2(
+      (uv.x - 0.5) * scale.x + 0.5,
+      ((1.0 - uv.y) - 0.5) * scale.y + 0.5
     );
+  }
 
-    vec2 uv1 = vec2(vUv.x * ratio1.x + (1.0 - ratio1.x) * 0.5, (1.0 - vUv.y) * ratio1.y + (1.0 - ratio1.y) * 0.5);
-    vec2 uv2 = vec2(vUv.x * ratio2.x + (1.0 - ratio2.x) * 0.5, (1.0 - vUv.y) * ratio2.y + (1.0 - ratio2.y) * 0.5);
+  void main() {
+    vec2 uv1 = getCoverUV(vUv, uPlaneResolution, uTextureResolution1);
+    vec2 uv2 = getCoverUV(vUv, uPlaneResolution, uTextureResolution2);
 
     vec4 color1 = texture2D(uTexture1, uv1);
     vec4 color2 = texture2D(uTexture2, uv2);
@@ -197,6 +199,8 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
       uMixRatio: gl.getUniformLocation(prog, "mixRatio"),
     };
     uniformLocsRef.current = locs;
+    gl.uniform2f(locs.uTexRes1, 1920, 1080);
+    gl.uniform2f(locs.uTexRes2, 1920, 1080);
 
     function createTexture(image: HTMLImageElement) {
       const tex = gl!.createTexture();
@@ -421,7 +425,7 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
   }, [currentIndex, isTransitioning, nextSlide]);
 
   return (
-    <section className="relative w-full h-[90vh] min-h-[70vh] overflow-hidden select-none bg-black p-0 m-0">
+    <section className="relative w-full lg:h-[90vh] min-h-[70vh] overflow-hidden select-none bg-black p-0 m-0">
       {/* WebGL Organic Liquid Dissolve Shader Canvas */}
       <canvas
         ref={canvasRef}
@@ -429,7 +433,7 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
       />
 
       {/* Cinematic Dark Vignettes for Maximum Readability */}
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+      <div className="absolute inset-0 pointer-events-none bg-linear-to-t from-black/90 via-black/50 to-transparent" />
 
       {/* Carousel Slide Indicators */}
       <div className="absolute inset-x-0 bottom-24 sm:bottom-32 md:bottom-30 z-10 flex flex-col items-center justify-center pointer-events-none px-6">
@@ -459,33 +463,6 @@ export default function EventDetailHero({ event }: EventDetailHeroProps) {
           })}
         </div>
       </div>
-
-      {/* Bottom-Right Controls: Same Carousel Navigation Button like Home Page */}
-      {/* <div className="absolute right-6 sm:right-10 md:right-16 lg:right-24 bottom-24 sm:bottom-32 md:bottom-30 z-10 flex items-center gap-2 pointer-events-auto">
-        <button
-          type="button"
-          onClick={prevSlide}
-          disabled={isTransitioning}
-          aria-label="Previous Slide"
-          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all cursor-pointer disabled:opacity-40"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-
-        <button
-          type="button"
-          onClick={nextSlide}
-          disabled={isTransitioning}
-          aria-label="Next Slide"
-          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all cursor-pointer disabled:opacity-40"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div> */}
     </section>
   );
 }

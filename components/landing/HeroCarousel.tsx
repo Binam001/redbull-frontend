@@ -37,7 +37,8 @@ export default function HeroCarousel() {
   const [hasEntered, setHasEntered] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
     return (
-      (window as Window & { hasEnteredIntro?: boolean }).hasEnteredIntro === true
+      (window as Window & { hasEnteredIntro?: boolean }).hasEnteredIntro ===
+      true
     );
   });
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -76,7 +77,7 @@ export default function HeroCarousel() {
             stagger: 0.08,
             ease: "power3.out",
             delay: 0.1,
-          }
+          },
         );
       }
     };
@@ -91,42 +92,45 @@ export default function HeroCarousel() {
   }, [hasEntered]);
 
   // Slide Transition Handler with smooth text animation
-  const goToSlide = useCallback((targetIndex: number) => {
-    if (targetIndex === currentIndexRef.current || isTransitioning) return;
+  const goToSlide = useCallback(
+    (targetIndex: number) => {
+      if (targetIndex === currentIndexRef.current || isTransitioning) return;
 
-    setIsTransitioning(true);
-    setSlideProgress(0);
-    progressStartTimeRef.current = Date.now();
+      setIsTransitioning(true);
+      setSlideProgress(0);
+      progressStartTimeRef.current = Date.now();
 
-    // Staggered text exit animation
-    const exitTl = gsap.timeline();
-    exitTl.to([titleRef.current, descRef.current, actionsRef.current], {
-      opacity: 0,
-      y: -12,
-      duration: 0.3,
-      stagger: 0.04,
-      ease: "power2.in",
-      onComplete: () => {
-        setCurrentIndex(targetIndex);
-        // Staggered text entrance animation
-        gsap.fromTo(
-          [titleRef.current, descRef.current, actionsRef.current],
-          { opacity: 0, y: 18 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.7,
-            stagger: 0.08,
-            ease: "power3.out",
-            onComplete: () => {
-              setIsTransitioning(false);
-              progressStartTimeRef.current = Date.now();
+      // Staggered text exit animation
+      const exitTl = gsap.timeline();
+      exitTl.to([titleRef.current, descRef.current, actionsRef.current], {
+        opacity: 0,
+        y: -12,
+        duration: 0.3,
+        stagger: 0.04,
+        ease: "power2.in",
+        onComplete: () => {
+          setCurrentIndex(targetIndex);
+          // Staggered text entrance animation
+          gsap.fromTo(
+            [titleRef.current, descRef.current, actionsRef.current],
+            { opacity: 0, y: 18 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.7,
+              stagger: 0.08,
+              ease: "power3.out",
+              onComplete: () => {
+                setIsTransitioning(false);
+                progressStartTimeRef.current = Date.now();
+              },
             },
-          }
-        );
-      },
-    });
-  }, [isTransitioning]);
+          );
+        },
+      });
+    },
+    [isTransitioning],
+  );
 
   const nextSlide = useCallback(() => {
     const next = (currentIndexRef.current + 1) % HERO_SLIDES.length;
@@ -134,7 +138,8 @@ export default function HeroCarousel() {
   }, [goToSlide]);
 
   const prevSlide = useCallback(() => {
-    const prev = (currentIndexRef.current - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
+    const prev =
+      (currentIndexRef.current - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
     goToSlide(prev);
   }, [goToSlide]);
 
@@ -168,7 +173,7 @@ export default function HeroCarousel() {
   const activeSlide = HERO_SLIDES[currentIndex];
 
   return (
-    <section className="relative w-full h-screen min-h-screen overflow-hidden select-none bg-black p-0 m-0">
+    <section className="relative w-full h-dvh overflow-hidden select-none bg-black p-0 m-0">
       {/* Mapped Hero Background Images */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         {HERO_SLIDES.map((slide, idx) => {
@@ -176,8 +181,11 @@ export default function HeroCarousel() {
           return (
             <div
               key={slide.id}
-              className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${isActive ? "opacity-100 z-0 pointer-events-auto" : "opacity-0 z-[-1] pointer-events-none"
-                }`}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
+                isActive
+                  ? "opacity-100 z-0 pointer-events-auto"
+                  : "opacity-0 z-[-1] pointer-events-none"
+              }`}
             >
               <Image
                 src={slide.image}
@@ -185,8 +193,9 @@ export default function HeroCarousel() {
                 fill
                 priority={idx === 0}
                 sizes="100vw"
-                className={`object-cover object-center w-full h-full transition-transform duration-[6000ms] ease-out ${isActive && hasEntered ? "scale-105" : "scale-100"
-                  }`}
+                className={`object-cover object-center w-full h-full transition-transform duration-[6000ms] ease-out ${
+                  isActive && hasEntered ? "scale-105" : "scale-100"
+                }`}
               />
             </div>
           );
@@ -220,7 +229,10 @@ export default function HeroCarousel() {
           </p>
 
           {/* Action Row */}
-          <div ref={actionsRef} className="pt-2 flex flex-wrap items-center gap-4 will-change-transform">
+          <div
+            ref={actionsRef}
+            className="pt-2 flex flex-col md:flex-row md:items-center gap-4 will-change-transform"
+          >
             <Button
               label={activeSlide.ctaText || "Explore more"}
               href={`/events/${activeSlide.slug}`}
@@ -261,8 +273,18 @@ export default function HeroCarousel() {
             aria-label="Previous Slide"
             className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/50 active:scale-95 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all cursor-pointer disabled:opacity-40"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
             </svg>
           </button>
 
@@ -273,8 +295,18 @@ export default function HeroCarousel() {
             aria-label="Next Slide"
             className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/50 active:scale-95 border border-white/20 text-white flex items-center justify-center backdrop-blur-md transition-all cursor-pointer disabled:opacity-40"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </button>
         </div>

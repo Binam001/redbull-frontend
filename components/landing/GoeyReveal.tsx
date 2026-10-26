@@ -2,7 +2,6 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
-import Button from "../shared/Button";
 
 export default function GooeyReveal() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -22,39 +21,17 @@ export default function GooeyReveal() {
       dissolveDuration: 0.55,
     };
 
-    let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    let targetMouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    let lastStampPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    let isTouching = false;
     let rafId: number | null = null;
+    let isActive = false;
+    let mouse = { x: 0, y: 0 };
+    let targetMouse = { x: 0, y: 0 };
+    let lastStampPos = { x: 0, y: 0 };
 
-    const handlePointerMove = (e: MouseEvent | TouchEvent) => {
-      const clientX =
-        "touches" in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
-      const clientY =
-        "touches" in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
+    const handlePointerMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
-      targetMouse.x = clientX - rect.left;
-      targetMouse.y = clientY - rect.top;
+      targetMouse.x = e.clientX - rect.left;
+      targetMouse.y = e.clientY - rect.top;
     };
-
-    const handleTouchStart = (e: TouchEvent) => {
-      isTouching = true;
-      handlePointerMove(e);
-      // Immediately stamp at touch start
-      lastStampPos = { ...targetMouse };
-      mouse = { ...targetMouse };
-      addBlob(targetMouse.x, targetMouse.y, 1);
-    };
-
-    const handleTouchEnd = () => {
-      isTouching = false;
-    };
-
-    window.addEventListener("mousemove", handlePointerMove);
-    window.addEventListener("touchmove", handlePointerMove, { passive: true });
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchend", handleTouchEnd);
 
     const addBlob = (x: number, y: number, speedRatio: number = 1) => {
       if (!smudgeBlobs) return;
@@ -122,14 +99,47 @@ export default function GooeyReveal() {
       rafId = requestAnimationFrame(updateLoop);
     };
 
-    rafId = requestAnimationFrame(updateLoop);
+    const startEffect = () => {
+      if (isActive) return;
+      const rect = container.getBoundingClientRect();
+      mouse = { x: rect.width / 2, y: rect.height / 2 };
+      targetMouse = { x: rect.width / 2, y: rect.height / 2 };
+      lastStampPos = { x: rect.width / 2, y: rect.height / 2 };
+
+      window.addEventListener("mousemove", handlePointerMove);
+      rafId = requestAnimationFrame(updateLoop);
+      isActive = true;
+    };
+
+    const stopEffect = () => {
+      if (!isActive) return;
+      window.removeEventListener("mousemove", handlePointerMove);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      if (smudgeBlobs) {
+        while (smudgeBlobs.firstChild) {
+          smudgeBlobs.removeChild(smudgeBlobs.firstChild);
+        }
+      }
+      isActive = false;
+    };
+
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        startEffect();
+      } else {
+        stopEffect();
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("mousemove", handlePointerMove);
-      window.removeEventListener("touchmove", handlePointerMove);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchend", handleTouchEnd);
-      if (rafId) cancelAnimationFrame(rafId);
+      stopEffect();
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -137,9 +147,9 @@ export default function GooeyReveal() {
     <div className="w-full">
       <div
         ref={containerRef}
-        className="relative w-full h-screen overflow-hidden font-sans select-none cursor-crosshair"
+        className="relative w-full h-screen overflow-hidden font-sans select-none lg:cursor-crosshair cursor-default"
       >
-        <svg className="absolute w-0 h-0 pointer-events-none">
+        <svg className="hidden lg:block absolute w-0 h-0 pointer-events-none">
           <defs>
             <filter
               id="gooey-filter"
@@ -182,28 +192,17 @@ export default function GooeyReveal() {
                 className="object-contain"
               />
             </div>
-
-            {/* Foreground Text Content */}
           </div>
           <div className="absolute bottom-16 z-10 space-y-6">
             <h1 className="uppercase text-3xl sm:text-4xl md:text-5xl lg:text-[5vw] tracking-tight text-white leading-[1.08]">
               Find Your Wiiings
             </h1>
-
-            {/* <p className="text-xs sm:text-sm md:text-lg text-white/80 leading-relaxed font-medium max-w-xl mx-auto">
-                Ready to take on what’s next? Discover the energy, events, and
-                stories that bring people together to push beyond the ordinary.
-              </p>
-
-              <div className="pt-4 flex justify-center gap-4">
-                <Button label="Explore Red Bull" className="rounded-full" />
-              </div> */}
           </div>
         </div>
 
-        {/* Foreground Surface Layer with Smudge Mask (reveals on top of content when hovered) */}
+        {/* Foreground Surface Layer with Smudge Mask (reveals on top of content when hovered on desktop) */}
         <div
-          className="hero-content-foreground absolute inset-0 overflow-hidden pointer-events-none select-none z-30"
+          className="hero-content-foreground hidden lg:block absolute inset-0 overflow-hidden pointer-events-none select-none z-30"
           style={{
             mask: "url(#smudge-mask)",
             WebkitMask: "url(#smudge-mask)",

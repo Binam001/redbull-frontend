@@ -97,14 +97,14 @@ const TextDivider2 = () => {
   return (
     <div
       ref={containerRef}
-      className="w-full overflow-hidden min-h-[55vh] sm:min-h-[60vh] lg:min-h-[68vh] flex items-center justify-center text-center px-4 py-16 sm:py-24 select-none"
+      className="w-full overflow-hidden min-h-[40vh] md:min-h-[60vh] lg:min-h-[68vh] flex items-center justify-center text-center px-4 py-16 sm:py-24 select-none"
     >
       <div className="w-full flex flex-col items-center justify-center leading-[1.04] sm:leading-[1.06] [perspective:1000px]">
         {/* Line 1 - animates from right */}
         <div className="w-full overflow-hidden py-1 sm:py-2 flex justify-center">
           <span
             ref={line1Ref}
-            className="block text-4xl sm:text-6xl md:text-7xl lg:text-[7.5vw] font-primary font-bold tracking-tight text-secondary uppercase will-change-transform"
+            className="block text-[40px] md:text-7xl lg:text-[7.5vw] font-primary font-bold tracking-tight text-secondary uppercase will-change-transform"
           >
             What If
           </span>
@@ -114,7 +114,7 @@ const TextDivider2 = () => {
         <div className="w-full overflow-hidden py-1 sm:py-2 flex justify-center">
           <span
             ref={line2Ref}
-            className="block text-4xl sm:text-6xl md:text-7xl lg:text-[7.5vw] font-primary font-bold tracking-tight text-secondary uppercase will-change-transform"
+            className="block text-[40px] md:text-7xl lg:text-[7.5vw] font-primary font-bold tracking-tight text-secondary uppercase will-change-transform"
           >
             You Were
           </span>
@@ -124,7 +124,7 @@ const TextDivider2 = () => {
         <div className="w-full overflow-hidden py-1 sm:py-2 flex justify-center">
           <span
             ref={line3Ref}
-            className="block text-4xl sm:text-6xl md:text-7xl lg:text-[7.5vw] font-primary font-bold tracking-tight text-primary uppercase will-change-transform"
+            className="block text-[40px] md:text-7xl lg:text-[7.5vw] font-primary font-bold tracking-tight text-primary uppercase will-change-transform"
           >
             Unstoppable?
           </span>

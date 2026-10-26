@@ -5,7 +5,7 @@ const CarbonatedDivider = () => {
   return (
     <section
       id="aspire-section-3"
-      className="relative z-20 min-h-dvh w-full bg-black text-white overflow-hidden p-0"
+      className="relative z-20 h-svh lg:min-h-svh w-full bg-black text-white overflow-hidden p-0"
     >
       <div className="flex flex-col-reverse xl:flex-row items-stretch justify-center w-full min-h-dvh">
         {/* <div className="xl:w-1/2 w-full flex flex-col justify-center text-center xl:text-left gap-4 xl:gap-8 px-6 sm:px-10 md:px-16 lg:px-20 xl:px-24 py-12 xl:py-0">
@@ -24,16 +24,8 @@ const CarbonatedDivider = () => {
           </p>
         </div> */}
 
-        <div className="w-full h-[50vh] xl:h-auto min-h-[50vh] xl:min-h-dvh z-0 pointer-events-none flex items-center justify-center">
+        <div className="w-full h-svh lg:h-auto lg:min-h-dvh z-0 pointer-events-none flex items-center justify-center">
           <div className="w-full h-full relative flex items-center justify-center">
-            {/* <video
-              src="/videos/shoes-video-11.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="pointer-events-none object-cover w-full h-full brightness-105"
-            /> */}
             <Image
               src="/images/product/can-ad-1.webp"
               alt="Carbonated Divider"

@@ -1,12 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useMemo } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import React, { useEffect, useMemo } from "react";
 
 export interface HeadingProps {
   /** The text content to display (alternative to passing children) */
@@ -23,45 +17,41 @@ export interface HeadingProps {
   baseClassName?: string;
   /** Highlight text color class. Defaults to "text-primary" (Red Bull Red #cb2026) */
   highlightClassName?: string;
-  /** Animation duration per character in seconds. Defaults to 0.75 */
+  /** Deprecated animation duration */
   animationDuration?: number;
-  /** GSAP easing curve. Defaults to "back.out(1.4)" for signature bounce */
+  /** Deprecated GSAP easing curve */
   ease?: string;
-  /** Stagger delay between characters. Defaults to 0.018 */
+  /** Deprecated stagger delay */
   stagger?: number;
-  /** Initial Y percent displacement. Defaults to 110 */
+  /** Deprecated Y percent displacement */
   yPercent?: number;
-  /** Initial rotation angle in degrees. Defaults to 0 */
+  /** Deprecated rotation angle */
   rotate?: number;
-  /** Delay before animation starts (seconds). Defaults to 0 */
+  /** Deprecated delay */
   delay?: number;
-  /** Whether to trigger the animation when scrolled into view. Defaults to true */
+  /** Deprecated triggerOnScroll */
   triggerOnScroll?: boolean;
-  /** ScrollTrigger start position. Defaults to "top 85%" */
+  /** Deprecated scrollStart */
   scrollStart?: string;
-  /** Custom scroll trigger element ref if different from heading */
+  /** Deprecated triggerRef */
   triggerRef?: React.RefObject<HTMLElement | null>;
-  /** Callback fired when the animation completes */
+  /** Callback fired when rendered */
   onComplete?: () => void;
 }
 
-interface CharItem {
-  char: string;
-  isHighlight: boolean;
+interface SegmentItem {
+  text: string;
+  isHighlight?: boolean;
   customClass?: string;
 }
 
-interface WordItem {
-  chars: CharItem[];
-}
-
 interface LineItem {
-  words: WordItem[];
+  segments: SegmentItem[];
   brClass?: string;
 }
 
 /**
- * Parses children / text prop and highlight rules into structured words and characters
+ * Parses children / text prop and highlight rules into structured lines and styled segments
  */
 function parseContent(
   textProp?: string,
@@ -114,7 +104,11 @@ function parseContent(
     }
   };
 
-  const processString = (str: string, explicitHighlight?: boolean, explicitClass?: string) => {
+  const processString = (
+    str: string,
+    explicitHighlight?: boolean,
+    explicitClass?: string,
+  ) => {
     if (!str) return;
 
     // Support line breaks from <br />, newlines (\n), or literal escaped \n
@@ -133,7 +127,11 @@ function parseContent(
     }
 
     if (explicitHighlight !== undefined) {
-      rawSegments.push({ text: str, isHighlight: explicitHighlight, customClass: explicitClass });
+      rawSegments.push({
+        text: str,
+        isHighlight: explicitHighlight,
+        customClass: explicitClass,
+      });
       return;
     }
 
@@ -215,51 +213,26 @@ function parseContent(
     processString(textProp);
   }
 
-  // Convert raw segments into lines and words of individual characters
-  const lines: LineItem[] = [{ words: [] }];
-  let currentChars: CharItem[] = [];
-
-  const pushWord = () => {
-    if (currentChars.length > 0) {
-      const currentLine = lines[lines.length - 1];
-      currentLine.words.push({ chars: currentChars });
-      currentChars = [];
-    }
-  };
-
+  // Group raw segments into lines
+  const lines: LineItem[] = [{ segments: [] }];
   for (const seg of rawSegments) {
     if (seg.isLineBreak) {
-      pushWord();
-      lines.push({ words: [], brClass: seg.customClass });
+      lines.push({ segments: [], brClass: seg.customClass });
       continue;
     }
-
-    const chars = seg.text.split("");
-    for (const ch of chars) {
-      if (/\s/.test(ch)) {
-        pushWord();
-      } else {
-        currentChars.push({
-          char: ch,
-          isHighlight: !!seg.isHighlight,
-          customClass: seg.customClass,
-        });
-      }
-    }
+    const currentLine = lines[lines.length - 1];
+    currentLine.segments.push({
+      text: seg.text,
+      isHighlight: seg.isHighlight,
+      customClass: seg.customClass,
+    });
   }
 
-  pushWord();
-
-  const validLines = lines.filter((l) => l.words.length > 0);
-  if (validLines.length === 0) {
-    validLines.push({ words: [] });
-  }
-
-  const plainText = validLines
-    .map((l) => l.words.map((w) => w.chars.map((c) => c.char).join("")).join(" "))
+  const plainText = lines
+    .map((l) => l.segments.map((s) => s.text).join(""))
     .join(" ");
 
-  return { lines: validLines, plainText };
+  return { lines, plainText };
 }
 
 export const Heading: React.FC<HeadingProps> = ({
@@ -270,128 +243,34 @@ export const Heading: React.FC<HeadingProps> = ({
   className = "",
   baseClassName = "text-secondary",
   highlightClassName = "text-primary",
-  animationDuration = 0.75,
-  ease = "back.out(1.4)",
-  stagger = 0.018,
-  yPercent = 110,
-  rotate = 0,
-  delay = 0,
-  triggerOnScroll = true,
-  scrollStart = "top 85%",
-  triggerRef,
   onComplete,
 }) => {
-  const containerRef = useRef<HTMLElement | null>(null);
-
   const { lines, plainText } = useMemo(
     () => parseContent(text, children, highlight),
     [text, children, highlight],
   );
 
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    const charElements = el.querySelectorAll(".heading-char");
-    if (!charElements || charElements.length === 0) return;
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        delay,
-        scrollTrigger: triggerOnScroll
-          ? {
-              trigger: triggerRef?.current || el,
-              start: scrollStart,
-              once: true,
-            }
-          : undefined,
-        onComplete,
-      });
-
-      // Signature kinetic squash & stretch wave animation from preloader
-      tl.fromTo(
-        charElements,
-        {
-          opacity: 0,
-          yPercent: yPercent,
-          rotate: rotate,
-          scaleY: 1.35,
-          scaleX: 0.85,
-          transformOrigin: "50% 0%",
-        },
-        {
-          duration: animationDuration,
-          ease: ease,
-          opacity: 1,
-          yPercent: 0,
-          rotate: 0,
-          scaleY: 1,
-          scaleX: 1,
-          stagger: stagger,
-        },
-      );
-    }, el);
-
-    // Refresh ScrollTrigger if preloader completes while page is loaded
-    const handlePreloaderComplete = () => {
-      ScrollTrigger.refresh();
-    };
-    if (typeof window !== "undefined") {
-      window.addEventListener("preloaderComplete", handlePreloaderComplete);
-    }
-
-    return () => {
-      if (typeof window !== "undefined") {
-        window.removeEventListener("preloaderComplete", handlePreloaderComplete);
-      }
-      ctx.revert();
-    };
-  }, [
-    lines,
-    animationDuration,
-    ease,
-    stagger,
-    yPercent,
-    rotate,
-    delay,
-    triggerOnScroll,
-    scrollStart,
-    triggerRef,
-    onComplete,
-  ]);
+    onComplete?.();
+  }, [onComplete]);
 
   return (
-    <Component
-      ref={containerRef as any}
-      className={`relative select-none ${className}`}
-      aria-label={plainText}
-    >
-      <span aria-hidden="true">
-        {lines.map((line, lineIdx) => (
-          <React.Fragment key={lineIdx}>
-            {lineIdx > 0 && <br className={line.brClass} />}
-            {line.words.map((word, wIdx) => (
-              <React.Fragment key={wIdx}>
-                <span className="inline-block whitespace-nowrap overflow-hidden align-bottom pb-[0.12em] pt-[0.1em] -mb-[0.12em] -mt-[0.1em]">
-                  {word.chars.map((charObj, cIdx) => (
-                    <span
-                      key={cIdx}
-                      className={`inline-block heading-char will-change-transform ${
-                        charObj.customClass ||
-                        (charObj.isHighlight ? highlightClassName : baseClassName)
-                      }`}
-                      style={{ display: "inline-block" }}
-                    >
-                      {charObj.char}
-                    </span>
-                  ))}
-                </span>
-                {wIdx < line.words.length - 1 && " "}
-              </React.Fragment>
-            ))}
-          </React.Fragment>
-        ))}
-      </span>
+    <Component className={`relative ${className}`} aria-label={plainText}>
+      {lines.map((line, lineIdx) => (
+        <React.Fragment key={lineIdx}>
+          {lineIdx > 0 && <br className={line.brClass} />}
+          {line.segments.map((seg, sIdx) => {
+            const colorClass =
+              seg.customClass ||
+              (seg.isHighlight ? highlightClassName : baseClassName);
+            return (
+              <span key={sIdx} className={colorClass}>
+                {seg.text}
+              </span>
+            );
+          })}
+        </React.Fragment>
+      ))}
     </Component>
   );
 };

@@ -183,7 +183,7 @@ const FooterContent = () => {
 
         {/* Bottom / Dome Section: Red Bull Logo on bottom and Unleash Your BABAAL Energy */}
         <div className="w-full flex flex-col items-center justify-center text-center my-auto py-2 sm:py-3 select-none">
-          <div className="relative w-24 sm:w-32 md:w-40 lg:w-120 aspect-4/2 drop-shadow-[0_0_35px_rgba(48,82,175,0.9)]">
+          <div className="relative w-48 sm:w-64 md:w-80 lg:w-120 aspect-4/2 drop-shadow-[0_0_35px_rgba(48,82,175,0.9)]">
             <Image
               src="/logo.svg"
               alt="Red Bull Logo"

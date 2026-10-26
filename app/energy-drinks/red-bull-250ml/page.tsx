@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function RedBull250mlPage() {
   return (
-    <main className="relative">
+    <main className="relative overflow-x-hidden">
       {/* <RedBullPouringSection /> */}
       {/* <HeroSection />
       <FloatingCircle />

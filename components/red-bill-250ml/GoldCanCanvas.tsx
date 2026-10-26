@@ -2,7 +2,7 @@
 
 import React, { Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Float, Environment } from "@react-three/drei";
+import { Float } from "@react-three/drei";
 import { GoldCanModel } from "./GoldCanModel";
 
 interface GoldCanCanvasProps {
@@ -45,22 +45,33 @@ export default function GoldCanCanvas({
         }}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={1.8} />
-          <directionalLight position={[4, 6, 4]} intensity={2.8} color="#ffffff" />
-          <directionalLight position={[-4, 4, -2]} intensity={1.8} color="#ffeedd" />
-          <directionalLight position={[0, 0, 7]} intensity={2.0} color="#ffffff" />
-          <directionalLight position={[0, -5, 4]} intensity={1.2} color="#ffffff" />
+          <ambientLight intensity={1} />
+          <directionalLight position={[5, 8, 6]} intensity={1.5} />
+          <directionalLight
+            position={[-5, 4, 4]}
+            intensity={1.0}
+            color="#ffffff"
+          />
+          <directionalLight
+            position={[0, 0, 7]}
+            intensity={1.0}
+            color="#ffffff"
+          />
+          <directionalLight
+            position={[0, -5, 4]}
+            intensity={1.0}
+            color="#ffffff"
+          />
 
+          {/* Zero-G floating levitation */}
           <Float
             rotationIntensity={0.12}
-            floatingRange={[-0.02, 0.02]}
+            floatingRange={[-0.03, 0.03]}
             floatIntensity={0.5}
-            speed={1.2}
+            speed={1.3}
           >
             <GoldCanModel rotate={rotate} setRotate={setRotate} />
           </Float>
-
-          <Environment preset="warehouse" />
         </Suspense>
       </Canvas>
     </div>

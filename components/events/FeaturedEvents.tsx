@@ -78,8 +78,8 @@ export default function FeaturedEvents() {
   return (
     <section className="w-full lg:max-w-none px-0 overflow-hidden">
       {/* Header with Title, Event Filters, and Carousel Navigation Buttons */}
-      <header className="w-full mb-6 sm:mb-10 lg:mb-[3vw] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 lg:gap-[1.2vw] px-4 sm:px-8 lg:px-[4vw]">
-        <div className="flex items-center gap-8">
+      <header className="w-full mb-6 sm:mb-10 lg:mb-[3vw] flex flex-row items-start sm:items-center justify-between gap-4 lg:gap-[1.2vw] px-4 sm:px-8 lg:px-[4vw]">
+        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
           <Heading
             as="h2"
             text="Events"
@@ -91,7 +91,7 @@ export default function FeaturedEvents() {
             <button
               type="button"
               onClick={() => handleFilterChange("upcoming")}
-              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm lg:text-[0.85vw] font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
+              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm lg:text-[0.85vw] font-bold uppercase tracking-wider transition-all duration-200 ${
                 activeFilter === "upcoming"
                   ? "bg-secondary text-white"
                   : "text-primary/70 hover:text-primary"
@@ -102,7 +102,7 @@ export default function FeaturedEvents() {
             <button
               type="button"
               onClick={() => handleFilterChange("past")}
-              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm lg:text-[0.85vw] font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer ${
+              className={`px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm lg:text-[0.85vw] font-bold uppercase tracking-wider transition-all duration-200 ${
                 activeFilter === "past"
                   ? "bg-secondary text-white"
                   : "text-primary/70 hover:text-primary"
@@ -120,7 +120,7 @@ export default function FeaturedEvents() {
             <button
               onClick={scrollPrev}
               disabled={prevBtnDisabled}
-              className="w-10 h-10 sm:w-11 sm:h-11 lg:w-[2.8vw] lg:h-[2.8vw] rounded-full border border-secondary/10 bg-secondary/70 flex items-center justify-center text-white hover:bg-secondary hover:text-white hover:border-secondary disabled:opacity-30 disabled:hover:bg-white disabled:hover:text-neutral-800 disabled:hover:border-black/10 transition-all duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs"
+              className="size-10 md:size-11 lg:size-[2.8vw] rounded-full border border-secondary/10 bg-secondary flex items-center justify-center text-white hover:bg-secondary hover:text-white hover:border-secondary disabled:opacity-30 disabled:hover:bg-white disabled:hover:text-neutral-800 disabled:hover:border-black/10 transition-all duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs"
               aria-label="Previous slide"
             >
               <svg
@@ -140,7 +140,7 @@ export default function FeaturedEvents() {
             <button
               onClick={scrollNext}
               disabled={nextBtnDisabled}
-              className="w-10 h-10 sm:w-11 sm:h-11 lg:w-[2.8vw] lg:h-[2.8vw] rounded-full border border-secondary/10 bg-secondary/70 flex items-center justify-center text-white hover:bg-secondary hover:text-white hover:border-secondary disabled:opacity-30 disabled:hover:bg-white disabled:hover:text-neutral-800 disabled:hover:border-black/10 transition-all duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs"
+              className="size-10 md:size-11 lg:size-[2.8vw] rounded-full border border-secondary/10 bg-secondary flex items-center justify-center text-white hover:bg-secondary hover:text-white hover:border-secondary disabled:opacity-30 disabled:hover:bg-white disabled:hover:text-neutral-800 disabled:hover:border-black/10 transition-all duration-200 cursor-pointer disabled:cursor-not-allowed shadow-xs"
               aria-label="Next slide"
             >
               <svg
@@ -174,24 +174,6 @@ export default function FeaturedEvents() {
           ))}
         </div>
       </div>
-
-      {/* Pagination Indicator Dots */}
-      {/* {scrollSnaps.length > 1 && (
-        <div className="flex justify-center items-center gap-2 lg:gap-[0.5vw] mt-8 sm:mt-10 lg:mt-[2.5vw]">
-          {scrollSnaps.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => scrollTo(index)}
-              className={`transition-all duration-300 rounded-full cursor-pointer ${
-                index === selectedIndex
-                  ? "w-8 h-2 lg:w-[2vw] lg:h-[0.5vw] bg-neutral-900"
-                  : "w-2 h-2 lg:w-[0.5vw] lg:h-[0.5vw] bg-neutral-300 hover:bg-neutral-400"
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
-      )} */}
     </section>
   );
 }

@@ -30,11 +30,11 @@ const CareerHero: React.FC<CareerHeroProps> = ({
       dissolveDuration: 0.65,
     };
 
-    const initialRect = container.getBoundingClientRect();
-    let mouse = { x: initialRect.width / 2, y: initialRect.height / 2 };
-    let targetMouse = { x: initialRect.width / 2, y: initialRect.height / 2 };
-    let lastStampPos = { x: initialRect.width / 2, y: initialRect.height / 2 };
     let rafId: number | null = null;
+    let isActive = false;
+    let mouse = { x: 0, y: 0 };
+    let targetMouse = { x: 0, y: 0 };
+    let lastStampPos = { x: 0, y: 0 };
 
     const addBlob = (x: number, y: number, speedRatio: number = 1) => {
       if (!smudgeBlobs) return;
@@ -82,34 +82,19 @@ const CareerHero: React.FC<CareerHeroProps> = ({
       );
     };
 
-    const handlePointerMove = (e: MouseEvent | TouchEvent) => {
-      const clientX =
-        "touches" in e ? e.touches[0].clientX : (e as MouseEvent).clientX;
-      const clientY =
-        "touches" in e ? e.touches[0].clientY : (e as MouseEvent).clientY;
+    const handlePointerMove = (e: MouseEvent) => {
       const rect = container.getBoundingClientRect();
 
       if (
-        clientX >= rect.left &&
-        clientX <= rect.right &&
-        clientY >= rect.top &&
-        clientY <= rect.bottom
+        e.clientX >= rect.left &&
+        e.clientX <= rect.right &&
+        e.clientY >= rect.top &&
+        e.clientY <= rect.bottom
       ) {
-        targetMouse.x = clientX - rect.left;
-        targetMouse.y = clientY - rect.top;
+        targetMouse.x = e.clientX - rect.left;
+        targetMouse.y = e.clientY - rect.top;
       }
     };
-
-    const handleTouchStart = (e: TouchEvent) => {
-      handlePointerMove(e);
-      lastStampPos = { ...targetMouse };
-      mouse = { ...targetMouse };
-      addBlob(targetMouse.x, targetMouse.y, 1.2);
-    };
-
-    window.addEventListener("mousemove", handlePointerMove);
-    window.addEventListener("touchmove", handlePointerMove, { passive: true });
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
 
     const updateLoop = () => {
       mouse.x += (targetMouse.x - mouse.x) * config.smoothing;
@@ -128,23 +113,58 @@ const CareerHero: React.FC<CareerHeroProps> = ({
       rafId = requestAnimationFrame(updateLoop);
     };
 
-    rafId = requestAnimationFrame(updateLoop);
+    const startEffect = () => {
+      if (isActive) return;
+      const rect = container.getBoundingClientRect();
+      mouse = { x: rect.width / 2, y: rect.height / 2 };
+      targetMouse = { x: rect.width / 2, y: rect.height / 2 };
+      lastStampPos = { x: rect.width / 2, y: rect.height / 2 };
+
+      window.addEventListener("mousemove", handlePointerMove);
+      rafId = requestAnimationFrame(updateLoop);
+      isActive = true;
+    };
+
+    const stopEffect = () => {
+      if (!isActive) return;
+      window.removeEventListener("mousemove", handlePointerMove);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      if (smudgeBlobs) {
+        while (smudgeBlobs.firstChild) {
+          smudgeBlobs.removeChild(smudgeBlobs.firstChild);
+        }
+      }
+      isActive = false;
+    };
+
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        startEffect();
+      } else {
+        stopEffect();
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("mousemove", handlePointerMove);
-      window.removeEventListener("touchmove", handlePointerMove);
-      window.removeEventListener("touchstart", handleTouchStart);
-      if (rafId) cancelAnimationFrame(rafId);
+      stopEffect();
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
   return (
     <section
       ref={containerRef}
-      className="relative w-full h-screen min-h-[580px] overflow-hidden font-sans select-none bg-black cursor-crosshair flex flex-col justify-end items-center"
+      className="relative w-full h-dvh min-h-[580px] overflow-hidden bg-black xl:cursor-crosshair cursor-default flex flex-col justify-end items-center"
     >
-      {/* ── Layer 0 (Behind): Red Bull Logo Revealed Underneath Dissolved Holes ── */}
-      <div className="hero-logo-underlay absolute inset-0 flex items-center justify-center bg-black pointer-events-none select-none z-0 overflow-hidden">
+      <div className="xl:hidden absolute inset-0 bg-linear-to-t from-black via-transparent to-transparent z-20" />
+      {/* ── Layer 0 (Behind): Red Bull Logo Revealed Underneath Dissolved Holes (Desktop only) ── */}
+      <div className="hero-logo-underlay hidden md:flex absolute inset-0 items-center justify-center bg-black pointer-events-none select-none z-0 overflow-hidden">
         {/* Ambient atmospheric backlight */}
         <div className="absolute w-[600px] sm:w-[850px] h-[400px] bg-red-600/30 blur-[130px] rounded-full pointer-events-none" />
         <div className="absolute w-[350px] sm:w-[550px] h-[300px] bg-yellow-500/20 blur-[110px] rounded-full pointer-events-none" />
@@ -160,9 +180,20 @@ const CareerHero: React.FC<CareerHeroProps> = ({
         </div>
       </div>
 
-      {/* ── Layer 1 (Foreground Image): Dissolves under SVG Gooey Smudge Mask ── */}
+      {/* ── Layer 1 Mobile: Static Hero Image ── */}
+      <div className="md:hidden absolute inset-0 w-full h-full z-10 pointer-events-none select-none">
+        <Image
+          src={imageSrc}
+          alt="Career Hero"
+          fill
+          priority
+          className="object-cover"
+        />
+      </div>
+
+      {/* ── Layer 1 Desktop: Dissolves under SVG Gooey Smudge Mask ── */}
       <svg
-        className="absolute inset-0 w-full h-full pointer-events-none select-none z-10"
+        className="hidden md:block absolute inset-0 w-full h-full pointer-events-none select-none z-10"
         preserveAspectRatio="none"
       >
         <defs>

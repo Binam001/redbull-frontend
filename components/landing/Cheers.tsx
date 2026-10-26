@@ -210,11 +210,11 @@ export default function Cheers() {
 
       <div
         ref={containerRef}
-        className="relative w-full h-screen overflow-hidden font-sans"
+        className="relative w-full h-svh overflow-hidden font-sans"
       >
         {/* Front / Foreground Hands CTA Layer (meets in middle on scroll) */}
         <div className="hands-foreground-layer absolute inset-0 pointer-events-none select-none overflow-hidden z-20 flex items-center justify-center">
-          <div className="relative w-[150vw] sm:w-[125vw] md:w-full lg:w-[100vw] lg:max-w-none aspect-[1678/937] flex items-center justify-center scale-75 sm:scale-[0.78] lg:scale-[0.8] origin-center">
+          <div className="relative w-[150vw] sm:w-[125vw] md:w-full lg:w-[100vw] lg:max-w-none aspect-[1678/937] flex items-center justify-center scale-[2] sm:scale-[1.2] lg:scale-[0.8] origin-center -translate-x-[10%] lg:-translate-x-[5%]">
             {/* Right Hand (holding gold can) */}
             <div
               ref={rightHandRef}

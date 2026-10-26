@@ -180,7 +180,7 @@ function CanScene({
           start: "top top",
           end: "+=160%",
           pin: true,
-          scrub: 0.2, // Snappy response with zero sluggish delay
+          scrub: 1,
           anticipatePin: 1,
           invalidateOnRefresh: true,
         },
@@ -263,10 +263,10 @@ function CanScene({
       if (phase1DetailsRef.current) {
         tl.fromTo(
           phase1DetailsRef.current,
-          { opacity: 0, x: -30 },
+          { opacity: 0, y: 20 },
           {
             opacity: 1,
-            x: 0,
+            y: 0,
             ease: "power2.out",
             duration: 0.15,
           },
@@ -433,7 +433,7 @@ function CanScene({
           phase1DetailsRef.current,
           {
             opacity: 0,
-            x: -20,
+            y: -20,
             ease: "power2.inOut",
             duration: 0.25,
           },
@@ -445,10 +445,10 @@ function CanScene({
       if (phase2DetailsRef.current) {
         tl.fromTo(
           phase2DetailsRef.current,
-          { opacity: 0, x: 30 },
+          { opacity: 0, y: 20 },
           {
             opacity: 1,
-            x: 0,
+            y: 0,
             ease: "power2.out",
             duration: 0.3,
           },
@@ -577,66 +577,70 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(14,42,88,0.22)_0%,rgba(3,7,18,0.92)_60%,#030712_100%)]" />
 
       {/* Center-left Phase 1 Highlight Details */}
-      <div
-        ref={phase1DetailsRef}
-        className="absolute top-1/2 -translate-y-1/2 left-4 md:left-8 lg:left-16 xl:left-24 z-20 pointer-events-none select-none flex flex-col gap-6 md:gap-8 max-w-xs sm:max-w-sm lg:max-w-md opacity-0"
-      >
-        {/* High Caffeine */}
-        <div className="flex items-start gap-3 sm:gap-4">
-          <div className="w-2.5 h-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
-          <div className="flex flex-col">
-            <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
-              High Caffeine{" "}
-              <span className="text-primary font-bold text-base sm:text-xl lg:text-[1.35vw] block sm:inline">
-                (24.24 mg/100ml)
+      <div className="absolute bottom-8 sm:bottom-10 md:bottom-12 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 inset-x-0 lg:inset-x-auto lg:left-16 xl:left-24 w-full lg:w-auto z-20 pointer-events-none select-none flex justify-center lg:justify-start px-4 sm:px-6">
+        <div
+          ref={phase1DetailsRef}
+          className="flex flex-col items-start text-left gap-4 sm:gap-6 md:gap-8 max-w-sm lg:max-w-md opacity-0"
+        >
+          {/* High Caffeine */}
+          <div className="flex items-start gap-3 sm:gap-4">
+            <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
+            <div className="flex flex-col items-start text-left">
+              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
+                High Caffeine{" "}
+                <span className="text-primary font-bold text-base sm:text-xl lg:text-[1.35vw] block sm:inline">
+                  (24.24 mg/100ml)
+                </span>
               </span>
-            </span>
+            </div>
           </div>
-        </div>
 
-        {/* Calories */}
-        <div className="flex items-start gap-3 sm:gap-4">
-          <div className="w-2.5 h-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
-          <div className="flex flex-col">
-            <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
-              Calories <span className="text-primary font-bold">200</span>
-            </span>
+          {/* Calories */}
+          <div className="flex items-start gap-3 sm:gap-4">
+            <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
+            <div className="flex flex-col items-start text-left">
+              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
+                Calories <span className="text-primary font-bold">200</span>
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Center-right Phase 2 Highlight Details */}
-      <div
-        ref={phase2DetailsRef}
-        className="absolute top-1/2 -translate-y-1/2 right-4 md:right-8 lg:left-auto lg:right-16 xl:right-24 z-20 pointer-events-none select-none flex flex-col gap-6 md:gap-8 max-w-xs sm:max-w-sm lg:max-w-md opacity-0"
-      >
-        {/* Sodium */}
-        <div className="flex items-start gap-3 sm:gap-4">
-          <div className="w-2.5 h-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
-          <div className="flex flex-col">
-            <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
-              Sodium <span className="text-primary font-bold">100mg</span>
-            </span>
+      <div className="absolute bottom-8 sm:bottom-10 md:bottom-12 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 inset-x-0 lg:inset-x-auto lg:left-auto lg:right-16 xl:right-24 w-full lg:w-auto z-20 pointer-events-none select-none flex justify-center lg:justify-end px-4 sm:px-6">
+        <div
+          ref={phase2DetailsRef}
+          className="flex flex-col items-start lg:items-end text-left gap-4 sm:gap-6 md:gap-8 max-w-sm lg:max-w-md opacity-0"
+        >
+          {/* Sodium */}
+          <div className="flex items-start lg:items-end gap-3 sm:gap-4">
+            <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
+            <div className="flex flex-col items-start lg:items-end text-left">
+              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
+                Sodium <span className="text-primary font-bold">100mg</span>
+              </span>
+            </div>
           </div>
-        </div>
 
-        {/* Carbohydrate */}
-        <div className="flex items-start gap-3 sm:gap-4">
-          <div className="w-2.5 h-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
-          <div className="flex flex-col">
-            <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
-              Carbohydrate <span className="text-primary font-bold">49g</span>
-            </span>
+          {/* Carbohydrate */}
+          <div className="flex items-start lg:items-end gap-3 sm:gap-4">
+            <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
+            <div className="flex flex-col items-start lg:items-end text-left">
+              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
+                Carbohydrate <span className="text-primary font-bold">49g</span>
+              </span>
+            </div>
           </div>
-        </div>
 
-        {/* Protein */}
-        <div className="flex items-start gap-3 sm:gap-4">
-          <div className="w-2.5 h-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
-          <div className="flex flex-col">
-            <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
-              Protein <span className="text-primary font-bold">2g</span>
-            </span>
+          {/* Protein */}
+          <div className="flex items-start lg:items-end gap-3 sm:gap-4">
+            <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
+            <div className="flex flex-col items-start lg:items-end text-left">
+              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
+                Protein <span className="text-primary font-bold">2g</span>
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -644,9 +648,9 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
       {/* top-left label in text-primary */}
       <div
         ref={titleRef}
-        className="absolute top-16 md:top-32 lg:top-[30%] left-4 md:left-8 lg:left-16 xl:left-24 z-20 pointer-events-none select-none"
+        className="absolute top-24 md:top-32 lg:top-[30%] left-4 md:left-8 lg:left-16 xl:left-24 z-20 pointer-events-none select-none"
       >
-        <h2 className="text-primary font-bold text-xl md:text-3xl lg:text-[3.5vw] uppercase">
+        <h2 className="text-primary font-bold text-3xl md:text-5xl lg:text-[3.5vw] uppercase">
           Unleash the <br /> Unexpected
         </h2>
       </div>

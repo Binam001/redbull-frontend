@@ -25,7 +25,6 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Cycle />
-
           <Footer />
         </LenisProvider>
       </body>

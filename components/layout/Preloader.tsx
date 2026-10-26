@@ -8,7 +8,6 @@ import { useGLTF } from "@react-three/drei";
 import NextImage from "next/image";
 
 const STATIC_IMAGES = [
-  // "/images/home/bg-1.webp",
   // "/images/home/paras-khadka-4.webp",
   // "/images/home/rabindra-dhaat-1.webp",
   // "/images/home/ad-1.webp",
@@ -24,7 +23,7 @@ const STATIC_IMAGES = [
 ];
 
 const GLTF_MODELS = [
-  // "/models/red-bull-3-transformed.glb",
+  "/models/red-bull-3-transformed.glb",
   "/models/redbull.glb",
 ];
 

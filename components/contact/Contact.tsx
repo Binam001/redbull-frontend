@@ -48,7 +48,7 @@ export default function Contact() {
   };
 
   return (
-    <section className="relative w-full min-h-screen bg-black text-white flex items-center justify-center overflow-hidden py-24 sm:py-28 lg:py-[5vw] px-4 sm:px-8 lg:px-[5vw] select-none">
+    <section className="relative w-full min-h-screen bg-black text-white flex items-center justify-center overflow-hidden py-24 sm:py-28 lg:py-[5vw] px-4 sm:px-8 lg:px-[5vw]">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -66,7 +66,7 @@ export default function Contact() {
       {/* Main Content Layout */}
       <div className="relative z-10 w-full lg:max-w-[90vw] mx-auto flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-0">
         {/* Left Column: Quote & Direct Contact Details */}
-        <div className="w-full lg:w-[28vw] flex flex-col justify-center space-y-6 sm:space-y-8 lg:space-y-[1.8vw] text-left pt-6 sm:pt-10 lg:pt-[4vw] xl:pt-[6vw]">
+        <div className="w-full max-w-xl lg:w-[28vw] lg:max-w-none flex flex-col justify-center items-center lg:items-start text-center lg:text-left space-y-6 sm:space-y-8 lg:space-y-[1.8vw] pt-6 md:pt-10 lg:pt-[4vw] xl:pt-[6vw]">
           <blockquote className="space-y-3 sm:space-y-4 lg:space-y-[0.6vw] max-w-xl lg:max-w-none">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.2vw] font-medium tracking-tight text-white leading-tight lg:leading-[1.18]">
               “Great things happen when people are given the energy to go
@@ -78,7 +78,7 @@ export default function Contact() {
           </blockquote>
 
           {/* Elegant Frosted Contact Details Card */}
-          <div className="max-w-md lg:max-w-none w-full lg:w-[24vw] rounded-2xl sm:rounded-3xl lg:rounded-[1.2vw] bg-white/[0.07] border border-white/20 backdrop-blur-xl p-5 sm:p-6 lg:p-[1.2vw] shadow-[0_20px_45px_rgba(0,0,0,0.4)] space-y-4 lg:space-y-[0.8vw]">
+          <div className="w-full max-w-xl lg:max-w-none lg:w-[24vw] rounded-2xl sm:rounded-3xl lg:rounded-[1.2vw] bg-white/[0.07] border border-white/20 backdrop-blur-xl p-5 sm:p-6 lg:p-[1.2vw] shadow-[0_20px_45px_rgba(0,0,0,0.4)] space-y-4 lg:space-y-[0.8vw] text-left">
             {/* Address */}
             <div className="flex items-start gap-3.5 lg:gap-[0.7vw]">
               <div className="w-9 h-9 lg:w-[2vw] lg:h-[2vw] rounded-xl lg:rounded-[0.5vw] bg-white/10 border border-white/15 flex items-center justify-center shrink-0 text-white/80 mt-0.5 lg:mt-[0.1vw]">
@@ -179,7 +179,7 @@ export default function Contact() {
         </div>
 
         {/* Right Column: Glassmorphism Floating Form Card (same style as left card) */}
-        <div className="w-full max-w-xl lg:w-[33vw] lg:max-w-none flex justify-center lg:justify-end pt-12">
+        <div className="w-full max-w-xl lg:w-[33vw] lg:max-w-none flex justify-center lg:justify-end lg:pt-12">
           <div className="relative w-full bg-white/[0.07] border border-white/20 backdrop-blur-xl rounded-3xl lg:rounded-[1.5vw] px-6 sm:px-8 md:px-10 lg:px-[2.2vw] py-8 sm:py-10 md:py-11 lg:py-[2.2vw] shadow-[0_20px_45px_rgba(0,0,0,0.4)] overflow-hidden">
             <form
               onSubmit={handleSubmit}

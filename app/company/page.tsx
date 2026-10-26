@@ -1,7 +1,7 @@
 import AboutTokenomics from "@/components/about/AboutTokenomics";
 import Saras from "@/components/about/Saras";
 import Tcp from "@/components/about/Tcp";
-import SecondSection from "@/components/home/SecondSection";
+import SecondSection from "@/components/about/SecondSection";
 import GooeyReveal from "@/components/landing/GoeyReveal";
 import Intro from "@/components/landing/Intro";
 import { Metadata } from "next";

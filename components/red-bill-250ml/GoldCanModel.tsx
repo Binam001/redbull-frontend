@@ -33,7 +33,7 @@ const INITIAL_Y_ROTATION = degToRad(-40);
 
 export function GoldCanModel({
   rotate = false,
-  setRotate = () => { },
+  setRotate = () => {},
   standalone = false,
   ...props
 }: GoldCanModelProps) {
@@ -49,7 +49,7 @@ export function GoldCanModel({
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 800);
+      setIsMobile(window.innerWidth < 1024);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -60,15 +60,19 @@ export function GoldCanModel({
   // dampening seamlessly as user scrolls into Section 2
   useFrame((state, delta) => {
     if (idleGroupRef.current) {
-      const factor = standalone ? 1 : Math.max(0, 1 - scrollProgressRef.current * 2.5);
+      const factor = standalone
+        ? 1
+        : Math.max(0, 1 - scrollProgressRef.current * 2.5);
       const t = state.clock.getElapsedTime();
 
       // Continuous spin around Y
       idleGroupRef.current.rotation.y += delta * 0.55 * factor;
 
       // Dynamic tilting motion: stylish diagonal lean with a gentle, organic sway
-      idleGroupRef.current.rotation.z = (0.20 + Math.sin(t * 1.3) * 0.08) * factor;
-      idleGroupRef.current.rotation.x = (0.12 + Math.cos(t * 1.3) * 0.06) * factor;
+      idleGroupRef.current.rotation.z =
+        (0.2 + Math.sin(t * 1.3) * 0.08) * factor;
+      idleGroupRef.current.rotation.x =
+        (0.12 + Math.cos(t * 1.3) * 0.06) * factor;
     }
   });
 
@@ -93,18 +97,18 @@ export function GoldCanModel({
       const mm = gsap.matchMedia();
       mm.add(
         {
-          isDesktop: "(min-width: 800px)",
-          isMobile: "(max-width: 799px)",
+          isDesktop: "(min-width: 1024px)",
+          isMobile: "(max-width: 1023px)",
         },
         (context) => {
           const mobile = context.conditions?.isMobile;
 
-          // Desktop: Starts on the RIGHT (+2.15), moves across to the LEFT (-1.8)
-          // Mobile: Starts centered/upper half, moves to upper left
+          // Desktop (>= 1024px): Starts on the RIGHT (+2.15), moves across to the LEFT (-1.8)
+          // Mobile & Tablet (< 1024px): Starts centered/upper half, moves vertically straight down
           const initialPosX = mobile ? 0 : 2.15;
-          const initialPosY = mobile ? 0.45 : 0.05;
+          const initialPosY = mobile ? 0.72 : 0.18;
           const targetPosX = mobile ? 0 : -1.8;
-          const targetPosY = mobile ? 0.20 : -0.42;
+          const targetPosY = mobile ? 0.58 : -0.24;
 
           // 1. Position animation (Right to Left on desktop)
           gsap.fromTo(
@@ -126,13 +130,13 @@ export function GoldCanModel({
                   scrollProgressRef.current = self.progress;
                 },
               },
-            }
+            },
           );
 
           // 2. Rotation animation: 360° sideways spin on Y, while tilting towards the left (Z: 0.30, X: 0.16)
           const targetRotX = 0.16;
           const targetRotY = INITIAL_Y_ROTATION + 2 * Math.PI + 0.42;
-          const targetRotZ = 0.30;
+          const targetRotZ = 0.3;
 
           gsap.fromTo(
             rotationGroupRef.current!.rotation,
@@ -150,7 +154,7 @@ export function GoldCanModel({
                 immediateRender: false,
                 refreshPriority: 10,
               },
-            }
+            },
           );
 
           // 3. Scale animation
@@ -173,43 +177,54 @@ export function GoldCanModel({
                 immediateRender: false,
                 refreshPriority: 10,
               },
-            }
+            },
           );
-        }
+        },
       );
     });
 
     return () => ctx.revert();
   }, [isMobile]);
 
-  const initialScale = standalone ? (isMobile ? 1.45 : 1.75) : (isMobile ? 1.45 : 1.95);
-  const initialPosX = standalone ? 0 : (isMobile ? 0 : 2.15);
-  const initialPosY = standalone ? (isMobile ? 0.2 : 0) : (isMobile ? 0.45 : 0.05);
+  const initialScale = standalone
+    ? isMobile
+      ? 1.45
+      : 1.75
+    : isMobile
+      ? 1.45
+      : 1.95;
+  const initialPosX = standalone ? 0 : isMobile ? 0 : 2.15;
+  const initialPosY = standalone
+    ? isMobile
+      ? 0.25
+      : 0.05
+    : isMobile
+      ? 0.72
+      : 0.18;
 
-  const canMesh =
-    (nodes?.Pepsi_Can ||
-      (nodes as any)?.["Pepsi Can"] ||
-      (nodes as any)?.["Pepsi_Can"] ||
-      Object.values(nodes || {}).find((n: any) => n?.isMesh)) as THREE.Mesh | undefined;
+  const canMesh = (nodes?.Pepsi_Can ||
+    (nodes as any)?.["Pepsi Can"] ||
+    (nodes as any)?.["Pepsi_Can"] ||
+    Object.values(nodes || {}).find((n: any) => n?.isMesh)) as
+    | THREE.Mesh
+    | undefined;
 
   const rawMaterial =
     materials?.["Pepsi Can.003"] ||
     (materials as any)?.["Pepsi_Can.003"] ||
-    (Object.values(materials || {})[0] as THREE.MeshStandardMaterial | undefined);
+    (Object.values(materials || {})[0] as
+      | THREE.MeshStandardMaterial
+      | undefined);
 
-  // When Environment map is disabled, default PBR metalness (1.0) absorbs diffuse light and reflects pure black.
-  // By cloning the material with low metalness (0.1) and balanced roughness (0.32),
-  // the gold baseColor texture is brightly and vividly illuminated by scene lights without dark shadows.
+  // By cloning the material with balanced metalness (0.68) and roughness (0.28),
+  // the gold baseColor texture is brightly and vividly illuminated by scene lights without requiring external HDR environment maps.
   const canMaterial = React.useMemo(() => {
     if (!rawMaterial) return undefined;
-    if (standalone) {
-      const cloned = rawMaterial.clone();
-      cloned.metalness = 0.68;
-      cloned.roughness = 0.28;
-      return cloned;
-    }
-    return rawMaterial;
-  }, [rawMaterial, standalone]);
+    const cloned = rawMaterial.clone();
+    cloned.metalness = 0.68;
+    cloned.roughness = 0.28;
+    return cloned;
+  }, [rawMaterial]);
 
   return (
     <group

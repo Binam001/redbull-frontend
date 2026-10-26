@@ -143,7 +143,7 @@ export default function EventCard({ event, className = "" }: EventCardProps) {
   return (
     <Link
       href={`/events/${event.slug}`}
-      className={`group relative w-full aspect-[7/9] rounded-3xl lg:rounded-[2vw] overflow-hidden flex flex-col justify-between p-4 sm:p-5 lg:p-[1.4vw] select-none border border-white/10 hover:border-white/30 shadow-lg hover:shadow-2xl transition-all duration-300 block ${className}`}
+      className={`group relative w-full aspect-7/9 rounded-3xl overflow-hidden flex flex-col justify-between p-4 sm:p-5 lg:p-[1.4vw] select-none border border-white/10 hover:border-white/30 shadow-lg hover:shadow-2xl transition-all duration-300 ${className}`}
     >
       {/* Background Full-bleed Poster Image */}
       {/* eslint-disable-next-line @next/next/no-img-element */}

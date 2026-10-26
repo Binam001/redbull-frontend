@@ -26,24 +26,6 @@ const Navbar = () => {
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const pathname = usePathname();
 
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
-
-  useEffect(() => {
-    setIsDarkTheme(document.documentElement.classList.contains("dark"));
-
-    const observer = new MutationObserver(() => {
-      setIsDarkTheme(document.documentElement.classList.contains("dark"));
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const { isSmallerDevice } = useResponsive();
   const { scrollY } = useScroll();
   const isExclusivePage = pathname.startsWith("/exclusive");
   const isEnergyDrinksPage = pathname.startsWith("/energy-drinks");
@@ -65,21 +47,6 @@ const Navbar = () => {
       setActiveLink("");
     }
   }, [pathname]);
-
-  const isExclusive =
-    [
-      "/company",
-      "/contact",
-      "/events",
-      "/cart",
-      "/review",
-      "/",
-      "/gallery",
-      "/wishlist",
-    ].includes(pathname) ||
-    pathname.startsWith("/products") ||
-    pathname.startsWith("/blog") ||
-    pathname.startsWith("/exclusive");
 
   // Lock scroll when menu is open
   useEffect(() => {
@@ -349,7 +316,7 @@ const Navbar = () => {
               isScrolled={isScrolledOrLight}
               className="relative flex items-center"
               btnClassName="lg:p-[0.4vw]"
-              imgClassName="lg:size-[0.85vw]"
+              imgClassName="size-6 lg:size-[0.85vw]"
             />
 
             {/* Mobile Hamburger Toggle (Mobile Only - Right end) */}
@@ -439,7 +406,7 @@ const Navbar = () => {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="flex flex-col gap-2 mt-2 mb-2 overflow-hidden bg-[#181c22]/95 backdrop-blur-2xl rounded-3xl p-2.5 shadow-xl w-full max-w-sm border border-white/10"
+                            className="flex flex-col gap-2 my-2 overflow-hidden bg-[#181c22]/5 backdrop-blur-2xl rounded-3xl p-1 w-full max-w-sm"
                           >
                             {link.dropdownItems.map((subItem) => {
                               const isSubActive = pathname.startsWith(
@@ -455,8 +422,8 @@ const Navbar = () => {
                                   }}
                                   className={`group flex items-center gap-3 p-2.5 rounded-2xl transition-all duration-200 text-left ${
                                     isSubActive
-                                      ? "bg-white/15 text-white"
-                                      : "hover:bg-white/10 text-white"
+                                      ? "bg-white/15 text-black"
+                                      : "hover:bg-white/10 text-black"
                                   }`}
                                 >
                                   <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-black shrink-0 border border-white/10 flex items-center justify-center">
@@ -471,12 +438,12 @@ const Navbar = () => {
                                     )}
                                   </div>
                                   <div className="flex flex-col justify-center min-w-0 flex-1 text-left">
-                                    <span className="text-[10.5px] font-semibold tracking-wider text-white/60 uppercase">
+                                    <span className="text-[10.5px] font-semibold tracking-wider text-black/60 uppercase">
                                       {subItem.subtitle ||
                                         subItem.badge ||
                                         subItem.volume}
                                     </span>
-                                    <span className="text-[13.5px] font-bold text-white tracking-tight leading-snug truncate">
+                                    <span className="text-[13.5px] font-bold text-black tracking-tight leading-snug truncate">
                                       {subItem.name}
                                     </span>
                                   </div>

@@ -187,7 +187,7 @@ export default function ShortHero() {
       className="relative z-30 w-full h-dvh overflow-visible flex flex-col items-center justify-start text-white select-none bg-black"
     >
       {/* 1. Ambient Spotlight Atmosphere Background (--secondary: #233971) */}
-      <div className="absolute inset-[-1px] z-0 overflow-hidden bg-black pointer-events-none">
+      <div className="absolute -inset-px z-0 overflow-hidden bg-black pointer-events-none">
         <div
           className="absolute inset-0 select-none"
           style={{
@@ -227,7 +227,7 @@ export default function ShortHero() {
         >
           {/* Full-viewport canvas aligned with the screen */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-screen h-dvh pointer-events-none">
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-[140vw] sm:w-[110vw] md:w-[90vw] lg:w-[70vw] xl:w-[90vw] max-w-none flex justify-center">
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 z-10 w-[200vw] md:w-[160vw] lg:w-[70vw] xl:w-[90vw] max-w-none flex justify-center">
               <div
                 ref={maskedHandRef}
                 className="w-full h-auto will-change-transform flex justify-center"
@@ -303,7 +303,7 @@ export default function ShortHero() {
       {/* 4. Main Can Image (Translates up, then fades out into the dark background) */}
       <div
         ref={handWrapperRef}
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 w-[140vw] sm:w-[110vw] md:w-[90vw] lg:w-[70vw] xl:w-[90vw] max-w-none flex justify-center pointer-events-none will-change-transform"
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 z-20 w-[200vw] md:w-[160vw] lg:w-[70vw] xl:w-[90vw] max-w-none flex justify-center pointer-events-none will-change-transform"
       >
         <div
           ref={handRef}
