@@ -36,112 +36,91 @@ export default function AthleteDetailView({ athlete }: AthleteDetailViewProps) {
 
   return (
     <article className="w-full bg-white text-neutral-900 pb-24">
-      {/* ── Top Hero Banner (Full-Width Background Image Blend) ── */}
-      <div className="relative w-full overflow-hidden bg-white min-h-[440px] sm:min-h-[480px] lg:min-h-[560px] flex items-center">
-        {/* Full-Width Background Image Layer */}
-        <div className="absolute inset-0 pointer-events-none select-none overflow-hidden">
-          {/* Ambient center soft glow (matches Sample 2 central halo) */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] sm:w-[650px] sm:h-[650px] lg:w-[850px] lg:h-[850px] bg-gradient-to-tr from-primary/20 via-ternary/15 to-secondary/15 rounded-full blur-3xl opacity-60" />
-
-          {/* Full-width athlete hero image */}
-          <div className="absolute inset-0 w-full h-full">
-            <Image
-              src={
-                athlete.portraitImage ||
-                athlete.hoverImage ||
-                athlete.actionImage ||
-                athlete.defaultImage
-              }
-              alt={athlete.name}
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-center lg:object-[center_35%] opacity-90 lg:opacity-100 transition-all duration-700"
+      {/* ── Top Hero Section (Editorial Layout matching reference) ── */}
+      <div className="max-w-4xl mx-auto w-full px-4 sm:px-6 pt-28">
+        {/* Back Navigation Link */}
+        <Link
+          href="/athletes"
+          className="inline-flex items-center gap-1.5 text-neutral-700 text-xs sm:text-sm font-medium transition-all group w-fit mb-4"
+        >
+          <svg
+            className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-x-0.5 text-neutral-500"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M15 19l-7-7 7-7"
             />
+          </svg>
+          <span>Go Back</span>
+        </Link>
 
-            {/* Left-to-Right Fade: keeps headline text crisp and high-contrast */}
-            <div className="absolute inset-0 bg-linear-to-r from-white via-white/80 sm:via-white/65 to-transparent z-10" />
+        {/* Headline Title */}
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-medium tracking-tight text-neutral-900 leading-[1.12] mb-4">
+          {athlete.name}
+        </h1>
 
-            {/* Top Fade: melts seamlessly under navbar */}
-            <div className="absolute top-0 inset-x-0 h-20 sm:h-24 bg-linear-to-b from-white via-white/50 to-transparent z-10" />
+        {/* Lead Excerpt Description */}
+        {athlete.description && (
+          <p className="text-neutral-600 text-sm md:text-lg leading-relaxed font-normal mb-8 sm:mb-10">
+            {athlete.description}
+          </p>
+        )}
 
-            {/* Bottom Fade: melts seamlessly into white page */}
-            <div className="absolute bottom-0 inset-x-0 h-20 sm:h-28 bg-linear-to-t from-white via-white/30 to-transparent z-10" />
+        {/* Metadata Row */}
+        <div className="flex flex-col gap-2.5 mb-8">
+          <span className="text-xs sm:text-sm text-neutral-500 font-normal">
+            {athlete.discipline ? athlete.discipline : "Athlete Profile"} · 4
+            min read
+          </span>
+          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 text-sm">
+            <div className="relative w-7 h-7 rounded-full overflow-hidden border border-neutral-200 shrink-0">
+              <Image
+                src={athlete.portraitImage || athlete.defaultImage}
+                alt={athlete.name}
+                fill
+                sizes="28px"
+                className="object-cover object-top"
+              />
+            </div>
+            <span className="font-medium text-neutral-900">
+              {athlete.team || "Oracle Red Bull Racing"}
+            </span>
+            <span className="text-neutral-300 select-none">·</span>
+            <span className="text-neutral-500">
+              {athlete.hometown || athlete.nationality}
+            </span>
+            <span className="text-neutral-300 select-none">·</span>
+            <span className="font-semibold text-primary">{athlete.sport}</span>
           </div>
         </div>
 
-        {/* Hero Content on Top */}
-        <div className="relative max-w-4xl mx-auto w-full pt-24 sm:pt-28 lg:pt-30 pb-8 sm:pb-10 px-4 sm:px-6 z-10">
-          {/* Back Navigation Link */}
-          <Link
-            href="/athletes"
-            className="inline-flex items-center gap-2 text-neutral-500 hover:text-neutral-900 text-sm mb-8 transition-colors group cursor-pointer w-fit"
-          >
-            <svg
-              className="w-4 h-4 transition-transform duration-200 group-hover:-translate-x-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2.2"
-                d="M10 19l-7-7m0 0l7-7m-7 7h18"
-              />
-            </svg>
-            <span>All Athletes</span>
-          </Link>
-
-          {/* Category Pill Badge */}
-          <div className="mb-5">
-            <span className="px-3.5 py-1 rounded-full border border-neutral-200 bg-neutral-100/90 backdrop-blur-sm text-xs font-semibold uppercase text-neutral-800">
-              {athlete.discipline ? athlete.discipline : "Athlete Profile"}
-            </span>
-          </div>
-
-          {/* Headline Title */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold text-secondary leading-[1.15] mb-5 max-w-3xl">
-            {athlete.name}
-          </h1>
-
-          {/* Subtitle / Excerpt */}
-          <p className="text-neutral-600 text-base sm:text-lg leading-relaxed max-w-2xl mb-8">
-            {athlete.description}
-          </p>
-
-          {/* Metadata Row */}
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm text-neutral-500">
-            <div className="flex items-center gap-2.5">
-              <div className="relative w-8 h-8 rounded-full overflow-hidden border border-neutral-300 bg-neutral-100 shrink-0">
-                <Image
-                  src={athlete.portraitImage || athlete.defaultImage}
-                  alt={athlete.name}
-                  fill
-                  sizes="32px"
-                  className="object-cover object-top"
-                />
-              </div>
-              <span className="font-semibold text-neutral-900">
-                {athlete.team || "Oracle Red Bull Racing"}
-              </span>
-            </div>
-
-            <span className="text-neutral-300 select-none">·</span>
-
-            <span>{athlete.hometown || athlete.nationality}</span>
-
-            <span className="text-neutral-300 select-none">·</span>
-
-            <span className="font-semibold text-primary">{athlete.sport}</span>
-          </div>
+        {/* Featured Image Card */}
+        <div className="relative w-full aspect-[16/9] sm:aspect-[16/10] lg:aspect-[21/10] rounded-2xl sm:rounded-3xl overflow-hidden bg-neutral-100 shadow-sm border border-neutral-100 mb-8 sm:mb-10">
+          <Image
+            src={
+              athlete.actionImage ||
+              athlete.hoverImage ||
+              athlete.portraitImage ||
+              athlete.defaultImage
+            }
+            alt={athlete.name}
+            fill
+            priority
+            sizes="(max-width: 1024px) 100vw, 896px"
+            className="object-cover object-center"
+          />
         </div>
       </div>
 
       {/* ── Main Editorial Content Section ── */}
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16">
         {/* Signature Gradient Accent Divider (Matches WebX) */}
-        <div className="h-[2.5px] w-20 bg-gradient-to-r from-primary via-ternary to-secondary mb-10 sm:mb-12 rounded-full" />
+        <div className="h-[2.5px] w-20 bg-linear-to-r from-primary via-ternary to-secondary mb-10 sm:mb-12 rounded-full" />
 
         <div className="w-full flex flex-col gap-8 sm:gap-10">
           {/* Introductory Narrative */}
