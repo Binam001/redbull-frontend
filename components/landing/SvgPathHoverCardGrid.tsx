@@ -487,7 +487,7 @@ export default function SvgPathHoverCardGrid({
         <div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3vw] tracking-tight text-secondary leading-[1.08]">
             Our <br className="md:hidden" />
-            <span className="text-primary"> Athletes</span>
+            Elite<span className="text-primary"> Champions</span>
           </h1>
         </div>
         {showViewAllButton && (

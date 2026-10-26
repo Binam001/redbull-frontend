@@ -131,8 +131,8 @@ export default function AthletesDisplay() {
         <div>
           <Heading
             as="h2"
-            text="Our Athletes"
-            highlight="Athletes"
+            text="Our Elite Champions"
+            highlight="elite"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight leading-[1.08]"
           />
         </div>

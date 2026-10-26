@@ -153,7 +153,7 @@ export default function HeroTry() {
           x: 0,
           yPercent: -10,
           y: 0,
-          scale: 0.90,
+          scale: 0.9,
         });
         gsap.set(heroText1LayerRef.current, { opacity: 0, x: 0, y: 30 });
         gsap.set(heroText2LayerRef.current, { opacity: 1, x: 0, y: 0 });
@@ -248,7 +248,7 @@ export default function HeroTry() {
             {
               yPercent: -6,
               xPercent: 0,
-              scale: 0.80,
+              scale: 0.8,
               duration: 1,
               ease: "power2.inOut",
             },
@@ -320,7 +320,7 @@ export default function HeroTry() {
           {/* Text 1: Heading & CTA Button (Bottom on mobile/tablet, Right on desktop) */}
           <div
             ref={heroText1LayerRef}
-            className="absolute bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-0 inset-x-0 lg:inset-x-auto lg:top-0 lg:inset-y-0 lg:right-0 w-full lg:w-[50%] flex flex-col justify-end lg:justify-center items-center lg:items-start text-center lg:text-left px-6 sm:px-8 md:px-12 lg:px-14 xl:px-18 z-30 will-change-transform will-change-opacity pointer-events-auto"
+            className="absolute bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-0 inset-x-0 lg:inset-x-auto lg:top-0 lg:inset-y-0 lg:right-0 w-full lg:w-[50%] flex flex-col justify-end lg:justify-center items-center lg:items-start text-center lg:text-left px-6 sm:px-8 md:px-12 z-30 will-change-transform will-change-opacity pointer-events-auto"
             style={{ opacity: 0 }}
           >
             <div className="max-w-xl space-y-3 sm:space-y-4 flex flex-col items-center lg:items-start text-center lg:text-left">
@@ -336,13 +336,13 @@ export default function HeroTry() {
                   <span className="text-primary">ENERGY</span> DRINK
                 </span>
               </h2>
-              <p className="text-xs sm:text-sm md:text-base lg:text-lg text-secondary/70 max-w-md font-sans leading-relaxed hidden sm:block text-center lg:text-left">
-                Engineered for world-class athletes, peak performers, and
-                non-stop active lifestyles.
+              <p className="text-xs sm:text-sm md:text-base lg:text-lg text-secondary/70 max-w-md leading-relaxed hidden sm:block text-center lg:text-left">
+                Experience the refreshing blend of Blueberry & Blackcurrant,
+                crafted to power your peak performance.
               </p>
               <div className="flex justify-center lg:justify-start w-full">
                 <Button
-                  label="View Product"
+                  label="Power Up Now"
                   href="/energy-drinks/carbonated-blackcurrant-blueberry-330ml"
                 />
               </div>
@@ -368,7 +368,7 @@ export default function HeroTry() {
           {/* Text 2: Heading & CTA Button (Bottom on mobile/tablet, Right on desktop) */}
           <div
             ref={heroText2LayerRef}
-            className="absolute bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-0 inset-x-0 lg:inset-x-auto lg:top-0 lg:inset-y-0 lg:right-0 w-full lg:w-[50%] flex flex-col justify-end lg:justify-center items-center lg:items-start text-center lg:text-left px-6 sm:px-8 md:px-12 lg:px-14 xl:px-18 z-30 will-change-transform will-change-opacity pointer-events-auto"
+            className="absolute bottom-6 sm:bottom-8 md:bottom-10 lg:bottom-0 inset-x-0 lg:inset-x-auto lg:top-0 lg:inset-y-0 lg:right-0 w-full lg:w-[50%] flex flex-col justify-end lg:justify-center items-center lg:items-start text-center lg:text-left px-6 sm:px-8 md:px-12 z-30 will-change-transform will-change-opacity pointer-events-auto"
           >
             <div className="max-w-xl space-y-3 sm:space-y-4 flex flex-col items-center lg:items-start text-center lg:text-left">
               <h2
@@ -378,18 +378,18 @@ export default function HeroTry() {
                   letterSpacing: "-0.01em",
                 }}
               >
-                <span className="block whitespace-nowrap">THE ULTIMATE</span>
+                <span className="block whitespace-nowrap">The Original</span>
                 <span className="block whitespace-nowrap mt-1 sm:mt-2">
-                  <span className="text-primary">ENERGY</span> DRINK
+                  <span className="text-primary">Energy</span> Surge
                 </span>
               </h2>
               <p className="text-xs sm:text-sm md:text-base lg:text-lg text-secondary/70 max-w-md font-sans leading-relaxed hidden sm:block text-center lg:text-left">
-                Engineered for world-class athletes, peak performers, and
-                non-stop active lifestyles.
+                The classic non-carbonated formula built to power your toughest
+                days and longest hours.
               </p>
               <div className="flex justify-center lg:justify-start w-full">
                 <Button
-                  label="View Product"
+                  label="Explore Flavor"
                   href="/energy-drinks/red-bull-250ml"
                 />
               </div>

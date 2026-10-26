@@ -319,7 +319,9 @@ function MedalIcon({ variant }: { variant: "gold" | "silver" | "bronze" }) {
 export default function AthletesSection() {
   const INITIAL_VISIBLE_COUNT = 8;
   const [selectedSport, setSelectedSport] = useState<string>("All");
-  const [visibleCount, setVisibleCount] = useState<number>(INITIAL_VISIBLE_COUNT);
+  const [visibleCount, setVisibleCount] = useState<number>(
+    INITIAL_VISIBLE_COUNT,
+  );
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const tableRef = useRef<HTMLDivElement>(null);
@@ -366,9 +368,9 @@ export default function AthletesSection() {
           <div>
             <Heading
               as="h2"
-              text={"All Athletes"}
+              text={"All-Star Athletes"}
               highlight="Athletes"
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5vw] tracking-tight leading-[1.08]"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-[3vw] tracking-tight leading-[1.08]"
             />
           </div>
 

@@ -2,46 +2,47 @@ import { FaqItem } from './types';
 
 export const FAQ_HEADER = {
   tag: '[ FAQS ]',
-  heading: 'Questions clients often ask',
+  heading: 'Frequently Asked Questions',
   intro:
-    'Find answers to common questions about our integrated design process, multidisciplinary BIM coordination, LOD deliverables, Scan-to-BIM workflows, and project delivery timelines.',
+    'Everything you need to know about Red Bull energy drinks, key functional ingredients, consumption moments, and authentic licensing in Nepal.',
 };
 
 export const FAQ_LIST: FaqItem[] = [
   {
     id: 'faq-1',
-    question: 'Do you only create the design project, or do you manage the coordination end to end?',
+    question: 'What is Red Bull Energy Drink and how does it give you wings?',
     answer:
-      'We provide end-to-end digital solutions from conceptual design and multidisciplinary BIM development (Architecture, Structure, MEP) to clash detection, Construction Cloud management, and construction-ready documentation.',
+      'Red Bull is a functional beverage specially formulated to vitalize body and mind. It contains a high-quality blend of ingredients including caffeine, taurine, B-group vitamins, and essential sugars that work together to stimulate metabolism, increase alertness, and sustain mental and physical endurance.',
   },
   {
     id: 'faq-2',
-    question: 'What is included in the BIM deliverables, and what will I receive?',
+    question: 'What is the difference between Red Bull Gold 250ml and the Carbonated 330ml Can?',
     answer:
-      'You receive complete, coordinated Autodesk Revit models, federated Navisworks models (.NWD/.NWC), clash reports, 2D architectural & engineering drawings (PDF/DWG), schedules, quantities, and IFC export files for universal interoperability.',
+      'Red Bull Gold 250ml is our classic, non-carbonated functional energy drink packed with amino acids, B-vitamins, and taurine for sustained stamina. The 330ml New-Gen Can delivers a sparkling, carbonated surge infused with natural blackcurrant and wild blueberry extract for a crisp, refreshing fruit-forward flavor.',
   },
   {
     id: 'faq-3',
-    question: 'What BIM Level of Development (LOD) do you provide?',
+    question: 'When is the best time to drink Red Bull?',
     answer:
-      'We support all standard LOD levels from LOD 200/300 (schematic and detailed design) to LOD 400 (fabrication, shop drawings, and constructability) and LOD 500 (field-verified as-built and facility management models).',
+      'Red Bull is designed for whenever peak performance is required: during intense study or workday sessions, before training and sporting events, on long highway drives, during marathon gaming tournaments, or whenever you need an extra push to power through.',
   },
   {
     id: 'faq-4',
-    question: 'How does your Scan to BIM / Point Cloud workflow work for existing structures?',
+    question: 'What is Taurine and where does it come from?',
     answer:
-      'We convert 3D laser scan and point cloud data into precise Revit BIM models and 2D documentation. Real-world conditions, structural deviations, and MEP routing are faithfully recreated to support renovation, retrofit, extension, and record drawings.',
+      'Taurine is an amino acid naturally produced in the human body and present in daily diets through seafood, poultry, and meat. It supports cardiovascular function and muscle development. The taurine in Red Bull is produced synthetically to meet the highest pharmaceutical quality standards, making it completely vegan-friendly.',
   },
   {
     id: 'faq-5',
-    question: 'How do you handle 4D sequencing and 5D cost integration?',
+    question: 'Who manufactures and distributes Red Bull in Nepal?',
     answer:
-      'We link 3D model geometry with construction schedules (Primavera P6, MS Project) for 4D visual phasing and simulate construction sequencing over time. For 5D, we connect model elements with unit costs for automated quantity takeoff and financial forecasting.',
+      'In Nepal, Red Bull is manufactured and bottled by Saras Beverages Private Limited under direct license from TCP Group (Thailand), adhering strictly to global quality control standards, authentic recipes, and state-of-the-art beverage hygiene protocols.',
   },
   {
     id: 'faq-6',
-    question: 'How is project pricing structured and what affects the cost?',
+    question: 'Are Red Bull cans 100% recyclable?',
     answer:
-      'Pricing is determined by the gross floor area (GFA), discipline scope (Architecture, Structure, MEP), required LOD level, complexity of geometry, and turnaround timeline. We provide transparent fixed-fee proposals and milestone schedules upfront.',
+      'Yes! Every Red Bull aluminum can is 100% and infinitely recyclable. Melting down recycled aluminum uses 95% less energy than producing primary aluminum, drastically reducing carbon emissions. Once recycled, your can can return to the shelf in as little as 60 days.',
   },
 ];
+
