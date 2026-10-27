@@ -1,5 +1,6 @@
 import CareerDisplay from "@/components/career/CareerDisplay";
 import CareerHero from "@/components/career/CareerHero";
+import FirstSection from "@/components/career/FirstSection";
 import HeroSection from "@/components/career/HeroSection";
 import { Metadata } from "next";
 
@@ -13,7 +14,8 @@ const page = () => {
   return (
     <div className="relative">
       {/* <HeroSection /> */}
-      <CareerHero />
+      <FirstSection />
+      {/* <CareerHero /> */}
       <CareerDisplay />
     </div>
   );
