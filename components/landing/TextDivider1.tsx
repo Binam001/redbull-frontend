@@ -3,7 +3,7 @@ import React from "react";
 const TextDivider1 = () => {
   return (
     <section>
-      <p className="text-xl md:text-3xl lg:text-[2.6vw] xl:text-[2.6vw] leading-snug lg:leading-[1.5]">
+      <p className="text-xl md:text-3xl lg:text-[2.6vw] leading-snug lg:leading-[1.5]">
         <span className="text-primary">RedBull</span> is made for the moments
         when you’re ready to do more when an early start, a demanding day, or
         one more attempt calls for renewed focus and drive. Its distinctive
