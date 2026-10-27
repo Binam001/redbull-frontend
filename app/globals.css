@@ -156,7 +156,6 @@ body,
 
 .footer-highlight-overlay {
   color: var(--color-primary, #cb2026);
-  text-shadow: 0 0 25px rgba(203, 32, 38, 0.75);
   -webkit-mask-image: linear-gradient(
     90deg,
     transparent 0%,
@@ -236,5 +235,3 @@ body,
   animation: footerCenterCoreBreathe 4.5s ease-in-out infinite;
   will-change: transform, opacity;
 }
-
-

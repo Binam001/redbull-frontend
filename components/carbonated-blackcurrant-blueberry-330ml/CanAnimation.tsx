@@ -16,14 +16,16 @@ if (typeof window !== "undefined") {
 
 interface CanSceneProps {
   sectionRef: React.RefObject<HTMLDivElement | null>;
-  titleRef: React.RefObject<HTMLDivElement | null>;
+  // titleRef: React.RefObject<HTMLDivElement | null>;
+  bigTextRef: React.RefObject<HTMLDivElement | null>;
   phase1DetailsRef: React.RefObject<HTMLDivElement | null>;
   phase2DetailsRef: React.RefObject<HTMLDivElement | null>;
 }
 
 function CanScene({
   sectionRef,
-  titleRef,
+  // titleRef,
+  bigTextRef,
   phase1DetailsRef,
   phase2DetailsRef,
 }: CanSceneProps) {
@@ -251,13 +253,27 @@ function CanScene({
       );
 
       // Fade out bottom-left title early on first scroll
-      if (titleRef.current) {
-        tl.to(
-          titleRef.current,
+      // if (titleRef.current) {
+      //   tl.to(
+      //     titleRef.current,
+      //     {
+      //       opacity: 0,
+      //       ease: "power2.out",
+      //       duration: 0.12,
+      //     },
+      //     0,
+      //   );
+      // }
+
+      // Smoothly reduce opacity on scroll without flashing
+      if (bigTextRef.current) {
+        tl.fromTo(
+          bigTextRef.current,
+          { opacity: 1 },
           {
-            opacity: 0,
-            ease: "power2.out",
-            duration: 0.12,
+            opacity: 0.25,
+            ease: "none",
+            duration: 0.35,
           },
           0,
         );
@@ -461,7 +477,13 @@ function CanScene({
       }
     },
     {
-      dependencies: [sectionRef, titleRef, phase1DetailsRef, phase2DetailsRef],
+      dependencies: [
+        sectionRef,
+        // titleRef,
+        bigTextRef,
+        phase1DetailsRef,
+        phase2DetailsRef,
+      ],
     },
   );
 
@@ -518,7 +540,7 @@ function CanScene({
         ref={rimLeftRef}
         position={[-3.8, 1.8, -2.0]}
         intensity={1.5}
-        color="#00d2ff"
+        color="#e0f2fe"
       />
 
       {/* Royal blue right rim light outlining the opposite silhouette */}
@@ -526,7 +548,7 @@ function CanScene({
         ref={rimRightRef}
         position={[3.8, 1.8, -2.0]}
         intensity={1.3}
-        color="#cb2026"
+        color="#e0f2fe"
       />
 
       <group
@@ -559,6 +581,7 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
   const [mounted, setMounted] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
+  const bigTextRef = useRef<HTMLDivElement>(null);
   const phase1DetailsRef = useRef<HTMLDivElement>(null);
   const phase2DetailsRef = useRef<HTMLDivElement>(null);
 
@@ -581,7 +604,7 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(14,42,88,0.22)_0%,rgba(3,7,18,0.92)_60%,#030712_100%)]" />
 
       {/* Center-left Phase 1 Highlight Details */}
-      <div className="absolute bottom-8 sm:bottom-10 md:bottom-12 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 inset-x-0 lg:inset-x-auto lg:left-16 xl:left-24 w-full lg:w-auto z-20 pointer-events-none select-none flex justify-center lg:justify-start px-4 sm:px-6">
+      <div className="absolute bottom-8 sm:bottom-10 md:bottom-12 lg:bottom-auto lg:top-[70%] lg:-translate-y-1/2 inset-x-0 lg:inset-x-auto lg:left-16 xl:left-24 w-full lg:w-auto z-20 pointer-events-none select-none flex justify-center lg:justify-start px-4 sm:px-6">
         <div
           ref={phase1DetailsRef}
           className="flex flex-col items-start text-left gap-4 sm:gap-6 md:gap-8 max-w-sm lg:max-w-md opacity-0"
@@ -612,7 +635,7 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
       </div>
 
       {/* Center-right Phase 2 Highlight Details */}
-      <div className="absolute bottom-8 sm:bottom-10 md:bottom-12 lg:bottom-auto lg:top-1/2 lg:-translate-y-1/2 inset-x-0 lg:inset-x-auto lg:left-auto lg:right-16 xl:right-24 w-full lg:w-auto z-20 pointer-events-none select-none flex justify-center lg:justify-end px-4 sm:px-6">
+      <div className="absolute bottom-8 sm:bottom-10 md:bottom-12 lg:bottom-auto lg:top-[70%] lg:-translate-y-1/2 inset-x-0 lg:inset-x-auto lg:left-auto lg:right-16 xl:right-24 w-full lg:w-auto z-20 pointer-events-none select-none flex justify-center lg:justify-end px-4 sm:px-6">
         <div
           ref={phase2DetailsRef}
           className="flex flex-col items-start lg:items-end text-left gap-4 sm:gap-6 md:gap-8 max-w-sm lg:max-w-md opacity-0"
@@ -650,34 +673,50 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
       </div>
 
       {/* top-left label in text-primary */}
-      <div
+      {/* <div
         ref={titleRef}
         className="absolute top-24 md:top-32 lg:top-[30%] left-4 md:left-8 lg:left-16 xl:left-24 z-20 pointer-events-none select-none"
       >
         <h2 className="text-primary font-bold text-3xl md:text-5xl lg:text-[3.5vw] uppercase">
           Unleash the <br /> Unexpected
         </h2>
+      </div> */}
+
+      {/* Big "RedBull" brand watermark behind the 3D can (Reference visual) */}
+      <div
+        ref={bigTextRef}
+        className="absolute inset-0 pt-[10vh] flex flex-col items-center pointer-events-none select-none z-0 overflow-hidden"
+      >
+        <span className="text-white text-lg md:text-2xl lg:text-[3vw] tracking-wide uppercase">
+          New Gen, Same Wings.
+        </span>
+        <h1 className="text-[20vw] sm:text-[23vw] lg:text-[18vw] tracking-tight text-primary leading-none whitespace-nowrap will-change-[opacity]">
+          RedBull
+        </h1>
       </div>
 
-      <Canvas
-        camera={{ position: [0, 0, 8], fov: 35 }}
-        dpr={[1, 2]}
-        gl={{
-          powerPreference: "high-performance",
-          preserveDrawingBuffer: false,
-          antialias: true,
-          alpha: true,
-        }}
-      >
-        <Suspense fallback={null}>
-          <CanScene
-            sectionRef={sectionRef}
-            titleRef={titleRef}
-            phase1DetailsRef={phase1DetailsRef}
-            phase2DetailsRef={phase2DetailsRef}
-          />
-        </Suspense>
-      </Canvas>
+      <div className="relative z-10 w-full h-full pointer-events-none">
+        <Canvas
+          camera={{ position: [0, 0, 8], fov: 35 }}
+          dpr={[1, 2]}
+          gl={{
+            powerPreference: "high-performance",
+            preserveDrawingBuffer: false,
+            antialias: true,
+            alpha: true,
+          }}
+        >
+          <Suspense fallback={null}>
+            <CanScene
+              sectionRef={sectionRef}
+              // titleRef={titleRef}
+              bigTextRef={bigTextRef}
+              phase1DetailsRef={phase1DetailsRef}
+              phase2DetailsRef={phase2DetailsRef}
+            />
+          </Suspense>
+        </Canvas>
+      </div>
     </div>
   );
 };
