@@ -16,25 +16,25 @@ const ImageSliderSection = () => {
   const videoLists = [
     {
       id: 1,
-      title: "SPARKLING BERRY FUSION",
+      title: "DOWNHILL MTB: GRAVITY ON THE EDGE",
       subtitle:
-        "An exhilarating blend of rich blackcurrant and wild blueberry, charged with lively carbonation for a sparkling, refreshing kick.",
+        "From the sheer sandstone cliffs of Red Bull Rampage to the brutal tracks of Red Bull Hardline, Red Bull powers mountain bike athletes with the razor-sharp focus, split-second reflexes, and fearless grit to tame nature’s steepest descents.",
       imgSrc: "/images/home/hero/adventure-5.webp",
       position: "left" as const,
     },
     {
       id: 2,
-      title: "FUNCTIONAL ENERGY BOOST",
+      title: "SKATEBOARDING: CREATIVITY IN MOTION",
       subtitle:
-        "Formulated with premium taurine and vital B-group vitamins to stimulate metabolism and elevate mental focus throughout the day.",
+        "Backing iconic street contests and skate parks worldwide, Red Bull champions raw skate progression—fueling riders with the balance, technical precision, and relentless drive to lock into every grind.",
       imgSrc: "/images/product/canbonated-can-ad-6.webp",
       position: "right" as const,
     },
     {
       id: 3,
-      title: "MAKE ROOM FOR WHAT’S NEXT",
+      title: "SLOPESTYLE MTB: ARTISTRY IN FLIGHT",
       subtitle:
-        "A modern 330ml ready-to-drink can engineered for creators, gamers, athletes, and active days on the move.",
+        "Taking flight at premier events like Red Bull Joyride, Red Bull empowers freestyle athletes with the aerial awareness, explosive amplitude, and nerves of steel to land impossible tricks high above the crowd.",
       imgSrc: "/images/product/canbonated-can-ad-7.webp",
       position: "left" as const,
     },
@@ -129,6 +129,11 @@ const ImageSliderSection = () => {
                   className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
                 />
                 <div className="absolute inset-0 bg-black/35 pointer-events-none" />
+                {isRight ? (
+                  <div className="absolute inset-0 bg-linear-to-l from-black/70 via-transparent to-transparent pointer-events-none" />
+                ) : (
+                  <div className="absolute inset-0 bg-linear-to-r from-black/70 via-transparent to-transparent pointer-events-none" />
+                )}
               </div>
 
               {/* Zigzag Content Overlay: 1st Center-Left, 2nd Center-Right, 3rd Center-Left */}

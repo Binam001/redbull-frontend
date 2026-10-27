@@ -16,26 +16,26 @@ const ImageSliderSection = () => {
   const videoLists = [
     {
       id: 1,
-      title: "SPARKLING BERRY FUSION",
+      title: "CRICKET: PRECISION UNDER PRESSURE",
       subtitle:
-        "An exhilarating blend of rich blackcurrant and wild blueberry, charged with lively carbonation for a sparkling, refreshing kick.",
-      imgSrc: "/images/product/gold-can-ad-1.webp",
+        "From nurturing grassroots champions in Red Bull Campus Cricket to backing world-class players on the international stage, Red Bull fuels cricketers with the sustained focus, tactical composure, and explosive power to conquer the pitch.",
+      imgSrc: "/images/product/sport-ad-1.webp",
       position: "left" as const,
     },
     {
       id: 2,
-      title: "FUNCTIONAL ENERGY BOOST",
+      title: "FOOTBALL: HIGH-OCTANE INTENSITY",
       subtitle:
-        "Formulated with premium taurine and vital B-group vitamins to stimulate metabolism and elevate mental focus throughout the day.",
-      imgSrc: "/images/product/gold-can-ad-3.webp",
+        "Through our world-renowned football clubs and boundary-pushing tournaments like Red Bull Four 2 Score, Red Bull powers athletes with the blistering speed, tactical pressing, and relentless stamina to command all 90 minutes.",
+      imgSrc: "/images/product/sport-ad-2.webp",
       position: "right" as const,
     },
     {
       id: 3,
-      title: "MAKE ROOM FOR WHAT’S NEXT",
+      title: "VOLLEYBALL: DEFYING GRAVITY ABOVE THE NET",
       subtitle:
-        "A modern 330ml ready-to-drink can engineered for creators, gamers, athletes, and active days on the move.",
-      imgSrc: "/images/product/gold-can-ad-4.webp",
+        "From high-flying indoor showdowns to global beach volleyball championships, Red Bull elevates athletes with the explosive vertical leaps, split-second reflexes, and clutch endurance to rule every rally.",
+      imgSrc: "/images/product/sport-ad-3.webp",
       position: "left" as const,
     },
   ];
@@ -129,6 +129,11 @@ const ImageSliderSection = () => {
                   className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
                 />
                 <div className="absolute inset-0 bg-black/35 pointer-events-none" />
+                {isRight ? (
+                  <div className="absolute inset-0 bg-linear-to-l from-black/70 via-transparent to-transparent" />
+                ) : (
+                  <div className="absolute inset-0 bg-linear-to-r from-black/70 via-transparent to-transparent" />
+                )}
               </div>
 
               {/* Zigzag Content Overlay: 1st Center-Left, 2nd Center-Right, 3rd Center-Left */}

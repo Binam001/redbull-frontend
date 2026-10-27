@@ -30,13 +30,17 @@ const RECOMMENDED_AVATARS = [
     name: "Red Bull Athlete",
     image: "/images/athletes/athlete-3.webp",
   },
+  {
+    name: "Red Bull Athlete",
+    image: "/images/athletes/athlete-4.webp",
+  },
 ];
 
 interface CanSceneProps {
   sectionRef: React.RefObject<HTMLDivElement | null>;
   titleRef: React.RefObject<HTMLDivElement | null>;
   recommendedRef?: React.RefObject<HTMLDivElement | null>;
-  bigTextRef: React.RefObject<HTMLDivElement | null>;
+  // bigTextRef: React.RefObject<HTMLDivElement | null>;
   phase1DetailsRef: React.RefObject<HTMLDivElement | null>;
   phase2DetailsRef: React.RefObject<HTMLDivElement | null>;
 }
@@ -45,7 +49,7 @@ function CanScene({
   sectionRef,
   titleRef,
   recommendedRef,
-  bigTextRef,
+  // bigTextRef,
   phase1DetailsRef,
   phase2DetailsRef,
 }: CanSceneProps) {
@@ -298,18 +302,18 @@ function CanScene({
       }
 
       // Smoothly reduce opacity on scroll without flashing
-      if (bigTextRef.current) {
-        tl.fromTo(
-          bigTextRef.current,
-          { opacity: 1 },
-          {
-            opacity: 0.25,
-            ease: "none",
-            duration: 0.35,
-          },
-          0,
-        );
-      }
+      // if (bigTextRef.current) {
+      //   tl.fromTo(
+      //     bigTextRef.current,
+      //     { opacity: 1 },
+      //     {
+      //       opacity: 0.25,
+      //       ease: "none",
+      //       duration: 0.35,
+      //     },
+      //     0,
+      //   );
+      // }
 
       // Reveal Phase 1 label details later, once title has vanished and spotlight lands
       if (phase1DetailsRef.current) {
@@ -512,7 +516,7 @@ function CanScene({
       dependencies: [
         sectionRef,
         titleRef,
-        bigTextRef,
+        // bigTextRef,
         phase1DetailsRef,
         phase2DetailsRef,
       ],
@@ -614,7 +618,7 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const recommendedRef = useRef<HTMLDivElement>(null);
-  const bigTextRef = useRef<HTMLDivElement>(null);
+  // const bigTextRef = useRef<HTMLDivElement>(null);
   const phase1DetailsRef = useRef<HTMLDivElement>(null);
   const phase2DetailsRef = useRef<HTMLDivElement>(null);
 
@@ -804,7 +808,7 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
               sectionRef={sectionRef}
               titleRef={titleRef}
               recommendedRef={recommendedRef}
-              bigTextRef={bigTextRef}
+              // bigTextRef={bigTextRef}
               phase1DetailsRef={phase1DetailsRef}
               phase2DetailsRef={phase2DetailsRef}
             />
