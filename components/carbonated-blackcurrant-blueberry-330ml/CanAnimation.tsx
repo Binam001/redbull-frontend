@@ -183,8 +183,12 @@ function CanScene({
           scrub: 1,
           anticipatePin: 1,
           invalidateOnRefresh: true,
+          refreshPriority: 10,
         },
       });
+
+      // Refresh ScrollTrigger to ensure downstream pinned sections recalculate after canvas pin spacer is created
+      ScrollTrigger.refresh();
 
       // ========================================================
       // PAGE OPEN INTRO: Can rises spinning from the bottom into hero pose
@@ -614,7 +618,7 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
           className="flex flex-col items-start lg:items-end text-left gap-4 sm:gap-6 md:gap-8 max-w-sm lg:max-w-md opacity-0"
         >
           {/* Sodium */}
-          <div className="flex items-start lg:items-end gap-3 sm:gap-4">
+          <div className="flex items-start gap-3 sm:gap-4">
             <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
             <div className="flex flex-col items-start lg:items-end text-left">
               <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
@@ -624,7 +628,7 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
           </div>
 
           {/* Carbohydrate */}
-          <div className="flex items-start lg:items-end gap-3 sm:gap-4">
+          <div className="flex items-start gap-3 sm:gap-4">
             <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
             <div className="flex flex-col items-start lg:items-end text-left">
               <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
@@ -634,7 +638,7 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
           </div>
 
           {/* Protein */}
-          <div className="flex items-start lg:items-end gap-3 sm:gap-4">
+          <div className="flex items-start gap-3 sm:gap-4">
             <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
             <div className="flex flex-col items-start lg:items-end text-left">
               <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">

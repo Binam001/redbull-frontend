@@ -6,6 +6,7 @@ import ProductsHero from "@/components/red-bill-250ml/ProductsHero";
 import RedBullPouringSection from "@/components/red-bill-250ml/RedBullPouringSection";
 import ShortHero from "@/components/red-bill-250ml/ShortHero";
 import SideBullSection from "@/components/red-bill-250ml/SideBullSection";
+import DrinkComparisionTable from "@/components/shared/DrinkComparisionTable";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function RedBull250mlPage() {
       <ShortHero />
       <ProductsHero />
       <ProductDivider />
+      <DrinkComparisionTable variant="gold" />
       <ProductCta />
     </main>
   );

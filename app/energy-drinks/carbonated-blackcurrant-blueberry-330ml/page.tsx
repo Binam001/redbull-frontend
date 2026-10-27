@@ -2,8 +2,13 @@ import CanAnimation from "@/components/carbonated-blackcurrant-blueberry-330ml/C
 import CarbonatedCta from "@/components/carbonated-blackcurrant-blueberry-330ml/CarbonatedCta";
 import CarbonatedDivider from "@/components/carbonated-blackcurrant-blueberry-330ml/CarbonatedDivider";
 import CarbonatedHero from "@/components/carbonated-blackcurrant-blueberry-330ml/CarbonatedHero";
+import ImageDivider1 from "@/components/carbonated-blackcurrant-blueberry-330ml/ImageDivider1";
+import ImageSliderSection from "@/components/carbonated-blackcurrant-blueberry-330ml/ImageSliderSection";
 import LongHero from "@/components/carbonated-blackcurrant-blueberry-330ml/LongHero";
 import TextDivider1 from "@/components/carbonated-blackcurrant-blueberry-330ml/TextDivider1";
+import TextDivider2 from "@/components/carbonated-blackcurrant-blueberry-330ml/TextDivider2";
+import VideoSection1 from "@/components/carbonated-blackcurrant-blueberry-330ml/VideoSection1";
+import DrinkComparisionTable from "@/components/shared/DrinkComparisionTable";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -19,9 +24,14 @@ export default function CarbonatedBlackcurrantBlueberry330mlPage() {
       {/* <LongHero /> */}
       <CanAnimation />
       <TextDivider1 />
+      <VideoSection1 />
+      <ImageDivider1 />
+      <TextDivider2 />
+      <ImageSliderSection />
       {/* <CarbonatedHero /> */}
-      <CarbonatedDivider />
-      <CarbonatedCta />
+      {/* <CarbonatedDivider /> */}
+      {/* <DrinkComparisionTable /> */}
+      {/* <CarbonatedCta /> */}
     </main>
   );
 }

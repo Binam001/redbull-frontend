@@ -14,7 +14,10 @@ export default function Cycle() {
   const pathname = usePathname();
 
   // Do not show Cycle section on contact page
-  if (pathname?.startsWith("/contact")) {
+  if (
+    pathname === "/contact" ||
+    pathname === "/energy-drinks/carbonated-blackcurrant-blueberry-330ml"
+  ) {
     return null;
   }
 

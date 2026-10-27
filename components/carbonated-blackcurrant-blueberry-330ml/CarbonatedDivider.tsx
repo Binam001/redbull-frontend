@@ -27,16 +27,15 @@ const CarbonatedDivider = () => {
         <div className="w-full h-svh lg:h-auto lg:min-h-dvh z-0 pointer-events-none flex items-center justify-center">
           <div className="w-full h-full relative flex items-center justify-center">
             <Image
-              src="/images/product/can-ad-1.webp"
+              src="/images/product/canbonated-can-ad-1.webp"
               alt="Carbonated Divider"
               fill
-              sizes="(max-width: 1280px) 100vw, 50vw"
               className="object-cover"
               priority
             />
             {/* <div className="absolute inset-0 bg-linear-to-r from-black via-transparent to-transparent" /> */}
-            <div className="absolute inset-0 bg-linear-to-t from-white via-transparent to-transparent" />
-            <div className="absolute inset-0 bg-linear-to-b from-black via-transparent to-transparent" />
+            {/* <div className="absolute inset-0 bg-linear-to-t from-white via-transparent to-transparent" /> */}
+            <div className="absolute inset-0 bg-linear-to-b from-black via-transparent via-10% to-transparent" />
           </div>
         </div>
       </div>
