@@ -9,14 +9,33 @@ import * as THREE from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import Button from "../shared/Button";
+import Image from "next/image";
+import Link from "next/link";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+const RECOMMENDED_AVATARS = [
+  {
+    name: "Max Verstappen",
+    image: "/images/athletes/athlete-1.webp",
+  },
+  {
+    name: "Luc Ackermann",
+    image: "/images/athletes/athlete-2.webp",
+  },
+  {
+    name: "Red Bull Athlete",
+    image: "/images/athletes/athlete-3.webp",
+  },
+];
+
 interface CanSceneProps {
   sectionRef: React.RefObject<HTMLDivElement | null>;
-  // titleRef: React.RefObject<HTMLDivElement | null>;
+  titleRef: React.RefObject<HTMLDivElement | null>;
+  recommendedRef?: React.RefObject<HTMLDivElement | null>;
   bigTextRef: React.RefObject<HTMLDivElement | null>;
   phase1DetailsRef: React.RefObject<HTMLDivElement | null>;
   phase2DetailsRef: React.RefObject<HTMLDivElement | null>;
@@ -24,7 +43,8 @@ interface CanSceneProps {
 
 function CanScene({
   sectionRef,
-  // titleRef,
+  titleRef,
+  recommendedRef,
   bigTextRef,
   phase1DetailsRef,
   phase2DetailsRef,
@@ -252,18 +272,30 @@ function CanScene({
         0,
       );
 
-      // Fade out bottom-left title early on first scroll
-      // if (titleRef.current) {
-      //   tl.to(
-      //     titleRef.current,
-      //     {
-      //       opacity: 0,
-      //       ease: "power2.out",
-      //       duration: 0.12,
-      //     },
-      //     0,
-      //   );
-      // }
+      // Fade out bottom-left title and bottom-right recommendation badge early on first scroll
+      if (titleRef.current) {
+        tl.to(
+          titleRef.current,
+          {
+            opacity: 0,
+            ease: "power2.out",
+            duration: 0.12,
+          },
+          0,
+        );
+      }
+
+      if (recommendedRef?.current) {
+        tl.to(
+          recommendedRef.current,
+          {
+            opacity: 0,
+            ease: "power2.out",
+            duration: 0.12,
+          },
+          0,
+        );
+      }
 
       // Smoothly reduce opacity on scroll without flashing
       if (bigTextRef.current) {
@@ -479,7 +511,7 @@ function CanScene({
     {
       dependencies: [
         sectionRef,
-        // titleRef,
+        titleRef,
         bigTextRef,
         phase1DetailsRef,
         phase2DetailsRef,
@@ -581,6 +613,7 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
   const [mounted, setMounted] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
+  const recommendedRef = useRef<HTMLDivElement>(null);
   const bigTextRef = useRef<HTMLDivElement>(null);
   const phase1DetailsRef = useRef<HTMLDivElement>(null);
   const phase2DetailsRef = useRef<HTMLDivElement>(null);
@@ -604,18 +637,18 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(14,42,88,0.22)_0%,rgba(3,7,18,0.92)_60%,#030712_100%)]" />
 
       {/* Center-left Phase 1 Highlight Details */}
-      <div className="absolute bottom-8 sm:bottom-10 md:bottom-12 lg:bottom-auto lg:top-[70%] lg:-translate-y-1/2 inset-x-0 lg:inset-x-auto lg:left-16 xl:left-24 w-full lg:w-auto z-20 pointer-events-none select-none flex justify-center lg:justify-start px-4 sm:px-6">
+      <div className="absolute bottom-8 sm:bottom-10 md:bottom-12 lg:bottom-auto lg:top-[50%] lg:-translate-y-1/2 inset-x-0 lg:inset-x-auto lg:left-16 xl:left-24 w-full lg:w-auto z-20 pointer-events-none select-none flex justify-center lg:justify-start px-4 sm:px-6">
         <div
           ref={phase1DetailsRef}
           className="flex flex-col items-start text-left gap-4 sm:gap-6 md:gap-8 max-w-sm lg:max-w-md opacity-0"
         >
           {/* High Caffeine */}
           <div className="flex items-start gap-3 sm:gap-4">
-            <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
+            {/* <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" /> */}
             <div className="flex flex-col items-start text-left">
-              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
-                High Caffeine{" "}
-                <span className="text-primary font-bold text-base sm:text-xl lg:text-[1.35vw] block sm:inline">
+              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] text-white tracking-tight leading-snug">
+                High Caffeine:{" "}
+                <span className="font-extralight text-base sm:text-xl lg:text-[1.35vw] block sm:inline">
                   (24.24 mg/100ml)
                 </span>
               </span>
@@ -624,10 +657,13 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
 
           {/* Calories */}
           <div className="flex items-start gap-3 sm:gap-4">
-            <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
+            {/* <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" /> */}
             <div className="flex flex-col items-start text-left">
-              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
-                Calories <span className="text-primary font-bold">200</span>
+              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] text-white tracking-tight leading-snug">
+                Calories:{" "}
+                <span className="font-extralight text-base sm:text-xl lg:text-[1.35vw] block sm:inline">
+                  200
+                </span>
               </span>
             </div>
           </div>
@@ -635,37 +671,46 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
       </div>
 
       {/* Center-right Phase 2 Highlight Details */}
-      <div className="absolute bottom-8 sm:bottom-10 md:bottom-12 lg:bottom-auto lg:top-[70%] lg:-translate-y-1/2 inset-x-0 lg:inset-x-auto lg:left-auto lg:right-16 xl:right-24 w-full lg:w-auto z-20 pointer-events-none select-none flex justify-center lg:justify-end px-4 sm:px-6">
+      <div className="absolute bottom-8 sm:bottom-10 md:bottom-12 lg:bottom-auto lg:top-[50%] lg:-translate-y-1/2 inset-x-0 lg:inset-x-auto lg:left-auto lg:right-16 xl:right-24 w-full lg:w-auto z-20 pointer-events-none select-none flex justify-center lg:justify-end px-4 sm:px-6">
         <div
           ref={phase2DetailsRef}
           className="flex flex-col items-start lg:items-end text-left gap-4 sm:gap-6 md:gap-8 max-w-sm lg:max-w-md opacity-0"
         >
           {/* Sodium */}
           <div className="flex items-start gap-3 sm:gap-4">
-            <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
+            {/* <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" /> */}
             <div className="flex flex-col items-start lg:items-end text-left">
-              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
-                Sodium <span className="text-primary font-bold">100mg</span>
+              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] text-white tracking-tight leading-snug">
+                Sodium:{" "}
+                <span className="font-extralight text-base sm:text-xl lg:text-[1.35vw] block sm:inline">
+                  100mg
+                </span>
               </span>
             </div>
           </div>
 
           {/* Carbohydrate */}
           <div className="flex items-start gap-3 sm:gap-4">
-            <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
+            {/* <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" /> */}
             <div className="flex flex-col items-start lg:items-end text-left">
-              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
-                Carbohydrate <span className="text-primary font-bold">49g</span>
+              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] text-white tracking-tight leading-snug">
+                Carbohydrate:{" "}
+                <span className="font-extralight text-base sm:text-xl lg:text-[1.35vw] block sm:inline">
+                  49g
+                </span>
               </span>
             </div>
           </div>
 
           {/* Protein */}
           <div className="flex items-start gap-3 sm:gap-4">
-            <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" />
+            {/* <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" /> */}
             <div className="flex flex-col items-start lg:items-end text-left">
-              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] font-bold text-white tracking-tight leading-snug">
-                Protein <span className="text-primary font-bold">2g</span>
+              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] text-white tracking-tight leading-snug">
+                Protein:{" "}
+                <span className="font-extralight text-base sm:text-xl lg:text-[1.35vw] block sm:inline">
+                  2g
+                </span>
               </span>
             </div>
           </div>
@@ -673,17 +718,65 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
       </div>
 
       {/* top-left label in text-primary */}
-      {/* <div
+      <div
         ref={titleRef}
-        className="absolute top-24 md:top-32 lg:top-[30%] left-4 md:left-8 lg:left-16 xl:left-24 z-20 pointer-events-none select-none"
+        className="absolute top-24 md:top-32 lg:top-[50%] lg:-translate-y-1/2 left-4 md:left-8 lg:left-16 xl:left-24 z-20 space-y-4"
       >
-        <h2 className="text-primary font-bold text-3xl md:text-5xl lg:text-[3.5vw] uppercase">
-          Unleash the <br /> Unexpected
+        <h2 className="text-background text-3xl md:text-5xl lg:text-[3.5vw] uppercase">
+          Unleash the <br />
+          <span className="text-primary">Unexpected</span>
         </h2>
-      </div> */}
+        <p className="text-background lg:w-[40%]">
+          Experience Red Bull an invigorating fusion of dark, luscious berries
+          and crisp, sparkling carbonation built for active days and demanding
+          schedules.
+        </p>
+        <Button label="Learn More" href="/company" />
+      </div>
+
+      {/* Bottom-right Recommended By & Reviews Badge */}
+      <div
+        ref={recommendedRef}
+        className="absolute bottom-8 sm:bottom-12 md:bottom-14 right-4 sm:right-8 lg:right-16 xl:right-24 z-20 pointer-events-auto select-none flex flex-col items-start gap-1.5 sm:gap-2 group"
+      >
+        <span className="text-[11px] sm:text-xs font-semibold tracking-wider uppercase text-white/75 font-sans">
+          Recommended by
+        </span>
+        <div className="flex items-center gap-3">
+          {/* Overlapping circular avatars with gold rings */}
+          <div className="flex -space-x-2.5 sm:-space-x-3">
+            {RECOMMENDED_AVATARS.map((avatar, idx) => (
+              <div
+                key={idx}
+                className="relative size-9 sm:size-10 md:size-11 rounded-full border-2 border-ternary overflow-hidden shadow-[0_0_12px_rgba(255,201,6,0.35)] shrink-0 transition-transform duration-200 group-hover/link:border-yellow-300 hover:scale-110 hover:z-30"
+                style={{ zIndex: idx + 1 }}
+                title={avatar.name}
+              >
+                <Image
+                  src={avatar.image}
+                  alt={avatar.name}
+                  fill
+                  sizes="44px"
+                  className="object-cover object-top"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Metric review count */}
+          <div className="flex flex-col justify-center leading-none">
+            <span className="text-base sm:text-lg font-bold text-white tracking-tight group-hover/link:text-ternary transition-colors">
+              5.2k+
+            </span>
+            <span className="text-[11px] sm:text-xs text-white/70 font-medium mt-0.5">
+              Reviews
+            </span>
+          </div>
+        </div>
+      </div>
 
       {/* Big "RedBull" brand watermark behind the 3D can (Reference visual) */}
-      <div
+      {/* <div
         ref={bigTextRef}
         className="absolute inset-0 pt-[10vh] flex flex-col items-center pointer-events-none select-none z-0 overflow-hidden"
       >
@@ -693,7 +786,7 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
         <h1 className="text-[20vw] sm:text-[23vw] lg:text-[18vw] tracking-tight text-primary leading-none whitespace-nowrap will-change-[opacity]">
           RedBull
         </h1>
-      </div>
+      </div> */}
 
       <div className="relative z-10 w-full h-full pointer-events-none">
         <Canvas
@@ -709,7 +802,8 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
           <Suspense fallback={null}>
             <CanScene
               sectionRef={sectionRef}
-              // titleRef={titleRef}
+              titleRef={titleRef}
+              recommendedRef={recommendedRef}
               bigTextRef={bigTextRef}
               phase1DetailsRef={phase1DetailsRef}
               phase2DetailsRef={phase2DetailsRef}

@@ -16,7 +16,8 @@ export default function Cycle() {
   // Do not show Cycle section on contact page
   if (
     pathname === "/contact" ||
-    pathname === "/energy-drinks/carbonated-blackcurrant-blueberry-330ml"
+    pathname === "/energy-drinks/carbonated-blackcurrant-blueberry-330ml" ||
+    pathname === "/energy-drinks/red-bull-250ml"
   ) {
     return null;
   }
