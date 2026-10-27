@@ -31,8 +31,8 @@ const AUDIO_ASSETS = ["/audios/bgm.mp3"];
 
 // Pre-generate image frame sequence paths
 const footerFrames = Array.from(
-  { length: 149 },
-  (_, i) => `/images/footer-frames-2/${i + 1}.webp`,
+  { length: 126 },
+  (_, i) => `/compressed-footer/${i + 1}.webp`,
 );
 
 const Preloader = () => {

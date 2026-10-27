@@ -138,7 +138,7 @@ const ImageSliderSection = () => {
 
               {/* Zigzag Content Overlay: 1st Center-Left, 2nd Center-Right, 3rd Center-Left */}
               <div
-                className={`absolute top-1/2 -translate-y-1/2 z-10 w-full max-w-xl lg:max-w-[40vw] px-6 sm:px-10 lg:px-0 flex flex-col gap-3 sm:gap-4 ${
+                className={`absolute bottom-8 lg:bottom-0 lg:top-1/2 -translate-y-1/2 z-10 w-full max-w-xl lg:max-w-[40vw] px-6 sm:px-10 lg:px-0 flex flex-col gap-3 sm:gap-4 ${
                   isRight
                     ? "lg:right-16 xl:right-28 lg:items-end lg:text-right"
                     : "lg:left-16 xl:left-28 lg:items-start lg:text-left"

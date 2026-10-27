@@ -36,6 +36,18 @@ const RECOMMENDED_AVATARS = [
   },
 ];
 
+const NUTRITION_DETAILS = {
+  phase1: [
+    { label: "High Caffeine", value: "(24.24 mg/100ml)" },
+    { label: "Calories", value: "200" },
+  ],
+  phase2: [
+    { label: "Sodium", value: "100mg" },
+    { label: "Carbohydrate", value: "49g" },
+    { label: "Protein", value: "2g" },
+  ],
+};
+
 interface CanSceneProps {
   sectionRef: React.RefObject<HTMLDivElement | null>;
   titleRef: React.RefObject<HTMLDivElement | null>;
@@ -646,31 +658,18 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
           ref={phase1DetailsRef}
           className="flex flex-col items-start text-left gap-4 sm:gap-6 md:gap-8 max-w-sm lg:max-w-md opacity-0"
         >
-          {/* High Caffeine */}
-          <div className="flex items-start gap-3 sm:gap-4">
-            {/* <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" /> */}
-            <div className="flex flex-col items-start text-left">
-              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] text-white tracking-tight leading-snug">
-                High Caffeine:{" "}
-                <span className="font-extralight text-base sm:text-xl lg:text-[1.35vw] block sm:inline">
-                  (24.24 mg/100ml)
+          {NUTRITION_DETAILS.phase1.map((item) => (
+            <div key={item.label} className="flex items-start gap-3 sm:gap-4">
+              <div className="flex flex-col items-start text-left">
+                <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] text-white tracking-tight leading-snug">
+                  {item.label}:{" "}
+                  <span className="font-extralight text-base sm:text-xl lg:text-[1.35vw]">
+                    {item.value}
+                  </span>
                 </span>
-              </span>
+              </div>
             </div>
-          </div>
-
-          {/* Calories */}
-          <div className="flex items-start gap-3 sm:gap-4">
-            {/* <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" /> */}
-            <div className="flex flex-col items-start text-left">
-              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] text-white tracking-tight leading-snug">
-                Calories:{" "}
-                <span className="font-extralight text-base sm:text-xl lg:text-[1.35vw] block sm:inline">
-                  200
-                </span>
-              </span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
@@ -680,44 +679,18 @@ const CanAnimation = ({ className = "" }: CanAnimationProps) => {
           ref={phase2DetailsRef}
           className="flex flex-col items-start lg:items-end text-left gap-4 sm:gap-6 md:gap-8 max-w-sm lg:max-w-md opacity-0"
         >
-          {/* Sodium */}
-          <div className="flex items-start gap-3 sm:gap-4">
-            {/* <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" /> */}
-            <div className="flex flex-col items-start lg:items-end text-left">
-              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] text-white tracking-tight leading-snug">
-                Sodium:{" "}
-                <span className="font-extralight text-base sm:text-xl lg:text-[1.35vw] block sm:inline">
-                  100mg
+          {NUTRITION_DETAILS.phase2.map((item) => (
+            <div key={item.label} className="flex items-start gap-3 sm:gap-4">
+              <div className="flex flex-col items-start lg:items-end text-left">
+                <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] text-white tracking-tight leading-snug">
+                  {item.label}:{" "}
+                  <span className="font-extralight text-base sm:text-xl lg:text-[1.35vw]">
+                    {item.value}
+                  </span>
                 </span>
-              </span>
+              </div>
             </div>
-          </div>
-
-          {/* Carbohydrate */}
-          <div className="flex items-start gap-3 sm:gap-4">
-            {/* <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" /> */}
-            <div className="flex flex-col items-start lg:items-end text-left">
-              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] text-white tracking-tight leading-snug">
-                Carbohydrate:{" "}
-                <span className="font-extralight text-base sm:text-xl lg:text-[1.35vw] block sm:inline">
-                  49g
-                </span>
-              </span>
-            </div>
-          </div>
-
-          {/* Protein */}
-          <div className="flex items-start gap-3 sm:gap-4">
-            {/* <div className="hidden lg:flex size-2.5 rounded-full bg-primary mt-2 shrink-0 shadow-[0_0_10px_rgba(203,32,38,0.9)]" /> */}
-            <div className="flex flex-col items-start lg:items-end text-left">
-              <span className="text-xl sm:text-2xl md:text-3xl lg:text-[2.2vw] text-white tracking-tight leading-snug">
-                Protein:{" "}
-                <span className="font-extralight text-base sm:text-xl lg:text-[1.35vw] block sm:inline">
-                  2g
-                </span>
-              </span>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
